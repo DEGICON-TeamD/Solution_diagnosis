@@ -37,12 +37,21 @@
 
     <main class="max-w-md mx-auto p-4 pb-24">
         
-        <section id="page-start" class="page active py-10 text-center">
-            <h1 class="text-3xl font-black mb-6 leading-tight">あなたの息は<br><span class="text-sky-500 text-4xl underline decoration-yellow-300 decoration-8">「体の鏡」</span>です</h1>
-            <div class="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 mb-10 text-left">
-                <p id="liff-status" class="text-sm text-slate-600 font-medium leading-relaxed italic text-center">LINEと接続しています...</p>
+        <section id="page-start" class="page active py-6 text-center">
+            <h1 class="text-3xl font-black mb-4 leading-tight">あなたの息は<br><span class="text-sky-500 text-4xl underline decoration-yellow-300 decoration-8">「体の鏡」</span>です</h1>
+            
+            <div class="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8 text-left">
+                <h2 class="text-sky-600 font-black text-lg mb-3">この診断でわかること</h2>
+                <ul class="text-sm font-bold text-slate-600 space-y-3">
+                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>お口のニオイの原因が「一時的なもの」か「病気のサイン」かを分析します。</li>
+                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>生活習慣やストレスからくる体調の変化をチェックします。</li>
+                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>あなたに最適なセルフケアと下関市の健康情報を提案します。</li>
+                </ul>
+                <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-6 text-center">LINEと接続しています...</p>
             </div>
+            
             <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
+            <p class="text-[10px] text-slate-400 mt-4">※この診断は医療診断に代わるものではありません。</p>
         </section>
 
         <section id="page-q" class="page">
@@ -55,7 +64,6 @@
                 </div>
                 <h2 id="q-text" class="text-xl font-black mb-8 leading-tight text-slate-800 min-h-[4rem]"></h2>
                 <div id="q-image-area" class="mb-8 hidden">
-                    <p class="text-[10px] font-black text-sky-500 mb-4 bg-sky-50 inline-block px-3 py-1 rounded-lg italic">📸 鏡で自分の舌の状態を比較</p>
                     <div class="grid grid-cols-3 gap-2 text-[9px] font-bold text-slate-400 text-center">
                         <div><img src="tongue1.jpg" class="rounded-xl border mb-1 aspect-square object-cover shadow-sm">真っ白</div>
                         <div><img src="tongue2.jpg" class="rounded-xl border mb-1 aspect-square object-cover shadow-sm">うっすら</div>
@@ -67,18 +75,26 @@
         </section>
 
         <section id="page-result" class="page">
-            <h2 class="text-center font-black text-2xl mb-8 tracking-tighter italic text-slate-800 uppercase">Diagnostic Report</h2>
+            <h2 class="text-center font-black text-2xl mb-2 tracking-tighter italic text-slate-800 uppercase">Diagnostic Report</h2>
+            <p class="text-center text-sky-600 font-black text-sm mb-6 underline">現在の口臭リスク分析</p>
             
-            <div class="grid grid-cols-2 gap-3 mb-8">
+            <div class="grid grid-cols-2 gap-3 mb-4">
                 <div class="bg-white p-5 rounded-[2.5rem] shadow-xl border border-sky-50 text-center">
-                    <p class="text-[10px] font-black mb-2 uppercase opacity-60">一時的リスク</p>
+                    <p class="text-[10px] font-black mb-1 uppercase opacity-60">一時的リスク</p>
                     <div class="flex items-center justify-center font-black"><span id="score-1" class="text-5xl">0</span><span class="text-sm ml-1">%</span></div>
                     <p id="label-1" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
                 </div>
                 <div class="bg-white p-5 rounded-[2.5rem] shadow-xl border border-sky-50 text-center">
-                    <p class="text-[10px] font-black mb-2 uppercase opacity-60">病的リスク</p>
+                    <p class="text-[10px] font-black mb-1 uppercase opacity-60">病的リスク</p>
                     <div class="flex items-center justify-center font-black"><span id="score-2" class="text-5xl">0</span><span class="text-sm ml-1">%</span></div>
                     <p id="label-2" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
+                </div>
+            </div>
+
+            <div class="bg-sky-50/50 p-4 rounded-2xl mb-8 border border-sky-100">
+                <div class="text-[9px] text-slate-500 font-bold leading-relaxed space-y-1">
+                    <p><b class="text-sky-600">●一時的リスク：</b> 疲れ・緊張・乾燥など、生活リズムの乱れによるニオイの発生しやすさです。</p>
+                    <p><b class="text-sky-600">●病的リスク：</b> 歯周病や胃腸の不調など、身体的な要因が原因となっている可能性の高さです。</p>
                 </div>
             </div>
 
@@ -89,68 +105,12 @@
                 <div id="advice-list" class="grid gap-3"></div>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
-                <h3 class="font-black text-sky-600 text-sm mb-1 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>リマインド設定</h3>
-                <div class="space-y-3 mt-4">
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>朝の水分補給</label>
-                            <input type="time" value="07:00" class="text-xs p-1 rounded border">
-                        </div>
-                    </div>
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">舌のケア</label>
-                            <input type="time" value="08:00" class="text-xs p-1 rounded border">
-                        </div>
-                    </div>
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>こまめな給水</label>
-                            <div class="flex gap-1">
-                                <input type="time" value="10:00" class="text-[10px] p-1 rounded border w-14">
-                                <input type="time" value="15:00" class="text-[10px] p-1 rounded border w-14">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">睡眠リフレッシュ</label>
-                            <input type="time" value="22:30" class="text-xs p-1 rounded border">
-                        </div>
-                    </div>
-                </div>
-                <button onclick="alert('リマインドを保存しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all text-white">保存する</button>
-            </div>
-
             <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
                 <h3 class="text-xl font-black mb-4 italic text-sky-500 text-center">SHIMONOSEKI INFO</h3>
                 <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-900 border border-slate-900 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-900 border border-slate-900 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">健康診査（全般）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-700 border border-slate-700 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">特定健診（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-700 border border-slate-700 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">健康診査（全般）</a>
                 </div>
-            </div>
-
-            <div class="mb-4">
-                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline active:bg-slate-700 transition-all text-white">
-                    <span class="text-2xl mr-3">📄</span>
-                    <div class="text-left text-white">
-                        <p class="text-[10px] font-black text-sky-400 uppercase leading-none mb-1">Official List</p>
-                        <p class="text-sm font-black leading-none">下関市 実施医療機関一覧(PDF)</p>
-                    </div>
-                    <span class="ml-4 text-slate-500">↗︎</span>
-                </a>
-            </div>
-
-            <div class="mb-10">
-                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline active:bg-sky-50 transition-all text-slate-700">
-                    <span class="text-2xl mr-3">📍</span>
-                    <div class="text-left">
-                        <p class="text-[10px] font-black text-sky-500 uppercase leading-none mb-1">Clinic Search</p>
-                        <p class="text-sm font-black text-slate-700 leading-none">近くの歯科医院を探す</p>
-                    </div>
-                    <span class="ml-4 text-sky-200">▶︎</span>
-                </a>
             </div>
 
             <button onclick="liff.closeWindow()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md">診断を終了する</button>
@@ -254,7 +214,7 @@
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
             const msgEl = document.getElementById('result-message');
-            msgEl.innerText = s2 > 40 ? "要注意！不調が隠れているかもしれません。下関市の健診をおすすめします。" : "現在は一時的な乱れのようです。水分補給を意識しましょう！";
+            msgEl.innerText = s2 > 40 ? "お口の中に特定のニオイ原因が隠れている可能性があります。一度、下関市の健診で詳しくチェックしてみませんか？" : "現在は大きなリスクは見られません。日頃の水分補給と清潔なケアを続けていきましょう！";
             msgEl.className = `bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 ${s2 > 40 ? 'border-red-400' : 'border-sky-400'} text-sm font-bold text-slate-700`;
 
             document.getElementById('advice-list').innerHTML = [...new Set(adviceSet)].slice(0, 4).map(adv => `
