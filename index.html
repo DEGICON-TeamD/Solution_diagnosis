@@ -121,6 +121,21 @@
                             <input type="time" value="08:00" class="text-xs p-1 rounded border">
                         </div>
                     </div>
+                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>こまめな給水</label>
+                            <div class="flex gap-1">
+                                <input type="time" value="10:00" class="text-[10px] p-1 rounded border w-14">
+                                <input type="time" value="15:00" class="text-[10px] p-1 rounded border w-14">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">睡眠リフレッシュ</label>
+                            <input type="time" value="22:30" class="text-xs p-1 rounded border">
+                        </div>
+                    </div>
                 </div>
                 <button onclick="alert('リマインドを保存しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all">保存する</button>
             </div>
@@ -161,7 +176,7 @@
 
     <script>
         const LIFF_ID = "2008714027-cuYvg8O7"; 
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbz66OWd1XQd37zZAN7TQka0gq0KWDvkoXtX8xvSZhpkNKOwMcOsLivP_HVb1v_TbH5rXw/exec"; 
+        const GAS_URL = "https://script.google.com/macros/u/1/s/AKfycbz66OWd1XQd37zZAN7TQka0gq0KWDvkoXtX8xvSZhpkNKOwMcOsLivP_HVb1v_TbH5rXw/exec"; 
 
         const questions = [
             { axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
@@ -278,6 +293,4 @@
                 body: JSON.stringify(data)
             }).catch(e => console.error("Send Error:", e));
         }
-    </script>
-</body>
-</html>
+    </
