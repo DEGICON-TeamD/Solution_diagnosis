@@ -86,22 +86,12 @@
 
             <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
                 <h3 class="font-black text-sky-600 text-sm mb-1 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>リマインド設定（デモ）</h3>
-                <p class="text-[10px] text-slate-400 mb-4 font-medium italic">チェックを入れてLINEで通知を受け取る</p>
-                
-                <div class="space-y-3">
+                <div class="space-y-3 mt-4">
                     <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
                         <div class="flex items-center justify-between mb-2">
                             <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>朝の水分補給</label>
                             <input type="time" value="07:00" class="text-xs p-1 rounded border">
                         </div>
-                        <p class="text-[10px] text-slate-500 italic">寝起きの1杯でお口を潤しましょう。</p>
-                    </div>
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">舌のケア</label>
-                            <input type="time" value="08:00" class="text-xs p-1 rounded border">
-                        </div>
-                        <p class="text-[10px] text-slate-500 italic">朝の歯磨き前に1回が効果的！</p>
                     </div>
                     <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
                         <div class="flex items-center justify-between mb-2">
@@ -111,21 +101,24 @@
                                 <input type="time" value="15:00" class="text-[10px] p-1 rounded border w-16">
                             </div>
                         </div>
-                        <p class="text-[10px] text-slate-500 italic">喉が渇く前に一口潤す習慣を。</p>
-                    </div>
-                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">睡眠リフレッシュ</label>
-                            <input type="time" value="22:30" class="text-xs p-1 rounded border">
-                        </div>
-                        <p class="text-[10px] text-slate-500 italic">今日は少し早く休んで体を労わって。</p>
                     </div>
                 </div>
                 <button onclick="alert('リマインドを設定しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all">リマインドを保存する</button>
             </div>
 
+            <div class="mb-4">
+                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline active:bg-slate-700 transition-all">
+                    <span class="text-2xl mr-3">📄</span>
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-sky-400 uppercase leading-none mb-1">Official List</p>
+                        <p class="text-sm font-black leading-none text-white">下関市 実施医療機関一覧(PDF)</p>
+                    </div>
+                    <span class="ml-4 text-slate-500">↗︎</span>
+                </a>
+            </div>
+
             <div class="mb-10">
-                <a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline active:bg-sky-50 transition-all">
+                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline active:bg-sky-50 transition-all">
                     <span class="text-2xl mr-3">📍</span>
                     <div class="text-left">
                         <p class="text-[10px] font-black text-sky-500 uppercase leading-none mb-1">Clinic Search</p>
@@ -135,22 +128,14 @@
                 </a>
             </div>
 
-            <div class="bg-slate-900 text-white rounded-[2.5rem] p-8 mb-10 shadow-2xl">
-                <h3 class="text-xl font-black mb-4 italic text-sky-400">SHIMONOSEKI INFO</h3>
-                <p class="text-xs text-slate-300 mb-8 leading-relaxed">下関市では年齢に応じた健診を実施中です。リスクが高い方は早めのチェックを。</p>
-                <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-white/10 border border-white/20 text-center font-bold py-4 rounded-2xl text-sm transition-all hover:bg-white/20 no-underline text-white font-bold">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-sky-500 text-center font-black py-4 rounded-2xl text-sm shadow-lg no-underline text-white font-bold">健康診査（全般）</a>
-                </div>
-            </div>
-
             <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-600 font-black py-6 rounded-3xl text-lg active:scale-95">診断を終了する</button>
         </section>
     </main>
 
     <script>
         const LIFF_ID = "2008714027-cuYvg807"; 
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbw45dgoesrZRu4x_WOfB_HaChTFp-9AxQG12iarX_y-A37PPJJwT1GUZ7X8kJnBlkg2/exec";
+        // 【重要】自分のGASウェブアプリURLに書き換えてください
+        const GAS_URL = "ここにGASで発行したウェブアプリURLを貼り付け"; 
 
         const questions = [
             { axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
@@ -184,12 +169,9 @@
                     lineProfile = await liff.getProfile();
                     document.getElementById('liff-status').innerText = `${lineProfile.displayName}さん、準備完了！`;
                     document.getElementById('start-btn').disabled = false;
-                } else {
-                    liff.login();
-                }
+                } else { liff.login(); }
             } catch (e) {
-                console.error(e);
-                document.getElementById('liff-status').innerText = "デモモードで起動中...";
+                document.getElementById('liff-status').innerText = "デモモード起動中...";
                 document.getElementById('start-btn').disabled = false;
             }
         };
@@ -231,31 +213,41 @@
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
                 el.innerText = Math.round(score);
-                if (score <= 40) { el.className = "text-5xl score-blue"; lbl.innerText = "安心"; lbl.className = "text-[10px] font-black bg-blue-tag px-3 py-1 rounded-full"; }
-                else if (score <= 60) { el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-black bg-yellow-tag px-3 py-1 rounded-full"; }
-                else { el.className = "text-5xl score-red"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-black bg-red-tag px-3 py-1 rounded-full"; }
+                if (score <= 40) { el.className = "text-5xl score-blue"; lbl.innerText = "安心"; lbl.className = "text-[10px] font-black bg-blue-tag px-4 py-1 rounded-full"; }
+                else if (score <= 60) { el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; }
+                else { el.className = "text-5xl score-red"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; }
             };
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
             const msgEl = document.getElementById('result-message');
-            if (s2 > 40) {
-                msgEl.innerText = "注意！単なる口臭ではなく、不調が隠れているかもしれません。下関市の健診や歯科受診をおすすめします。";
-                msgEl.className = "bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 border-red-400 text-sm font-bold text-slate-700 leading-relaxed";
-            } else {
-                msgEl.innerText = "現在は一時的な乱れのようです。水分補給や休息を意識し、お口の自浄作用を高めましょう！";
-                msgEl.className = "bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 border-sky-400 text-sm font-bold text-slate-700 leading-relaxed";
-            }
+            msgEl.innerText = s2 > 40 ? "要注意！不調が隠れているかもしれません。下関市の健診をおすすめします。" : "現在は一時的な乱れのようです。水分補給を意識しましょう！";
+            msgEl.className = `bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 ${s2 > 40 ? 'border-red-400' : 'border-sky-400'} text-sm font-bold text-slate-700`;
+
             document.getElementById('advice-list').innerHTML = [...new Set(adviceSet)].slice(0, 4).map(adv => `
                 <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start">
                     <span class="text-sky-400 mr-2">●</span>${adv}
                 </div>
             `).join('');
-            sendData(s1, s2);
+
+            // データ送信（スプレッドシート保存 ＆ LINEプッシュ通知）
+            sendData(Math.round(s1), Math.round(s2));
         }
 
         async function sendData(s1, s2) {
-            if (!lineProfile) return;
-            fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ userId: lineProfile.userId, name: lineProfile.displayName, s1, s2 }) });
+            if (!lineProfile || !GAS_URL || GAS_URL.includes("貼り付け")) return;
+            const data = {
+                name: lineProfile.displayName,
+                userId: lineProfile.userId,
+                s1: s1,
+                s2: s2
+            };
+            // no-corsモードで送信（GAS側で処理させる）
+            fetch(GAS_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).catch(e => console.error("Send Error:", e));
         }
     </script>
 </body>
