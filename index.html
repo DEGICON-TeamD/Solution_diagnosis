@@ -85,25 +85,37 @@
             </div>
 
             <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
-                <h3 class="font-black text-sky-600 text-sm mb-1 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>リマインド設定（デモ）</h3>
+                <h3 class="font-black text-sky-600 text-sm mb-1 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>リマインド設定</h3>
                 <div class="space-y-3 mt-4">
                     <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center justify-between">
                             <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>朝の水分補給</label>
                             <input type="time" value="07:00" class="text-xs p-1 rounded border">
                         </div>
                     </div>
                     <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
-                        <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">舌のケア</label>
+                            <input type="time" value="08:00" class="text-xs p-1 rounded border">
+                        </div>
+                    </div>
+                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
+                        <div class="flex items-center justify-between">
                             <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" checked>こまめな給水</label>
                             <div class="flex gap-1">
-                                <input type="time" value="10:00" class="text-[10px] p-1 rounded border w-16">
-                                <input type="time" value="15:00" class="text-[10px] p-1 rounded border w-16">
+                                <input type="time" value="10:00" class="text-[10px] p-1 rounded border w-14">
+                                <input type="time" value="15:00" class="text-[10px] p-1 rounded border w-14">
                             </div>
                         </div>
                     </div>
+                    <div class="p-4 bg-sky-50 rounded-2xl flex flex-col border border-sky-100">
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center font-bold text-sm"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500">睡眠リフレッシュ</label>
+                            <input type="time" value="22:30" class="text-xs p-1 rounded border">
+                        </div>
+                    </div>
                 </div>
-                <button onclick="alert('リマインドを設定しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all">リマインドを保存する</button>
+                <button onclick="alert('リマインドを保存しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all">保存する</button>
             </div>
 
             <div class="mb-4">
@@ -128,14 +140,21 @@
                 </a>
             </div>
 
+            <div class="bg-slate-900 text-white rounded-[2.5rem] p-8 mb-10 shadow-2xl">
+                <h3 class="text-xl font-black mb-4 italic text-sky-400 text-center">SHIMONOSEKI INFO</h3>
+                <div class="space-y-3">
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-white/10 border border-white/20 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white">特定健診（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-sky-500 text-center font-black py-4 rounded-2xl text-sm shadow-lg no-underline text-white">健康診査（全般）</a>
+                </div>
+            </div>
+
             <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-600 font-black py-6 rounded-3xl text-lg active:scale-95">診断を終了する</button>
         </section>
     </main>
 
     <script>
         const LIFF_ID = "2008714027-cuYvg807"; 
-        // 【重要】自分のGASウェブアプリURLに書き換えてください
-        const GAS_URL = "ここにGASで発行したウェブアプリURLを貼り付け"; 
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzIkTeby9lUDWGdo2PGD1RLdwiCE1gGKgXyQ4CeOXkpjFAMEVsgE4-7P7Y3I3abwjuP/exec"; 
 
         const questions = [
             { axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
@@ -229,19 +248,12 @@
                 </div>
             `).join('');
 
-            // データ送信（スプレッドシート保存 ＆ LINEプッシュ通知）
             sendData(Math.round(s1), Math.round(s2));
         }
 
         async function sendData(s1, s2) {
             if (!lineProfile || !GAS_URL || GAS_URL.includes("貼り付け")) return;
-            const data = {
-                name: lineProfile.displayName,
-                userId: lineProfile.userId,
-                s1: s1,
-                s2: s2
-            };
-            // no-corsモードで送信（GAS側で処理させる）
+            const data = { name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2 };
             fetch(GAS_URL, {
                 method: 'POST',
                 mode: 'no-cors',
