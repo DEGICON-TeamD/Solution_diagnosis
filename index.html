@@ -123,11 +123,11 @@
                 <button onclick="alert('リマインドを保存しました！')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all text-white">保存する</button>
             </div>
 
-            <div class="bg-slate-900 text-white rounded-[2.5rem] p-8 mb-6 shadow-2xl">
-                <h3 class="text-xl font-black mb-4 italic text-sky-400 text-center">SHIMONOSEKI INFO</h3>
+            <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
+                <h3 class="text-xl font-black mb-4 italic text-sky-500 text-center">SHIMONOSEKI INFO</h3>
                 <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-white/10 border border-white/20 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-sky-500 text-center font-black py-4 rounded-2xl text-sm shadow-lg no-underline text-white">健康診査（全般）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-900 border border-slate-900 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">特定健診（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-900 border border-slate-900 text-center font-bold py-4 rounded-2xl text-sm transition-all no-underline text-white active:bg-slate-800">健康診査（全般）</a>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
                     <span class="text-2xl mr-3">📄</span>
                     <div class="text-left text-white">
                         <p class="text-[10px] font-black text-sky-400 uppercase leading-none mb-1">Official List</p>
-                        <p class="text-sm font-black leading-none text-white">下関市 実施医療機関一覧(PDF)</p>
+                        <p class="text-sm font-black leading-none">下関市 実施医療機関一覧(PDF)</p>
                     </div>
                     <span class="ml-4 text-slate-500">↗︎</span>
                 </a>
@@ -153,13 +153,12 @@
                 </a>
             </div>
 
-            <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-600 font-black py-6 rounded-3xl text-lg active:scale-95">診断を終了する</button>
+            <button onclick="liff.closeWindow()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md">診断を終了する</button>
         </section>
     </main>
 
     <script>
-        const LIFF_ID = "2008714027-cuYvg8O7"; 
-        // 指定されたGAS URLを適用済み
+        const LIFF_ID = "2008714027-cuYvg807"; 
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzIkTeby9lUDWGdo2PGD1RLdwiCE1gGKgXyQ4CeOXkpjFAMEVsgE4-7P7Y3I3abwjuP/exec"; 
 
         const questions = [
