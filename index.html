@@ -38,19 +38,34 @@
     <main class="max-w-md mx-auto p-4 pb-24">
         
         <section id="page-start" class="page active py-6 text-center">
-            <h1 class="text-3xl font-black mb-4 leading-tight">あなたの息は<br><span class="text-sky-500 text-4xl underline decoration-yellow-300 decoration-8">「体の鏡」</span>です</h1>
-            <div class="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8 text-left">
-                <h2 class="text-sky-600 font-black text-lg mb-3">この診断でわかること</h2>
-                <ul class="text-sm font-bold text-slate-600 space-y-3">
-                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>お口のニオイの原因が「一時的」か「病気のサイン」かを分析。</li>
-                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>生活習慣やストレスからくる体調の変化をチェック。</li>
-                    <li class="flex items-start"><span class="text-sky-400 mr-2">●</span>下関市の健康情報とともに、最適なケアを提案します。</li>
-                </ul>
-                <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-6 text-center">LINEと接続しています...</p>
-            </div>
-            <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
-        </section>
-
+    <h1 class="text-3xl font-black mb-4 leading-tight">あなたの息は、<br><span class="text-sky-500 text-4xl underline decoration-yellow-300 decoration-8">「健康サイン」</span>です</h1>
+    
+    <div class="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8 text-left">
+        <p class="text-sm font-bold text-slate-600 mb-6 leading-relaxed">
+            口臭は単なるお口の汚れだけでなく、日々の生活習慣や、時には隠れた病気のサインであることも。まずはあなたの現状をチェックしてみましょう。
+        </p>
+        
+        <h2 class="text-sky-600 font-black text-lg mb-3">この診断でわかること</h2>
+        <ul class="text-sm font-bold text-slate-600 space-y-4">
+            <li class="flex items-start">
+                <span class="text-sky-400 mr-2 text-lg">●</span>
+                <span><b>2つのリスクを算出：</b><br>「生活習慣による一時的なもの」か「病気のサイン」かを分析します。</span>
+            </li>
+            <li class="flex items-start">
+                <span class="text-sky-400 mr-2 text-lg">●</span>
+                <span><b>あなた専用のアドバイス：</b><br>診断結果に基づいた、今日から取り組めるケア方法を提案します。</span>
+            </li>
+            <li class="flex items-start">
+                <span class="text-sky-400 mr-2 text-lg">●</span>
+                <span><b>下関市の健康サポート：</b><br>市内の医療機関一覧や、役立つ健診情報をすぐにご案内します。</span>
+            </li>
+        </ul>
+        <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-8 text-center border-t pt-4">LINEと接続しています...</p>
+    </div>
+    
+    <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
+</section>
+        
         <section id="page-q" class="page">
             <div class="bg-white rounded-[3rem] p-8 shadow-2xl border border-sky-50 mt-4 relative">
                 <div class="flex justify-between items-start mb-6">
