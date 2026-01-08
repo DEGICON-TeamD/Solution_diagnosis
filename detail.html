@@ -12,16 +12,16 @@
         .content-section { display: none; }
         .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .logic-card { border-top: 4px solid #38bdf8; }
-        .patho-card { border-top: 4px solid #fb7185; }
+        .logic-card { border-top: 5px solid #38bdf8; }
+        .patho-card { border-top: 5px solid #fb7185; }
     </style>
 </head>
-<body class="pb-20">
+<body class="pb-24">
 
-    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="font-black text-slate-800 text-lg tracking-tighter">お口と体の健康ガイド</h1>
-            <button onclick="window.history.back()" class="bg-slate-100 hover:bg-slate-200 text-slate-500 px-3 py-1 rounded-full text-xs font-bold transition-colors">戻る</button>
+            <h1 class="font-black text-slate-800 text-lg tracking-tighter">口臭・健康深掘りガイド</h1>
+            <button onclick="window.history.back()" class="bg-slate-100 hover:bg-slate-200 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all">戻る</button>
         </div>
         <div class="max-w-md mx-auto flex border-t border-slate-100">
             <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">
@@ -35,175 +35,263 @@
 
     <main class="max-w-md mx-auto p-5">
 
-        <div id="physio-content" class="content-section active space-y-6">
+        <div id="physio-content" class="content-section active space-y-8">
             
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">起床時や空腹時のニオイ</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">睡眠中は唾液が減り、口内細菌が日中の約30倍に増殖します。これを「モーニングブレス」と呼びます。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    朝一番のうがいで菌を流し、水を飲んで唾液腺を刺激することが科学的に有効です。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">起床時や空腹時の「モーニングブレス」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>睡眠中は、お口を守る「唾液」の分泌がほとんど止まります。そのため、細菌が日中の約30倍以上に増殖し、強いニオイの原因となる「揮発性硫黄化合物（VSC）」を大量に発生させます。これが「モーニングブレス」です。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・起きたらすぐに「水うがい」をして、夜間に増えた細菌を吐き出しましょう。<br>
+                        ・その後、コップ1杯の水を飲むことで、休んでいた唾液腺を刺激し、新鮮な唾液の分泌を促します。<br>
+                        ・空腹時は血液中のケトン体が増えるため、一口の糖分（飴など）を摂るのも効果的です。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">舌の上の白い汚れ（舌苔）</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">舌苔（ぜったい）は、死んだ細胞や細菌の塊。口臭原因の約6割がここから発生します。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    1日1回、朝に専用ブラシで優しく掃除を。こすりすぎは舌を傷つけるので注意です。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">舌の汚れ「舌苔（ぜったい）」の正体</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>舌の上に白く見えるのは、剥がれ落ちた粘膜の細胞や食べかす、そして数千億もの細菌が堆積した「舌苔」です。口臭原因の60%以上が、この舌苔から発生する腐敗ガスだと言われています。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・「舌ブラシ」を使い、朝の歯磨き前に1回だけ行いましょう。<br>
+                        ・舌の奥から手前へ、力を入れずに優しくなでるのがポイントです。何度もこすりすぎると舌の組織（舌乳頭）を傷つけ、逆に細菌が繁殖しやすくなるので注意が必要です。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">強いストレスと口の渇き</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">緊張すると交感神経が優位になり唾液が止まります。自浄作用が失われ、ニオイが強まります。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    深呼吸を3回し、リラックスを心がけるだけで唾液は出やすくなります。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">ストレスと自律神経が奪う「唾液」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>唾液の分泌は自律神経がコントロールしています。強いストレスやプレッシャーを受けると「交感神経」が優位になり、唾液の分泌量が激減します。これが、重要な会議や面接で口がカラカラに乾く理由です。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・「鼻から4秒吸い、8秒かけて吐く」深呼吸を3回繰り返しましょう。これにより副交感神経が刺激され、唾液が出やすい状態になります。<br>
+                        ・一口の水を口に含んで転がすだけでも、脳に「湿っている」という信号が送られ、リラックス効果が得られます。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">唾液のネバつきマッサージ</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">ネバつく唾液は「ムチン」が多く、細菌を吸着しやすい状態です。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    耳の下（耳下腺）を指の腹で優しくマッサージし、サラサラの唾液を呼び戻しましょう。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">唾液のネバつきと「唾液腺マッサージ」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>健康な唾液はサラサラしていますが、水分不足や緊張時は「ムチン」というタンパク質が多いネバネバした唾液に変わります。ネバつきは細菌が歯や舌に定着しやすくなり、ニオイが凝縮される原因になります。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・「耳下腺マッサージ」を行いましょう。耳の横、上の奥歯あたりの頬に指全体を当て、後ろから前へ円を描くように10回なでます。<br>
+                        ・これにより新鮮なサラサラ唾液が分泌され、口内を洗浄・中和してくれます。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">日中の賢い水分摂取</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">コーヒーやお茶は利尿作用があるため、実は体内の水分を奪うこともあります。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    お口を潤すには「お水」がベスト。こまめに口を潤す習慣をつけましょう。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">お水で解決！「脱水由来の口臭」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>コーヒーや緑茶、アルコールには利尿作用があります。これらを水分補給だと思って飲んでいると、逆に体内の水分が奪われ、結果として口内が乾燥してしまいます。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・理想は「お水」です。1.5〜2時間おきに一口（約150ml）ずつ、こまめに飲むことで口内の湿潤環境を維持できます。<br>
+                        ・一気に飲むよりも、回数を分ける方が唾液腺が常に刺激され、口臭予防効果が高まります。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">ホルモンバランスと呼気</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">生理前後などは歯ぐきが敏感になり、呼気が変化しやすい時期です。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    丁寧な歯磨きと、たっぷりの休息を自分にプレゼントしてあげましょう。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">ホルモンと歯ぐきの繊細な関係</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>生理前後や更年期には、女性ホルモン（エストロゲン等）の変動により、一部の歯周病菌が増殖しやすくなったり、歯ぐきがわずかな刺激で炎症を起こしやすくなります（ホルモン性歯肉炎）。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・この時期は普段よりも優しい力で、時間をかけて丁寧にフロスを行いましょう。<br>
+                        ・また、十分な睡眠はホルモンバランスを整え、お口の粘膜の修復を助けます。自分を労わる時間を作ることが最大の予防です。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">疲れと免疫力のサイン</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">疲れが溜まると免疫力が下がり、お口の中の細菌が活動的になります。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    ニオイは「体が休みたい」と言っている証拠。今日はスマホを置いて早く寝ましょう。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">免疫力低下が招く「菌の暴走」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>睡眠不足や過労が続くと、お口の中の免疫細胞（白血球など）の働きが鈍くなり、普段は大人しい常在菌が急激に活発化してガスを放出します。体調不良時の口臭は「体が休止を求めているサイン」です。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・夜寝る前のスマホ時間を15分減らし、暗い部屋でしっかり眠る環境を整えましょう。<br>
+                        ・免疫機能の修復は睡眠中に最も行われるため、「今日は早く寝る」ことがどんな消臭剤よりも効果を発揮します。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">ニンニク・お酒の後に</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">これらは胃ではなく血液に取り込まれ、肺からニオイが出てきます。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    リンゴジュースを飲んだり、水を多めに飲んで代謝を助けましょう。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">ニンニク・お酒は「肺」から臭う</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>ニンニクの成分（アリン）やアルコールは、消化管から吸収されて血液に入り、全身を巡ります。その後、肺を通って「呼気」として排出されます。そのため、歯を磨いても完全には消えないのです。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・リンゴジュースに含まれる「ポリフェノール」は、ニオイ成分と結合して分解を助けます。食後すぐに飲むのがおすすめです。<br>
+                        ・お酒の後は、分解を促すために普段の倍以上の水を飲み、代謝を早めることが鉄則です。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">歯磨きができない時の工夫</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">細菌は数時間で増えるため、可能であれば昼食後もケアしたいものです。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    磨けない時は、お水で「ブクブクうがい」をするだけでも効果があります。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">「汚れ」と「ニオイ」のタイムラグ</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>食後の食べかすが口に残ると、数時間で細菌がそれを分解し、発酵させ始めます。1日2回だけの歯磨きでは、昼間に溜まった汚れが夕方には強力なニオイを放つようになります。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・外出先で磨けない時は、強く「ブクブクうがい」を30秒間行うだけでも、細菌の餌となる糖分や食べかすを大幅に減らすことができます。<br>
+                        ・特に甘い飲み物を飲んだ後は、必ず水で一口ゆすぐ癖をつけましょう。
+                    </div>
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 logic-card">
-                <h2 class="font-black text-sm mb-2 text-sky-600">口呼吸のリスクを知る</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">口で息をすると唾液が蒸発し、本来汚れを流してくれる自浄作用が失われます。</p>
-                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed italic">
-                    意識的に鼻呼吸を。寝る前の水分補給も大切です。
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
+                <h2 class="font-black text-base mb-3 text-sky-700">口呼吸が招く「乾燥砂漠化」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>本来、お口は閉じているのが正常です。口呼吸をすると唾液が急速に蒸発し、殺菌成分が薄まってしまいます。また、冷たい空気が直接喉に当たることで、免疫組織である扁桃腺が腫れやすくなるリスクもあります。</p>
+                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・意識的に「舌を上あごの裏につける」ようにしましょう。これが正しい舌のポジションです。<br>
+                        ・寝る時の口開きが気になる場合は、市販のマウステープを使用したり、寝る前の水分補給を徹底することで、睡眠中の口内環境を保護できます。
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <div id="patho-content" class="content-section space-y-8">
+            
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">「2週間」という警戒ライン</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>体調や食事による口臭は数日で消えるのが普通です。しかし、2週間以上毎日続く場合は、お口の中に「歯周病の深いポケット」があったり、内臓の機能低下などの「病的口臭」が隠れている可能性が極めて高いです。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・この段階では市販の洗口液だけでは解決できません。まずは「歯科健診」で、歯周ポケットの深さを測ってもらいましょう。<br>
+                        ・「どこが臭うのか」を特定することが、心の不安を取り除く最短の解決策になります。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">歯ぐきの出血は「血管の悲鳴」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>健康な歯ぐきからは、強く磨いても血は出ません。出血は歯周病菌が組織を破壊し、毛細血管が露出している証拠です。この傷口から細菌が血管に入り込み、全身へと炎症を広げていきます。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・出血を恐れて磨かないのは逆効果です。出血箇所ほど、柔らかい毛のブラシで優しく汚れを浮き出してください。<br>
+                        ・歯周病は「サイレントディジーズ（静かなる病気）」と呼ばれ、痛みなく進行します。出血を見た時こそが、対策を始めるべき最大のチャンスです。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">歯のグラつきと「重度炎症」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>歯がグラつくのは、歯を支えている顎の骨（歯槽骨）が歯周病菌によって溶かされているためです。ここからは強烈な腐敗臭が発生し、自覚症状が出た時にはかなり進行しているケースが多いです。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・「最近歯が長くなった気がする」「食べ物が挟まりやすい」と感じたら、骨が溶け始めているサインかもしれません。<br>
+                        ・これ以上骨を失わないために、一刻も早く専門的なクリーニングを受け、菌を徹底除去することが不可欠です。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">高血糖が招く「ドライマウス」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>血糖値が高い状態が続くと、腎臓が過剰な糖を排出しようとして尿の量が増えます。その結果、体全体の水分が不足し、極度の口の渇き（ドライマウス）が生じます。また、唾液中の糖分濃度が上がると細菌がより繁殖しやすくなります。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・喉が異常に渇き、トイレが近くなったと感じる場合は、内科で「血糖値（HbA1c）」をチェックしましょう。<br>
+                        ・お口のケアと血糖管理はセットです。血糖値が下がると、お口の乾きや炎症も劇的に改善することが多いです。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">鼻と喉の奥に潜む「蓄膿症」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>鼻の奥の空洞（副鼻腔）に膿が溜まる「副鼻腔炎（蓄膿症）」や、鼻水が喉に流れる「後鼻漏」があると、膿のニオイが呼吸とともに吐き出されます。これは歯をいくら磨いても解決しません。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・「頭を下げると頬や目元が重い」「鼻をかんでも奥に残る感じがする」場合は、耳鼻咽喉科への相談を検討してください。<br>
+                        ・鼻の通りが良くなると自然と鼻呼吸ができるようになり、相乗効果で口臭も改善していきます。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">内臓の疲れ（肝・腎）と呼気のニオイ</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>肝臓や腎臓は、体内の老廃物やアンモニアを解毒・排出する工場です。これらの臓器が疲れて処理しきれなくなると、本来体外に出るべき成分が血液に戻り、肺から「アンモニア臭」や「カビ臭いようなニオイ」として出てくることがあります。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・休肝日を作る、塩分を控えるといった生活の見直しが不可欠です。<br>
+                        ・足の強いむくみや、お酒を飲まないのに体が極端にだるい場合は、内科の健診で肝・腎機能の数値を一度確認してみましょう。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">胃もたれ・胸焼けと「逆流現象」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>胃の入り口が緩んだり、胃酸が出すぎたりすると、胃の内容物が逆流する「逆流性食道炎」が起こります。これにより、胃酸の酸っぱいニオイが口まで届くことがあります。また、消化不良による発酵臭も原因の一つです。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・食後すぐに横にならない（30分〜1時間は体を起こしておく）、早食いを避けてよく噛むことが胃の負担を減らします。<br>
+                        ・慢性的な胸焼けがある場合は、消化器内科で胃の状態を確認してもらうと、口臭だけでなく体も非常に楽になります。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">タバコが引き起こす「酸欠のお口」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>タバコに含まれるニコチンは血管を強く収縮させ、歯ぐきへの酸素供給をストップさせます。すると、歯周病菌が最も好む「酸素のない環境」ができあがり、ニオイが一気に強まります。また、タール成分が口内の組織にこびりつき、ニオイが持続します。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・喫煙者は歯周病の進行が早い一方で「出血しにくい」ため、異変に気づきにくいのが特徴です。<br>
+                        ・本数を減らすこと、そして非喫煙者よりも頻繁に歯科でのPMTC（プロによる清掃）を受け、着色と細菌を除去することが必須です。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">「甘いもの」と細菌の爆発的増加</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>お口の中の細菌（ミュータンス菌など）は、糖分をエサにして「グルカン」というネバネバ物質を作ります。これがプラーク（歯垢）となり、細菌の温床となります。また、甘いものによる血糖値の急上昇は体内の炎症を強める性質があります。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・食後に強い眠気や、甘いものへの異常な欲求がある場合は、体内の糖代謝が乱れているかもしれません。<br>
+                        ・お口のケアをしながら、間食の回数を減らす「シュガーレス習慣」を取り入れることで、お口と血管の両方を守ることができます。
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
+                <h2 class="font-black text-base mb-3 text-rose-700">足のむくみが教える「全身の巡り」</h2>
+                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
+                    <p>足のむくみは血流やリンパの滞りを示しています。血流が悪いと、お口の粘膜へ新鮮な栄養が届かず、唾液の質も低下します。全身の「巡り」が悪いと、お口の中の自浄作用も弱まってしまうのです。</p>
+                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
+                        <p class="font-bold mb-1">【改善アクション】</p>
+                        ・デスクワークの合間に足首を回したり、ふくらはぎを軽くストレッチするだけでも巡りは改善します。<br>
+                        ・全身の血行が良くなると、唾液分泌も促進され、お口のトラブルが自然と軽減される「健やかな循環」が生まれます。
+                    </div>
                 </div>
             </section>
         </div>
 
-        <div id="patho-content" class="content-section space-y-6">
-            
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">2週間以上続く違和感</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">生理的な口臭は一時的ですが、長く続く場合は原因が定着しているサインです。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    セルフケアで限界を感じたら、一度プロのチェックを受けるのが最短ルートです。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">歯ぐきからの出血と歯周病</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">出血は歯周病のサイン。歯周病菌のガスは玉ねぎが腐ったようなニオイがします。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    放置すると全身疾患（糖尿病など）にも影響します。早めの受診を。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">歯のグラつき・強い腫れ</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">骨が溶け始めている可能性があり、強い炎症が起きているかもしれません。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    大切な歯を失う前に、歯科医院へ相談してみませんか？
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">喉の渇きと血糖値の関係</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">異常な喉の渇きと頻尿が重なる場合、血糖値の状態が影響していることがあります。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    お口の乾きが続くなら、内科の健診で安心を確認してみましょう。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">鼻や喉のトラブル（後鼻漏）</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">鼻詰まりや副鼻腔炎が、呼吸のニオイの原因になることがあります。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    磨いても解決しない時は、耳鼻咽喉科への相談も一つの手です。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">内臓の疲れと呼気</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">肝臓や腎臓の疲れが、アンモニア臭などの呼気に現れることがあります。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    だるさがある時は、お酒を控え健診数値をチェックして体を労わりましょう。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">胃腸の不調とニオイ</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">消化不良や逆流性食道炎があると、呼気が酸っぱく感じることがあります。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    暴飲暴食を避け、消化に良い食事で胃を休めてあげましょう。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">タバコが隠す危険信号</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">タバコは歯ぐきの血流を悪くし、出血などの病気のサインを隠してしまいます。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    ニオイだけでなく健康のために、まずは1本減らすことから。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">甘いものと血糖値サイン</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">食後の強い眠気などは、血糖値の乱高下のサインかもしれません。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    お口の健康は血管の健康と繋がっています。一度数値をチェックして。
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 patho-card">
-                <h2 class="font-black text-sm mb-2 text-rose-600">巡りを整えて体を労わる</h2>
-                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">足のむくみや血流の滞りは、全身の巡りが悪い証拠。お口の環境にも影響します。</p>
-                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed italic">
-                    軽いストレッチやお酒を控える日を作り、体の巡りを助けてあげましょう。
-                </div>
-            </section>
+        <div class="mt-12 space-y-4">
+            <div class="bg-slate-200 h-px w-full"></div>
+            <p class="text-[10px] text-slate-500 leading-relaxed px-2 text-justify">
+                <strong>免責事項：</strong>本サイトに掲載されている情報は、一般的な健康維持の参考を目的としたものであり、特定の病状の診断・治療を保証するものではありません。症状に不安がある場合は、下関市の実施医療機関など専門の医師・歯科医師を受診してください。
+            </p>
+            <p class="text-center text-[10px] text-slate-400 font-bold tracking-widest pb-8">
+                © 2026 SHIMONOSEKI HEALTH TECH DEMO
+            </p>
         </div>
-
-        <p class="text-center text-[10px] text-slate-400 mt-12 mb-6 px-6 italic font-bold">
-            Developed for Shimonoseki Health Demo
-        </p>
 
     </main>
 
@@ -219,7 +307,7 @@
                 patho.classList.remove('active');
                 tab1.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
                 tab1.classList.remove('border-transparent', 'text-slate-400');
-                tab2.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
+                tab2.classList.remove('border-rose-500', 'text-rose-600', 'bg-rose-50/50');
                 tab2.classList.add('border-transparent', 'text-slate-400');
                 window.scrollTo(0, 0);
             } else {
@@ -235,4 +323,3 @@
     </script>
 </body>
 </html>
-
