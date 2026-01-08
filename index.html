@@ -63,7 +63,11 @@
                 <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-8 text-center border-t pt-4">LINEと接続しています...</p>
             </div>
             
-            <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
+            <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300 mb-4" disabled>診断を開始する</button>
+
+            <button id="resume-btn" onclick="showResult(true)" class="hidden w-full bg-white border-2 border-sky-400 text-sky-500 font-black py-4 rounded-3xl text-sm shadow-sm active:bg-sky-50 transition-all flex items-center justify-center">
+                <span class="mr-2">📄</span> 前回の診断結果を見る
+            </button>
         </section>
         
         <section id="page-q" class="page">
@@ -88,7 +92,6 @@
 
         <section id="page-result" class="page">
             <h2 class="text-center font-black text-2xl mb-2 tracking-tighter italic text-slate-800 uppercase">Diagnostic Report</h2>
-            
             <div class="grid grid-cols-2 gap-3 mb-4">
                 <div class="bg-white p-5 rounded-[2.5rem] shadow-xl border border-sky-50 text-center">
                     <p class="text-[10px] font-black mb-1 uppercase opacity-60">一時的リスク</p>
@@ -101,19 +104,15 @@
                     <p id="label-2" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
                 </div>
             </div>
-
             <div class="bg-sky-50/50 p-4 rounded-2xl mb-8 border border-sky-100 text-[9px] text-slate-500 font-bold leading-relaxed space-y-1 text-center">
                 <p><b class="text-sky-600">●一時的リスク：</b> 生活習慣等による一時的なニオイの発生しやすさ</p>
                 <p><b class="text-sky-600">●病的リスク：</b> 歯周病や内分泌系等、身体的要因の可能性</p>
             </div>
-
             <div id="result-message" class="bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 text-sm font-bold text-slate-700 leading-relaxed text-center"></div>
-
             <div class="mb-10">
                 <h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3>
                 <div id="advice-list" class="grid gap-3"></div>
             </div>
-
             <div class="mb-10">
                 <a href="detail.html" class="block group no-underline">
                     <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-[2.5rem] p-6 shadow-lg shadow-sky-200 active:scale-[0.98] transition-all relative overflow-hidden">
@@ -122,87 +121,17 @@
                             <div class="flex-1">
                                 <p class="text-white/80 text-[10px] font-black uppercase tracking-widest mb-1">Knowledge Library</p>
                                 <h3 class="text-white text-lg font-black leading-tight mb-2">もっと詳しく原因と<br>対策を知る</h3>
-                                <p class="text-sky-100 text-[11px] font-bold leading-relaxed">
-                                    なぜニオイは発生する？専門家が教える<br>20項目の徹底解説ガイドはこちら
-                                </p>
+                                <p class="text-sky-100 text-[11px] font-bold leading-relaxed">なぜニオイは発生する？専門家が教える<br>20項目の徹底解説ガイドはこちら</p>
                             </div>
-                            <div class="bg-white/20 p-4 rounded-full ml-4">
-                                <span class="text-white text-2xl">📖</span>
-                            </div>
-                        </div>
-                        <div class="mt-4 bg-white/10 text-center py-2 rounded-xl text-white text-[10px] font-black border border-white/20 group-hover:bg-white/20 transition-colors">
-                            詳細ガイドを開く
+                            <div class="bg-white/20 p-4 rounded-full ml-4"><span class="text-white text-2xl">📖</span></div>
                         </div>
                     </div>
                 </a>
             </div>
-
-            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="font-black text-sky-600 text-sm flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>習慣化リマインド</h3>
-                    <span class="text-[8px] font-bold text-slate-400">※デモ用のため実際には通知されません</span>
-                </div>
-                <div class="space-y-2 mt-4">
-                    <div class="p-3 bg-sky-50 rounded-2xl border border-sky-100">
-                        <div class="flex items-center justify-between mb-2">
-                            <label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500" checked>水分補給</label>
-                            <span class="text-[9px] text-sky-400 font-bold">1日2回設定</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <div class="flex-1 flex items-center bg-white rounded-lg px-2 py-1 border border-sky-100">
-                                <span class="text-[8px] font-bold text-slate-400 mr-1">1回目</span>
-                                <input type="time" value="10:00" class="text-[10px] w-full outline-none">
-                            </div>
-                            <div class="flex-1 flex items-center bg-white rounded-lg px-2 py-1 border border-sky-100">
-                                <span class="text-[8px] font-bold text-slate-400 mr-1">2回目</span>
-                                <input type="time" value="15:00" class="text-[10px] w-full outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100">
-                        <label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">舌のケア</label>
-                        <input type="time" value="08:00" class="text-[10px] p-1 rounded border">
-                    </div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100">
-                        <label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">マウスウォッシュ</label>
-                        <input type="time" value="12:30" class="text-[10px] p-1 rounded border">
-                    </div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100">
-                        <label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">デンタルフロス</label>
-                        <input type="time" value="21:00" class="text-[10px] p-1 rounded border">
-                    </div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100">
-                        <label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">夜の入念な歯磨き</label>
-                        <input type="time" value="22:00" class="text-[10px] p-1 rounded border">
-                    </div>
-                </div>
-                <button onclick="alert('リマインド設定を保存しました')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md active:scale-95 transition-all">リマインドを保存する</button>
+            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10 text-center">
+                <button onclick="resetAndStart()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md mb-4">最初からやり直す</button>
+                <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl text-sm active:scale-95">診断を終了する</button>
             </div>
-
-            <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
-                <h3 class="text-xl font-black mb-4 italic text-sky-500 text-center">SHIMONOSEKI INFO</h3>
-                <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white active:bg-slate-800">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white active:bg-slate-800">健康診査（全般）</a>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline active:bg-slate-700 text-white">
-                    <span class="text-2xl mr-3">📄</span>
-                    <div class="text-left text-white"><p class="text-[10px] font-black text-sky-400 uppercase leading-none mb-1">Official List</p><p class="text-sm font-black">下関市 実施医療機関一覧(PDF)</p></div>
-                </a>
-            </div>
-
-            <div class="mb-10">
-                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline active:bg-sky-50 text-slate-700">
-                    <span class="text-2xl mr-3">📍</span>
-                    <div class="text-left"><p class="text-[10px] font-black text-sky-500 uppercase leading-none mb-1">Clinic Search</p><p class="text-sm font-black text-slate-700">近くの歯科医院を探す</p></div>
-                </a>
-            </div>
-
-            <button onclick="resetAndStart()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md mb-4">最初からやり直す</button>
-            <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl text-sm active:scale-95">診断を終了する</button>
         </section>
     </main>
 
@@ -236,10 +165,10 @@
         let currentIdx = 0, answers = [], lineProfile = null;
 
         window.onload = async () => {
-            // 前回の結果があるか確認し、あれば即座に表示
+            // 保存データがあれば「再開ボタン」を表示する（自動遷移はしない）
             const savedData = localStorage.getItem('kuchi_check_result');
             if (savedData) {
-                showResult(true);
+                document.getElementById('resume-btn').classList.remove('hidden');
             }
 
             try {
@@ -250,17 +179,14 @@
                     document.getElementById('start-btn').disabled = false;
                 } else { liff.login(); }
             } catch (e) {
-                document.getElementById('liff-status').innerText = "接続中...";
                 document.getElementById('start-btn').disabled = false;
             }
         };
 
         function startQuiz() { 
-            currentIdx = 0; 
-            answers = []; 
+            currentIdx = 0; answers = []; 
             localStorage.removeItem('kuchi_check_result'); 
-            showPage('page-q'); 
-            updateQuestion(); 
+            showPage('page-q'); updateQuestion(); 
         }
 
         function showPage(id) { 
@@ -276,8 +202,6 @@
             document.getElementById('q-cat-label').innerText = q.cat;
             document.getElementById('q-text').innerText = q.text;
             document.getElementById('q-image-area').classList.toggle('hidden', !q.hasImage);
-            const backBtn = document.getElementById('back-btn');
-            backBtn.style.visibility = (currentIdx > 0) ? 'visible' : 'hidden';
             const container = document.getElementById('options-container');
             container.innerHTML = "";
             q.labels.forEach((label, i) => {
@@ -290,35 +214,29 @@
                 };
                 container.appendChild(btn);
             });
+            document.getElementById('back-btn').style.visibility = (currentIdx > 0) ? 'visible' : 'hidden';
         }
 
         function prevQuestion() { if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); } }
 
         function showResult(isResume = false) {
             let s1, s2, adviceList;
-
             if (isResume) {
                 const data = JSON.parse(localStorage.getItem('kuchi_check_result'));
-                s1 = data.s1;
-                s2 = data.s2;
-                adviceList = data.adviceList;
+                s1 = data.s1; s2 = data.s2; adviceList = data.adviceList;
             } else {
-                s1 = 0; s2 = 0;
-                const adviceSet = [];
+                s1 = 0; s2 = 0; const adviceSet = [];
                 answers.forEach(a => {
                     let p = a.userScore * 10;
                     if (a.axis === 1) s1 += p; else s2 += p;
                     if (a.userScore >= 0.5) adviceSet.push(a.advice);
                 });
-                s1 = Math.round(s1);
-                s2 = Math.round(s2);
+                s1 = Math.round(s1); s2 = Math.round(s2);
                 adviceList = [...new Set(adviceSet)].slice(0, 4);
                 localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList }));
                 sendData(s1, s2);
             }
-
             showPage('page-result');
-            
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
@@ -327,16 +245,12 @@
                 else if (score <= 60) { el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; }
                 else { el.className = "text-5xl score-red"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; }
             };
-
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
-
             const msgEl = document.getElementById('result-message');
             msgEl.innerText = s2 > 40 ? "お口の不調は体からのサインかもしれません。下関市の健診で詳しくチェックしてみませんか？" : "現在は大きなリスクは見られませんが、日頃のケアを大切に！";
             msgEl.className = `bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 ${s2 > 40 ? 'border-red-400' : 'border-sky-400'} text-sm font-bold text-slate-700`;
-            
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start"><span class="text-sky-400 mr-2">●</span>${adv}</div>`).join('');
-            
             document.getElementById('q-counter').innerText = "REPORT";
             document.getElementById('progress').style.width = "100%";
         }
@@ -349,7 +263,7 @@
         async function sendData(s1, s2) {
             if (!lineProfile || !GAS_URL) return;
             const data = { name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2 };
-            fetch(GAS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).catch(e => console.error(e));
+            fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
         }
     </script>
 </body>
