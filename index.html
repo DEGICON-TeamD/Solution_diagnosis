@@ -64,6 +64,8 @@
             </div>
             
             <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
+            
+            <button id="resume-btn" onclick="showResult(true)" class="w-full mt-4 bg-white text-sky-500 border-2 border-sky-500 font-black py-4 rounded-3xl text-sm hidden">前回の診断結果を見る</button>
         </section>
         
         <section id="page-q" class="page">
@@ -123,7 +125,7 @@
                                 <p class="text-white/80 text-[10px] font-black uppercase tracking-widest mb-1">Knowledge Library</p>
                                 <h3 class="text-white text-lg font-black leading-tight mb-2">もっと詳しく原因と<br>対策を知る</h3>
                                 <p class="text-sky-100 text-[11px] font-bold leading-relaxed">
-                                    なぜニオイは発生する？<br>徹底解説ガイドはこちら
+                                    なぜニオイは発生する？専門家が教える<br>20項目の徹底解説ガイドはこちら
                                 </p>
                             </div>
                             <div class="bg-white/20 p-4 rounded-full ml-4">
@@ -201,7 +203,8 @@
                 </a>
             </div>
 
-            <button onclick="liff.closeWindow()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md">診断を終了する</button>
+            <button onclick="resetAndStart()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md mb-4">最初からやり直す</button>
+            <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl text-sm active:scale-95">診断を終了する</button>
         </section>
     </main>
 
@@ -235,6 +238,12 @@
         let currentIdx = 0, answers = [], lineProfile = null;
 
         window.onload = async () => {
+            // 前回の結果があるか確認
+            const savedData = localStorage.getItem('kuchi_check_result');
+            if (savedData) {
+                document.getElementById('resume-btn').classList.remove('hidden');
+            }
+
             try {
                 await liff.init({ liffId: LIFF_ID });
                 if (liff.isLoggedIn()) {
@@ -248,8 +257,19 @@
             }
         };
 
-        function startQuiz() { currentIdx = 0; answers = []; showPage('page-q'); updateQuestion(); }
-        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
+        function startQuiz() { 
+            currentIdx = 0; 
+            answers = []; 
+            localStorage.removeItem('kuchi_check_result'); // 新規開始時は削除
+            showPage('page-q'); 
+            updateQuestion(); 
+        }
+
+        function showPage(id) { 
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
+            document.getElementById(id).classList.add('active'); 
+            window.scrollTo(0,0); 
+        }
 
         function updateQuestion() {
             const q = questions[currentIdx];
@@ -276,30 +296,60 @@
 
         function prevQuestion() { if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); } }
 
-        function showResult() {
+        function showResult(isResume = false) {
+            let s1, s2, adviceList;
+
+            if (isResume) {
+                // 保存されたデータを復元
+                const data = JSON.parse(localStorage.getItem('kuchi_check_result'));
+                s1 = data.s1;
+                s2 = data.s2;
+                adviceList = data.adviceList;
+            } else {
+                // 新規計算
+                s1 = 0; s2 = 0;
+                const adviceSet = [];
+                answers.forEach(a => {
+                    let p = a.userScore * 10;
+                    if (a.axis === 1) s1 += p; else s2 += p;
+                    if (a.userScore >= 0.5) adviceSet.push(a.advice);
+                });
+                s1 = Math.round(s1);
+                s2 = Math.round(s2);
+                adviceList = [...new Set(adviceSet)].slice(0, 4);
+
+                // データを保存
+                localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList }));
+                sendData(s1, s2);
+            }
+
             showPage('page-result');
-            let s1 = 0, s2 = 0;
-            const adviceSet = [];
-            answers.forEach(a => {
-                let p = a.userScore * 10;
-                if (a.axis === 1) s1 += p; else s2 += p;
-                if (a.userScore >= 0.5) adviceSet.push(a.advice);
-            });
+            
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
-                el.innerText = Math.round(score);
+                el.innerText = score;
                 if (score <= 40) { el.className = "text-5xl score-blue"; lbl.innerText = "安心"; lbl.className = "text-[10px] font-black bg-blue-tag px-4 py-1 rounded-full"; }
                 else if (score <= 60) { el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; }
                 else { el.className = "text-5xl score-red"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; }
             };
+
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
+
             const msgEl = document.getElementById('result-message');
             msgEl.innerText = s2 > 40 ? "お口の不調は体からのサインかもしれません。下関市の健診で詳しくチェックしてみませんか？" : "現在は大きなリスクは見られませんが、日頃のケアを大切に！";
             msgEl.className = `bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 ${s2 > 40 ? 'border-red-400' : 'border-sky-400'} text-sm font-bold text-slate-700`;
-            document.getElementById('advice-list').innerHTML = [...new Set(adviceSet)].slice(0, 4).map(adv => `<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start"><span class="text-sky-400 mr-2">●</span>${adv}</div>`).join('');
-            sendData(Math.round(s1), Math.round(s2));
+            
+            document.getElementById('advice-list').innerHTML = adviceList.map(adv => `<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start"><span class="text-sky-400 mr-2">●</span>${adv}</div>`).join('');
+            
+            document.getElementById('q-counter').innerText = "REPORT";
+            document.getElementById('progress').style.width = "100%";
+        }
+
+        function resetAndStart() {
+            localStorage.removeItem('kuchi_check_result');
+            location.reload();
         }
 
         async function sendData(s1, s2) {
