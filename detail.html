@@ -49,7 +49,7 @@
     <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="font-black text-slate-800 text-lg tracking-tighter italic text-sky-600">HEALTH GUIDE</h1>
-            <button id="back-to-quiz" onclick="window.history.back()" class="hidden bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all active:bg-slate-200">診断に戻る</button>
+            <button id="back-to-quiz" onclick="backToResult()" class="hidden bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all active:bg-slate-200">診断に戻る</button>
         </div>
         <div class="max-w-md mx-auto flex border-t border-slate-100 text-center">
             <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">一時的・習慣 (Q1-10)</div>
@@ -222,20 +222,24 @@
             const fromQuiz = sessionStorage.getItem('fromQuiz');
             if (fromQuiz === 'true') {
                 document.getElementById('back-to-quiz').classList.remove('hidden');
-                // 一度表示したらフラグを消す（直接URLを叩き直した時は消えるようにする）
-                sessionStorage.removeItem('fromQuiz');
+                // ここではフラグを消さず、backToResult()実行時まで保持させます
             }
 
             // 2. 診断スコアに基づいた初期タブの切り替え
             const savedData = localStorage.getItem('kuchi_check_result');
             if (savedData) {
                 const data = JSON.parse(savedData);
-                // 病的リスク(s2)が一定以上なら、最初から病的カテゴリを表示
                 if (data.s2 > 35) {
                     switchCategory('patho');
                 }
             }
         };
+
+        // 修正箇所：診断結果画面へ戻るための関数
+        function backToResult() {
+            // fromQuizフラグは保持したままindex.htmlへ遷移
+            location.href = 'index.html';
+        }
 
         function switchCategory(cat) {
             const physio = document.getElementById('physio-content');
