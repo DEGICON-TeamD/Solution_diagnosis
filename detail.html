@@ -3,45 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>準備中 | 口臭＆健康リスク解説</title>
+    <title>口臭と健康の徹底解説 | 下関市デモ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F1F5F9; color: #1E293B; }
+        .category-tab { cursor: pointer; transition: all 0.3s; }
+        .content-card { display: none; }
+        .content-card.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-6 text-slate-800">
+<body class="pb-20">
 
-    <div class="max-w-md w-full text-center">
-        <div class="mb-8 relative inline-block">
-            <div class="text-6xl mb-4">🔍</div>
-            <div class="absolute -top-2 -right-2 bg-yellow-400 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-sm">COMING SOON</div>
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="font-black text-sky-600 text-lg">口臭・健康ガイド</h1>
+            <button onclick="window.history.back()" class="text-xs font-bold text-slate-400">戻る</button>
+        </div>
+        <div class="max-w-md mx-auto flex border-t">
+            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-3 text-center text-xs font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50 category-tab">
+                ①一時的・生理的リスク
+            </div>
+            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-3 text-center text-xs font-black border-b-2 border-transparent text-slate-400 category-tab">
+                ②生活習慣・病的リスク
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-6">
+
+        <div id="physio-content" class="space-y-6 content-card active">
+            
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q1</span>
+                    <h2 class="font-black text-sm">起床時や空腹時のニオイ</h2>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    睡眠中は唾液の分泌が極端に減り、口内細菌が爆発的に増殖します。これを「モーニングブレス」と呼びます。
+                </p>
+                <div class="bg-slate-50 rounded-xl p-4">
+                    <h3 class="text-[11px] font-black text-sky-700 mb-2">💡 深掘り解説</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        空腹時は血液中の脂肪酸が分解され、ニオイの元となる物質が作られやすくなります。朝一番のうがいで細菌を流し、水を飲んで唾液腺を刺激することが科学的に有効です。
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q2</span>
+                    <h2 class="font-black text-sm">舌の上の白い汚れ（舌苔）</h2>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    白い汚れは「舌苔（ぜったい）」と呼ばれ、細菌や食べかす、剥がれた粘膜が溜まったものです。
+                </p>
+                <div class="bg-slate-50 rounded-xl p-4 text-[11px] text-slate-500 space-y-2">
+                    <p>口臭の約6割は舌苔が原因と言われています。ケアは「朝」が最適。夜間に溜まった汚れを優しく除去しましょう。※やりすぎは舌を傷つけるので逆効果です。</p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q3-4</span>
+                    <h2 class="font-black text-sm">ストレス・ネバつきと唾液</h2>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    緊張すると口が渇くのは、自律神経が影響しています。
+                </p>
+                <div class="bg-sky-50 border-l-4 border-sky-300 p-3 text-[11px] text-sky-800">
+                    <strong>唾液腺マッサージ：</strong>耳の下（耳下腺）、顎の下（顎下腺・舌下腺）を指の腹で円を描くように刺激すると、新鮮なサラサラ唾液が出やすくなります。
+                </div>
+            </section>
+
+            </div>
+
+        <div id="patho-content" class="space-y-6 content-card">
+            
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q1</span>
+                    <h2 class="font-black text-sm">2週間以上続く口臭</h2>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    生理的な口臭は一時的ですが、2週間以上続く場合は「病的口臭」の可能性が高いです。
+                </p>
+                <div class="bg-rose-50 rounded-xl p-4">
+                    <h3 class="text-[11px] font-black text-rose-700 mb-2">⚠️ リスクの深掘り</h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        病的口臭の90%はお口の中に原因（歯周病・虫歯など）がありますが、残りの10%は呼吸器や消化器、糖尿病などの全身疾患が隠れていることがあります。
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q2-3</span>
+                    <h2 class="font-black text-sm">歯ぐきからの出血・腫れ</h2>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    歯周病菌が放出する「メチルメルカプタン」は、玉ねぎが腐ったような強いニオイを放ちます。
+                </p>
+                <div class="text-[11px] text-slate-500 p-4 bg-slate-50 rounded-xl">
+                    歯周病は、血管を通じて全身に炎症物質を運び、糖尿病の悪化や動脈硬化のリスクを高めることが近年の研究で判明しています。
+                </div>
+            </section>
+
         </div>
 
-        <h1 class="text-2xl font-black text-sky-600 mb-4 leading-tight">
-            口臭と健康の真実<br>
-            <span class="text-slate-400 text-lg">ただいま準備中です</span>
-        </h1>
-
-        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 mb-8 text-left">
-            <p class="text-sm font-bold text-slate-500 mb-4 leading-relaxed">
-                こちらのページでは、臨床データに基づいた口臭のメカニズムや、全身の健康状態との関係について詳しく解説する予定です。
-            </p>
-            <ul class="text-[11px] font-black text-slate-400 space-y-2">
-                <li class="flex items-center"><span class="text-sky-300 mr-2">✓</span> データで見る口臭の原因（起床時・空腹時）</li>
-                <li class="flex items-center"><span class="text-sky-300 mr-2">✓</span> 息からわかる身体のサイン</li>
-                <li class="flex items-center"><span class="text-sky-300 mr-2">✓</span> 下関市で受けられる健康サポート情報</li>
-            </ul>
-        </div>
-
-        <button onclick="window.history.back()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl active:scale-95 transition-all text-sm">
-            診断アプリへ戻る
-        </button>
-
-        <p class="text-[10px] text-slate-300 mt-8 font-bold uppercase tracking-widest italic">
-            Developed for Shimonoseki Demo
+        <p class="text-center text-[10px] text-slate-400 mt-12 px-6 italic">
+            ※本内容は一般的な健康情報です。個別の診断については、下関市の実施医療機関など専門家にご相談ください。
         </p>
-    </div>
 
+    </main>
+
+    <script>
+        function switchCategory(cat) {
+            const physio = document.getElementById('physio-content');
+            const patho = document.getElementById('patho-content');
+            const tab1 = document.getElementById('tab1');
+            const tab2 = document.getElementById('tab2');
+
+            if (cat === 'physio') {
+                physio.classList.add('active');
+                patho.classList.remove('active');
+                tab1.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab1.classList.remove('border-transparent', 'text-slate-400');
+                tab2.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab2.classList.add('border-transparent', 'text-slate-400');
+            } else {
+                patho.classList.add('active');
+                physio.classList.remove('active');
+                tab2.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab2.classList.remove('border-transparent', 'text-slate-400');
+                tab1.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab1.classList.add('border-transparent', 'text-slate-400');
+            }
+        }
+    </script>
 </body>
 </html>
