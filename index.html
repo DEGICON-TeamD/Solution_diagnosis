@@ -19,8 +19,7 @@
         .score-yellow { color: #eab308; } .bg-yellow-tag { background-color: #fefce8; color: #854d0e; }
         .score-red { color: #ef4444; } .bg-red-tag { background-color: #fef2f2; color: #991b1b; }
         .my-icon { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 100; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); object-fit: cover; border: 2px solid white; }
-        /* 時間入力欄のスタイル微調整 */
-        input[type="time"] { appearance: none; -webkit-appearance: none; background: #F1F5F9; border: 1px solid #E2E8F0; }
+        input[type="time"], select { appearance: none; -webkit-appearance: none; background: #F1F5F9; border: 1px solid #E2E8F0; }
     </style>
 </head>
 <body class="bg-main">
@@ -109,8 +108,8 @@
                 <div class="text-center mb-6">
                     <h3 class="font-black text-sky-600 text-lg mb-2 italic">あなただけのアドバイス・プランを作ろう</h3>
                     <p class="text-[10px] font-bold text-slate-500 leading-relaxed">
-                        診断お疲れ様でした！今回の結果から、今のあなたにピッタリな<br>「健康のコツ」をLINEでお届けします。
-                        気になる項目を選んでください。<br>（<span class="text-sky-500 font-bold">⭐</span>は今のあなたに特におすすめです）
+                        今回の結果から、今のあなたにピッタリな「健康のコツ」をLINEでお届けします。<br>
+                        気になる項目を選んでください。
                     </p>
                 </div>
                 <div id="remind-list" class="space-y-4">
@@ -179,7 +178,8 @@
             { id: "nose", name: "鼻呼吸の意識付け・ガムトレ", time1: "15:00", triggers: [10], msg: "気づいた時に口を閉じ、唾液を出す練習を！" },
             { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [19], msg: "食後の強い眠気は血糖値のサイン。体を労わって。" },
             { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [20], msg: "軽いストレッチで全身とお口の巡りを良くしよう。" },
-            { id: "common", name: "季節の健康・下関健診案内", time1: "09:00", triggers: [], msg: "下関市の健診は、あなたの健康のチケットです。", isCommon: true }
+            { id: "season", name: "季節の健康アドバイス", time1: "09:00", triggers: [], msg: "季節の変わり目、お口の乾きに注意しましょう。", isCommon: true },
+            { id: "kensin", name: "下関市 健診案内通知", type: "period", triggers: [], msg: "そろそろ健診の時期です。早めに予約をしませんか？", isCommon: true }
         ];
 
         let currentIdx = 0, answers = [], lineProfile = null;
@@ -303,6 +303,32 @@
                 const item = document.createElement('div');
                 item.className = `p-4 rounded-3xl border-2 transition-all ${isRecommended ? 'bg-sky-50/50 border-sky-200 shadow-sm' : 'bg-white border-slate-100'}`;
                 
+                let controlHtml = "";
+                if (menu.type === "period") {
+                    controlHtml = `
+                        <div class="relative">
+                            <span class="absolute left-2 top-2 text-[8px]">📅</span>
+                            <select class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 focus:bg-white focus:border-sky-400 transition-colors outline-none">
+                                <option value="1">1ヶ月後</option>
+                                <option value="3" selected>3ヶ月後</option>
+                                <option value="6">6ヶ月後</option>
+                            </select>
+                        </div>
+                    `;
+                } else {
+                    controlHtml = `
+                        <div class="relative">
+                            <span class="absolute left-2 top-1.5 text-[8px]">🕒</span>
+                            <input type="time" value="${menu.time1}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 focus:bg-white focus:border-sky-400 transition-colors outline-none">
+                        </div>
+                        ${menu.time2 ? `
+                        <div class="relative">
+                            <span class="absolute left-2 top-1.5 text-[8px]">🕒</span>
+                            <input type="time" value="${menu.time2}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 focus:bg-white focus:border-sky-400 transition-colors outline-none">
+                        </div>` : ''}
+                    `;
+                }
+
                 item.innerHTML = `
                     <div class="flex items-start justify-between">
                         <label class="flex items-start font-bold text-sm cursor-pointer flex-1 pt-1">
@@ -314,15 +340,7 @@
                             </span>
                         </label>
                         <div class="flex flex-col gap-1.5 ml-2">
-                            <div class="relative">
-                                <span class="absolute left-2 top-1.5 text-[8px]">🕒</span>
-                                <input type="time" value="${menu.time1}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 focus:bg-white focus:border-sky-400 transition-colors outline-none">
-                            </div>
-                            ${menu.time2 ? `
-                            <div class="relative">
-                                <span class="absolute left-2 top-1.5 text-[8px]">🕒</span>
-                                <input type="time" value="${menu.time2}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 focus:bg-white focus:border-sky-400 transition-colors outline-none">
-                            </div>` : ''}
+                            ${controlHtml}
                         </div>
                     </div>
                 `;
