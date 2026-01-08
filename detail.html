@@ -12,25 +12,49 @@
         .content-section { display: none; }
         .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
-        .logic-card { border-top: 5px solid #38bdf8; position: relative; margin-bottom: 1.5rem; }
-        .patho-card { border-top: 5px solid #fb7185; position: relative; margin-bottom: 1.5rem; }
-        .kw-badge { position: absolute; top: 1rem; right: 1rem; font-size: 10px; font-weight: 900; padding: 2px 10px; border-radius: 9999px; background: #F1F5F9; color: #0369a1; border: 1px solid #E2E8F0; }
+        
+        /* カードデザインの改良：上部にバッジ用の余白を確保 */
+        .logic-card, .patho-card { 
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3.5rem 1.5rem 1.5rem 1.5rem; /* 上部パディングを増やしてバッジとの干渉を防ぐ */
+            position: relative; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .logic-card { border-top: 6px solid #38bdf8; }
+        .patho-card { border-top: 6px solid #fb7185; }
+
+        /* キーワードバッジ：絶対配置を調整 */
+        .kw-badge { 
+            position: absolute; 
+            top: 1.25rem; 
+            left: 1.5rem; /* 左側に寄せて視認性を向上 */
+            font-size: 11px; 
+            font-weight: 900; 
+            padding: 4px 12px; 
+            border-radius: 9999px; 
+            background: #F1F5F9; 
+            color: #0369a1; 
+            border: 1px solid #E2E8F0;
+        }
         .patho-card .kw-badge { color: #9f1239; background: #FFF1F2; border-color: #FECDD3; }
-        .evidence-box { background-color: #F8FAFC; border: 1px dashed #CBD5E1; margin-top: 10px; padding: 0.75rem; border-radius: 0.75rem; font-size: 9px; color: #64748B; line-height: 1.4; }
-        .advice-box { background-color: #F0F9FF; border-left: 4px solid #38bdf8; padding: 0.75rem; margin-top: 10px; border-radius: 0.5rem; font-size: 11px; }
-        .patho-box { background-color: #FFF1F2; border-left: 4px solid #fb7185; padding: 0.75rem; margin-top: 10px; border-radius: 0.5rem; font-size: 11px; }
+
+        .evidence-box { background-color: #F8FAFC; border-left: 3px solid #CBD5E1; margin-top: 15px; padding: 0.75rem; font-size: 10px; color: #64748B; }
+        .detail-text { font-size: 13px; line-height: 1.7; color: #475569; text-align: justify; }
+        h2 { font-size: 1.15rem !important; font-weight: 900; line-height: 1.4; }
     </style>
 </head>
 <body class="pb-24">
 
     <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="font-black text-slate-800 text-lg">HEALTH GUIDE</h1>
-            <button onclick="window.history.back()" class="bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold">戻る</button>
+            <h1 class="font-black text-slate-800 text-lg tracking-tighter italic">HEALTH GUIDE</h1>
+            <button onclick="window.history.back()" class="bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all">戻る</button>
         </div>
         <div class="max-w-md mx-auto flex border-t border-slate-100 text-center">
-            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">生活習慣（Q1-10）</div>
-            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">疾患リスク（Q11-20）</div>
+            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">生活習慣の解説 (Q1-10)</div>
+            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">疾患リスクの解説 (Q11-20)</div>
         </div>
     </header>
 
@@ -38,159 +62,207 @@
 
         <div id="physio-content" class="content-section active">
             
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">起床時・空腹時</span>
-                <h2 class="font-black text-sky-700 mb-2">Q1. 朝のニオイ・お腹が空いた時</h2>
-                <p class="text-[12px] text-slate-600">唾液が減り細菌が増える「生理的口臭」です。誰にでも起こります。</p>
-                <div class="evidence-box">【根拠】厚労省e-ヘルスネット：唾液分泌が減る時間帯に細菌がVSC（ガス）を作ります。</div>
+            <section class="logic-card">
+                <span class="kw-badge">☀️ 起床時・空腹時</span>
+                <h2 class="text-sky-700 mb-3">Q1. 朝のニオイ・空腹時の変化</h2>
+                <div class="detail-text">
+                    睡眠中は口を動かさないため、お口を洗浄する「唾液」の分泌が日中の約10%まで減少します。これにより細菌が爆発的に増殖し、ニオイの元となる揮発性硫黄化合物を生成します。これを「モーニングブレス」と呼び、健康な人でも起こる生理的現象です。
+                </div>
+                <div class="evidence-box">【根拠】厚生労働省：生理的口臭は起床直後に最も強く、食事や水分補給で唾液が増えると減少します。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">舌の白さ</span>
-                <h2 class="font-black text-sky-700 mb-2">Q2. 舌の汚れ（舌苔）</h2>
-                <p class="text-[12px] text-slate-600">舌の表面に付いた細菌や細胞の死骸。口臭の最大の原因です。</p>
-                <div class="evidence-box">【根拠】日本歯科医学会：口臭原因の約6割が舌苔由来とされています。</div>
+            <section class="logic-card">
+                <span class="kw-badge">👅 舌の白さ・汚れ</span>
+                <h2 class="text-sky-700 mb-3">Q2. 舌の汚れ（舌苔）の蓄積</h2>
+                <div class="detail-text">
+                    鏡で舌を見たとき、白や黄色い膜が見えるのは「舌苔（ぜったい）」です。これは剥がれ落ちた粘膜や細菌が堆積したもので、口臭原因の約60%を占めます。体調不良や消化器の乱れで厚くなることがあり、お口の鏡と言われています。
+                </div>
+                <div class="evidence-box">【根拠】日本歯科医学会：舌苔清掃は口臭抑制に極めて有効ですが、強くこすりすぎると舌を傷つけ逆効果になるため注意が必要です。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">緊張・ストレス</span>
-                <h2 class="font-black text-sky-700 mb-2">Q3. ストレスを感じている</h2>
-                <p class="text-[12px] text-slate-600">ストレスで自律神経が乱れると、唾液がネバつき自浄作用が落ちます。</p>
-                <div class="evidence-box">【根拠】日本唾液腺学会：ストレス下では交感神経が優位になり唾液量が激減します。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🌀 ストレス・自律神経</span>
+                <h2 class="text-sky-700 mb-3">Q3. ストレスと唾液の質</h2>
+                <div class="detail-text">
+                    緊張や強いストレスを受けると、自律神経のうち「交感神経」が優位になります。すると唾液腺が収縮し、サラサラした唾液ではなく「ムチン」を多く含むネバネバした唾液に変わります。この状態は菌が定着しやすく、ニオイが凝縮される原因になります。
+                </div>
+                <div class="evidence-box">【根拠】日本唾液腺学会：ストレスは唾液の流量だけでなく、タンパク組成も変化させ、自浄作用を低下させます。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">口の渇き・ネバつき</span>
-                <h2 class="font-black text-sky-700 mb-2">Q4. 口の乾燥（ドライマウス）</h2>
-                <p class="text-[12px] text-slate-600">唾液には殺菌成分が含まれます。乾燥は細菌にとって「天国」です。</p>
-                <div class="evidence-box">【根拠】ドライマウス研究会：口腔乾燥は細菌の揮発性物質を濃縮させます。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🌵 口の乾燥・ドライマウス</span>
+                <h2 class="text-sky-700 mb-3">Q4. 口の乾燥を感じる</h2>
+                <div class="detail-text">
+                    加齢や薬の副作用、あるいは水分不足によって口が乾く「ドライマウス」は現代人に増えています。唾液にはリゾチームなどの殺菌成分が含まれているため、乾燥するとお口の中が「細菌の温床」となり、虫歯や歯周病も進行しやすくなります。
+                </div>
+                <div class="evidence-box">【根拠】ドライマウス研究会：口腔乾燥は口腔細菌叢のバランスを崩し、口臭ガス濃度を上昇させることが証明されています。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">ニンニク・お酒</span>
-                <h2 class="font-black text-sky-700 mb-2">Q5. 食べ物や飲み物の影響</h2>
-                <p class="text-[12px] text-slate-600">吸収された成分が血液を通って肺から吐き出されます。</p>
-                <div class="evidence-box">【根拠】日本口臭学会：これらは「一過性口臭」に分類され、時間の経過で消失します。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🧄 食事・嗜好品</span>
+                <h2 class="text-sky-700 mb-3">Q5. ニンニクやお酒などの飲食</h2>
+                <div class="detail-text">
+                    ニンニクのアリンという成分や、アルコールの分解物であるアセトアルデヒドは、消化管から吸収され血液に乗ります。それが肺に届き、「呼気」として排出されます。表面的な歯磨きだけでは消えないのは、体内からニオイが出ているためです。
+                </div>
+                <div class="evidence-box">【根拠】日本口臭学会：これらは一過性口臭と呼ばれ、代謝が終われば消失します。リンゴジュース等のポリフェノールは分解を助ける可能性があります。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">睡眠不足・疲れ</span>
-                <h2 class="font-black text-sky-700 mb-2">Q6. 疲労や睡眠不足</h2>
-                <p class="text-[12px] text-slate-600">体の疲れは抵抗力を下げ、お口の中の炎症を悪化させます。</p>
-                <div class="evidence-box">【根拠】下関市しものせき21：休養は口腔保健において重要な一要素です。</div>
+            <section class="logic-card">
+                <span class="kw-badge">💤 疲労・睡眠・免疫力</span>
+                <h2 class="text-sky-700 mb-3">Q6. 疲れや睡眠不足が続いている</h2>
+                <div class="detail-text">
+                    睡眠不足や過労は免疫機能を低下させます。通常、お口の中の細菌は免疫によって一定数に抑えられていますが、体が弱ると細菌が活性化し、歯ぐきの腫れや腐敗臭を招きます。体調不良時の口臭は「体が休養を求めているサイン」です。
+                </div>
+                <div class="evidence-box">【根拠】下関市「しものせき21」：休養と口腔の健康は密接に関連し、特に睡眠は歯周組織の修復に不可欠な時間です。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">食後のニオイ</span>
-                <h2 class="font-black text-sky-700 mb-2">Q7. 食後の歯磨きをしない</h2>
-                <p class="text-[12px] text-slate-600">食べかすが数時間で発酵し、ニオイの元に変わります。</p>
-                <div class="evidence-box">【根拠】日本歯周病学会：歯垢（プラーク）は細菌の塊そのものです。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🪥 食後のケア不足</span>
+                <h2 class="text-sky-700 mb-3">Q7. 食後の歯磨きをしない</h2>
+                <div class="detail-text">
+                    食後30分もすると、食べかすに含まれる糖分をエサにして細菌が活動を始めます。特に「プラーク（歯垢）」は細菌の塊であり、これが成熟すると洗口液だけでは落ちません。昼間に磨けない場合も、うがいだけで食べかすを流すことが重要です。
+                </div>
+                <div class="evidence-box">【根拠】日本歯周病学会：歯垢が24時間以上放置されると、細菌が膜を形成し（バイオフィルム）、強いニオイと炎症を引き起こします。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">アルコール習慣</span>
-                <h2 class="font-black text-sky-700 mb-2">Q8. お酒をよく飲む</h2>
-                <p class="text-[12px] text-slate-600">アルコールの利尿作用は体から水分を奪い、お口を乾燥させます。</p>
-                <div class="evidence-box">【根拠】アルコールによる脱水と口臭の関係（各医学論文より）。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🍺 アルコール習慣と脱水</span>
+                <h2 class="text-sky-700 mb-3">Q8. お酒を日常的に飲む</h2>
+                <div class="detail-text">
+                    アルコールには強い利尿作用があるため、飲んだ量以上の水分が体から失われます。お酒を飲んだ翌朝に口がカラカラなのは、軽度の脱水症状です。これにより自浄作用が止まり、口臭成分が凝縮されてしまいます。
+                </div>
+                <div class="evidence-box">【根拠】米国歯科医師会(ADA)ガイド：過度のアルコール摂取は口腔粘膜を乾燥させ、慢性的口臭の一因となります。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">水分不足</span>
-                <h2 class="font-black text-sky-700 mb-2">Q9. 水をあまり飲まない</h2>
-                <p class="text-[12px] text-slate-600">体内の水分不足は唾液を減らし、口内の洗浄力を弱めます。</p>
-                <div class="advice-box">1.5〜2時間おきに一口の水分補給が推奨されます。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🚰 水分摂取の不足</span>
+                <h2 class="text-sky-700 mb-3">Q9. 水をあまり飲まない</h2>
+                <div class="detail-text">
+                    一日に必要な水分を摂れていないと、体は水分を節約するために唾液量を減らします。コーヒーやお茶はカフェインの利尿作用があるため、水分補給には「水」が最適です。こまめに口を湿らせることで、細菌の定着を防ぐことができます。
+                </div>
+                <div class="evidence-box">【アドバイス】下関市の水道水は非常に高品質です。1〜2時間おきに一口ずつ「水」を飲む習慣をつけましょう。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
-                <span class="kw-badge">口呼吸</span>
-                <h2 class="font-black text-sky-700 mb-2">Q10. 口で息をしている</h2>
-                <p class="text-[12px] text-slate-600">空気が直接入ることで唾液が蒸発し、菌が繁殖しやすくなります。</p>
-                <div class="evidence-box">【根拠】日本耳鼻咽喉科学会：口呼吸は口腔内フローラを悪化させます。</div>
+            <section class="logic-card">
+                <span class="kw-badge">🌬️ 口呼吸の習慣</span>
+                <h2 class="text-sky-700 mb-3">Q10. 無意識に口で呼吸している</h2>
+                <div class="detail-text">
+                    本来、鼻は「加湿フィルター」の役割をしますが、口呼吸は乾燥した外気を直接取り込むため、唾液が蒸発してしまいます。また、喉の奥にある扁桃組織が腫れやすくなり、そこから発生する膿（膿栓）が強いニオイの原因になることもあります。
+                </div>
+                <div class="evidence-box">【根拠】日本口腔外科学会：口呼吸は口腔内の自浄性を低下させ、歯周病や風邪のリスクを飛躍的に高めます。</div>
             </section>
+
         </div>
 
         <div id="patho-content" class="content-section">
             
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">継続的な悩み</span>
-                <h2 class="font-black text-rose-700 mb-2">Q11. 2週間以上悩んでいる</h2>
-                <p class="text-[12px] text-slate-600">一時的なものではなく、病的な要因が潜んでいる可能性があります。</p>
-                <div class="patho-box"><b>疾患例：</b> 歯周病、糖尿病、消化器疾患</div>
+            <section class="patho-card">
+                <span class="kw-badge">📅 慢性的・継続的</span>
+                <h2 class="text-rose-700 mb-3">Q11. 2週間以上悩んでいる</h2>
+                <div class="detail-text">
+                    一過性の口臭であれば数日で収まります。しかし、2週間以上毎日続く場合は、お口や体の中に「原因（疾患）」が定着している可能性が高いです。これを「病的口臭」と呼び、歯科健診や内科でのチェックが必要なサインとなります。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 進行した歯周病、糖尿病、慢性副鼻腔炎</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">歯ぐきの出血</span>
-                <h2 class="font-black text-rose-700 mb-2">Q12. 歯磨きでの出血</h2>
-                <p class="text-[12px] text-slate-600">歯ぐきの炎症（歯周病）のサイン。そこからニオイ成分が発生します。</p>
-                <div class="evidence-box">【根拠】日本歯周病学会：出血は歯周組織破壊の初期症状です。</div>
+            <section class="patho-card">
+                <span class="kw-badge">🩸 歯ぐきの炎症・出血</span>
+                <h2 class="text-rose-700 mb-3">Q12. 歯磨きでの出血がある</h2>
+                <div class="detail-text">
+                    健康な歯ぐきからは、適切な強さで磨いても血は出ません。出血は、歯周病菌によって毛細血管が破壊されている証拠です。この「血のニオイ」と「菌の腐敗臭」が混ざり、特有の強い口臭を発生させます。
+                </div>
+                <div class="evidence-box">【根拠】日本歯周病学会：歯肉出血は炎症の活動性を示しており、全身へ菌が回る入り口となります。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">異常な喉の渇き</span>
-                <h2 class="font-black text-rose-700 mb-2">Q13. 喉が異常に渇く</h2>
-                <p class="text-[12px] text-slate-600">ただの乾燥ではなく、体の代謝異常が隠れていることがあります。</p>
-                <div class="patho-box"><b>疾患例：</b> 糖尿病（高血糖による多尿と脱水）</div>
+            <section class="patho-card">
+                <span class="kw-badge">🥛 異常な口渇・高血糖</span>
+                <h2 class="text-rose-700 mb-3">Q13. 喉が異常に渇く・多尿</h2>
+                <div class="detail-text">
+                    水を飲んでもすぐに喉が渇き、トイレの回数が増えている場合、体が高血糖状態にある可能性があります。糖を排出しようとして水分が失われるため、深刻なドライマウスを引き起こし、細菌が異常増殖してニオイを放ちます。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 糖尿病（初期〜中期症状）</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">鼻・喉の不調</span>
-                <h2 class="font-black text-rose-700 mb-2">Q14. 鼻づまり・膿が出る</h2>
-                <p class="text-[12px] text-slate-600">鼻の奥の膿のニオイが呼気に混ざることがあります。</p>
-                <div class="patho-box"><b>疾患例：</b> 蓄膿症（副鼻腔炎）、後鼻漏</div>
+            <section class="patho-card">
+                <span class="kw-badge">👃 鼻・喉の疾患サイン</span>
+                <h2 class="text-rose-700 mb-3">Q14. 鼻づまり・膿が出る</h2>
+                <div class="detail-text">
+                    鼻の奥にある空洞（副鼻腔）に膿が溜まる「蓄膿症」があると、鼻から抜ける空気や口からの呼気が生臭いニオイになります。また、鼻水が喉に流れる「後鼻漏」も、喉の奥で細菌が繁殖する大きな原因となります。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 慢性副鼻腔炎、アレルギー性鼻炎、後鼻漏</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">むくみ・だるさ</span>
-                <h2 class="font-black text-rose-700 mb-2">Q15. 体がむくみやすい</h2>
-                <p class="text-[12px] text-slate-600">内臓の解毒機能が低下すると、呼気に特有の成分が混ざります。</p>
-                <div class="patho-box"><b>疾患例：</b> 腎機能障害、肝機能障害</div>
+            <section class="patho-card">
+                <span class="kw-badge">⚠️ 肝・腎のデトックスサイン</span>
+                <h2 class="text-rose-700 mb-3">Q15. 体がむくみやすい・倦怠感</h2>
+                <div class="detail-text">
+                    肝臓や腎臓は体の毒素を分解する工場です。これらの機能が低下すると、本来排出されるべきアンモニアなどの成分が血液に戻り、肺から「アンモニア臭」や「カビ臭」として出てくることがあります。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 肝不全、腎不全、尿毒症</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">胃の不調</span>
-                <h2 class="font-black text-rose-700 mb-2">Q16. 胃もたれ・胸焼け</h2>
-                <p class="text-[12px] text-slate-600">胃酸や未消化の物のニオイが逆流してくることがあります。</p>
-                <div class="patho-box"><b>疾患例：</b> 逆流性食道炎、胃炎</div>
+            <section class="patho-card">
+                <span class="kw-badge">🤢 消化器・逆流サイン</span>
+                <h2 class="text-rose-700 mb-3">Q16. 胃もたれ・胸焼けがある</h2>
+                <div class="detail-text">
+                    胃腸の動きが悪く、食べたものが長時間滞留して発酵したり、胃酸が逆流する「逆流性食道炎」がある場合、酸っぱい独特なニオイが上がってきます。これは歯を磨いても解決せず、消化器科の治療が必要です。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 逆流性食道炎、胃炎、胃潰瘍</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">喫煙習慣</span>
-                <h2 class="font-black text-rose-700 mb-2">Q17. タバコを吸う</h2>
-                <p class="text-[12px] text-slate-600">血流を悪くし歯周病を劇的に悪化させ、出血も隠してしまいます。</p>
-                <div class="evidence-box">【根拠】厚生労働省：喫煙は口腔がん・歯周病の最大のリスク因子です。</div>
+            <section class="patho-card">
+                <span class="kw-badge">🚬 喫煙と酸欠のお口</span>
+                <h2 class="text-rose-700 mb-3">Q17. タバコを吸う</h2>
+                <div class="detail-text">
+                    タバコに含まれるニコチンは、血管を強く収縮させ、歯ぐきへの酸素供給を阻害します。すると酸素を嫌う「凶悪な歯周病菌」が爆発的に増えます。また、喫煙者は出血などの自覚症状が出にくいため、気づいた時には末期ということも多いです。
+                </div>
+                <div class="evidence-box">【根拠】厚生労働省：喫煙は歯周病を5倍悪化させ、治療後の治りも遅くします。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">歯のグラつき</span>
-                <h2 class="font-black text-rose-700 mb-2">Q18. 歯が動く感じがする</h2>
-                <p class="text-[12px] text-slate-600">歯を支える骨が溶けている深刻なサイン。強い腐敗臭を発します。</p>
-                <div class="patho-box"><b>疾患例：</b> 中度〜重度歯周病</div>
+            <section class="patho-card">
+                <span class="kw-badge">🚨 重度歯周病のサイン</span>
+                <h2 class="text-rose-700 mb-3">Q18. 歯が浮く・動く感じがする</h2>
+                <div class="detail-text">
+                    歯がグラつくのは、歯を支えている顎の骨（歯槽骨）が細菌によって溶かされている末期症状です。ここからはメチルメルカプタンという、玉ねぎが腐ったような極めて強い腐敗臭が発生します。早急な専門治療が必要です。
+                </div>
+                <div class="patho-box"><b>関連疾患：</b> 重度歯周病（一刻も早い受診を推奨）</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">急な眠気</span>
-                <h2 class="font-black text-rose-700 mb-2">Q19. 食後に強い眠気がくる</h2>
-                <p class="text-[12px] text-slate-600">血糖値の急変は血管にダメージを与え、お口の自浄力を下げます。</p>
-                <div class="patho-box"><b>疾患例：</b> 糖尿病予備軍（血糖スパイク）</div>
+            <section class="patho-card">
+                <span class="kw-badge">🧁 血糖スパイク・糖代謝</span>
+                <h2 class="text-rose-700 mb-3">Q19. 食後に強い眠気がくる</h2>
+                <div class="detail-text">
+                    食後の激しい眠気は、血糖値が急上昇した後の反動（血糖スパイク）かもしれません。この状態は血管を傷つけ、唾液中の糖分濃度を上げます。細菌は糖をエサにするため、お口の中が一気に不衛生になりやすく、口臭を強めます。
+                </div>
+                <div class="evidence-box">【根拠】日本糖尿病学会：血糖値の変動が激しい人は、口腔内感染症のリスクが有意に高い。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
-                <span class="kw-badge">家族の指摘</span>
-                <h2 class="font-black text-rose-700 mb-2">Q20. 身近な人に指摘された</h2>
-                <p class="text-[12px] text-slate-600">他人が感じるニオイは、病的口臭である確率が高まります。</p>
-                <div class="advice-box">自分では慣れてしまうため、周囲の指摘は重要な健康のサインです。</div>
+            <section class="patho-card">
+                <span class="kw-badge">📢 客観的なサイン</span>
+                <h2 class="text-rose-700 mb-3">Q20. 家族や知人の指摘があった</h2>
+                <div class="detail-text">
+                    自分のニオイには脳が慣れてしまい（嗅覚の順応）、気づくのが難しいものです。身近な人からの指摘は、それが「他人の空間まで届くほどの濃度」であることを示しており、病的口臭である確率が非常に高くなります。
+                </div>
+                <div class="advice-box">指摘は健康管理への貴重なアドバイスです。まずは専門家に相談を。</div>
             </section>
+
         </div>
 
-        <div class="mt-8 bg-slate-800 rounded-3xl p-6 text-white text-[10px]">
-            <p class="font-black text-sky-400 mb-2">【参考文献・出典】</p>
-            <ul class="opacity-70 space-y-1">
-                <li>・厚生労働省 e-ヘルスネット「口臭の原因・対策」</li>
-                <li>・日本歯周病学会「歯周治療ガイドライン」</li>
-                <li>・日本口臭学会「口臭診療指針」</li>
-                <li>・下関市健康増進計画 しものせき21</li>
-            </ul>
+        <div class="mt-12 bg-slate-800 rounded-[2.5rem] p-8 text-white">
+            <h3 class="font-black text-lg text-sky-400 mb-4 italic">SHIMONOSEKI PRIDE</h3>
+            <p class="text-[11px] leading-relaxed opacity-90 mb-6 text-justify">
+                下関市では「しものせき21」に基づき、お口の健康から始める生活習慣病の予防を推進しています。本ガイドは市民の皆様の健康リテラシー向上を目的としており、特定の疾患を診断するものではありません。
+            </p>
+            <div class="border-t border-white/20 pt-4">
+                <p class="text-[10px] font-bold text-sky-300 mb-2 underline tracking-widest">REFERENCES</p>
+                <ul class="text-[9px] opacity-60 list-none space-y-1">
+                    <li>● 厚生労働省 e-ヘルスネット</li>
+                    <li>● 日本歯周病学会・日本口臭学会 ガイドライン</li>
+                    <li>● 下関市保健部作成資料</li>
+                </ul>
+            </div>
         </div>
+
     </main>
 
     <script>
