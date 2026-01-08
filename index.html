@@ -104,15 +104,18 @@
             </div>
 
             <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
-                <div class="flex justify-between items-center mb-4"><h3 class="font-black text-sky-600 text-sm flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>習慣化リマインド</h3><span class="text-[8px] font-bold text-slate-400">※デモ用</span></div>
-                <div class="space-y-2">
-                    <div class="p-3 bg-sky-50 rounded-2xl border border-sky-100"><label class="flex items-center font-bold text-xs mb-2"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500" checked>水分補給</label>
-                        <div class="flex gap-2"><div class="flex-1 bg-white rounded-lg px-2 py-1 border text-[10px] font-bold">10:00</div><div class="flex-1 bg-white rounded-lg px-2 py-1 border text-[10px] font-bold">15:00</div></div>
-                    </div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100"><label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">舌のケア</label><span class="text-[10px] font-bold">08:00</span></div>
-                    <div class="p-3 bg-sky-50 rounded-2xl flex items-center justify-between border border-sky-100"><label class="flex items-center font-bold text-xs"><input type="checkbox" class="w-4 h-4 mr-2 accent-sky-500">マウスウォッシュ</label><span class="text-[10px] font-bold">12:30</span></div>
+                <div class="text-center mb-6">
+                    <h3 class="font-black text-sky-600 text-lg mb-2 italic">あなただけのアドバイス・プランを作ろう</h3>
+                    <p class="text-[10px] font-bold text-slate-500 leading-relaxed">
+                        診断お疲れ様でした！今回の結果から、今のあなたにピッタリな「健康のコツ」をLINEでお届けします。<br>
+                        気になる項目を選んでください（<span class="text-sky-500">⭐</span>は今のあなたに特におすすめです）。
+                    </p>
                 </div>
-                <button onclick="alert('リマインド設定を保存しました')" class="w-full mt-4 bg-sky-500 text-white font-black py-4 rounded-2xl text-sm shadow-md">リマインドを保存する</button>
+                
+                <div id="remind-list" class="space-y-3">
+                    </div>
+
+                <button onclick="alert('リマインド設定を保存しました。設定した時間にLINEをお届けします（デモ）')" class="w-full mt-6 bg-sky-500 text-white font-black py-4 rounded-3xl text-md shadow-md active:scale-95 transition-all">リマインドを保存する</button>
             </div>
 
             <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
@@ -123,18 +126,13 @@
                 </div>
             </div>
 
-            <div class="mb-10">
+            <div class="mb-10 text-center">
                 <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline mb-4">
                     <span class="text-2xl mr-3">📄</span><div class="text-left"><p class="text-[10px] font-black text-sky-400 leading-none mb-1 uppercase">Official List</p><p class="text-sm font-black text-white">下関市 実施医療機関一覧(PDF)</p></div>
                 </a>
-                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline">
-                    <span class="text-2xl mr-3">📍</span><div class="text-left"><p class="text-[10px] font-black text-sky-500 leading-none mb-1 uppercase">Clinic Search</p><p class="text-sm font-black text-slate-700">近くの歯科医院を探す</p></div>
-                </a>
+                <button onclick="liff.closeWindow()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl text-xl shadow-lg active:scale-95 mb-4">診断を終了する</button>
+                <button onclick="resetAndStart()" class="w-full bg-slate-200 text-slate-500 font-black py-3 rounded-2xl text-sm active:scale-95 mb-10">最初からやり直す</button>
             </div>
-
-            <button onclick="liff.closeWindow()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl text-xl shadow-lg active:scale-95 mb-4">診断を終了する</button>
-            <button onclick="resetAndStart()" class="w-full bg-slate-200 text-slate-500 font-black py-3 rounded-2xl text-sm active:scale-95 mb-10">最初からやり直す</button>
-
         </section>
     </main>
 
@@ -143,26 +141,42 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbz66OWd1XQd37zZAN7TQka0gq0KWDvkoXtX8xvSZhpkNKOwMcOsLivP_HVb1v_TbH5rXw/exec"; 
 
         const questions = [
-            { axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
-            { axis: 1, cat: "舌の汚れ", text: "鏡で舌を見たとき、表面が白く厚く覆われている。", labels: ["真っ白","うっすら","きれい"], advice: "朝の歯磨き前に「舌ブラシ」で優しくケアしましょう。", hasImage: true },
-            { axis: 1, cat: "ストレス", text: "現在、仕事や家庭などで強いストレスを感じている。", labels: ["常に強い","時々","あまりない"], advice: "深呼吸を3回するだけでも唾液は出やすくなります。" },
-            { axis: 1, cat: "ネバつき", text: "緊張すると口の中がネバネバし、話しにくいと感じることがある。", labels: ["よくある","たまにある","ない"], advice: "唾液腺マッサージで、サラサラ唾液を呼び戻しましょう。" },
-            { axis: 1, cat: "水分摂取", text: "日中、水やお茶などの水分をあまり摂らない。", labels: ["摂らない","時々","こまめに摂る"], advice: "一口ずつ、こまめに口を潤す習慣をつけましょう。" },
-            { axis: 1, cat: "ホルモン", text: "（女性の方）生理前後や更年期の時期に当たっている。", labels: ["はい","どちらでもない","いいえ"], advice: "丁寧な歯磨きと、たっぷりの休息を大切に。" },
-            { axis: 1, cat: "体調・疲労", text: "睡眠不足や疲れが溜まっていて、体調が万全ではない。", labels: ["かなり疲労","やや疲れ","元気"], advice: "今日はいつもより30分早く寝てみませんか？" },
-            { axis: 1, cat: "飲食", text: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ。", labels: ["はい","少し","いいえ"], advice: "リンゴジュースが一時的なニオイの分解を助けます。" },
-            { axis: 1, cat: "セルフケア", text: "1日の歯磨き回数が、2回以下である。", labels: ["1回以下","2回","3回以上"], advice: "食後のブクブクうがいだけでも細菌の増殖を抑えられます。" },
-            { axis: 1, cat: "口呼吸", text: "寝ている時に、口が開いていると指摘されたことがある。", labels: ["よくある","たまにある","ない"], advice: "意識的な鼻呼吸と、寝る前の水分補給を大切に。" },
-            { axis: 2, cat: "継続性", text: "口臭の悩みが2週間以上、長く続いている。", labels: ["ずっと","時々","ない"], advice: "長く続く場合は、一度専門家のチェックを受けましょう。" },
-            { axis: 2, cat: "歯ぐき", text: "歯を磨くとき、特定の場所から血が出ることがある。", labels: ["毎回","時々","ない"], advice: "出血は歯周病のサイン。早めの受診をおすすめします。" },
-            { axis: 2, cat: "歯の異変", text: "歯がグラついたり、歯ぐきが腫れたりしている場所がある。", labels: ["ある","違和感","ない"], advice: "放置は危険です。早めに歯科医院へ。" },
-            { axis: 2, cat: "代謝サイン", text: "以前より喉が異常に渇き、トイレの回数が増えた。", labels: ["よくある","たまに","ない"], advice: "内分泌の健診で数値を一度確認してみましょう。" },
-            { axis: 2, cat: "鼻・喉", text: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある。", labels: ["よくある","たまに","ない"], advice: "耳鼻科への相談が改善の近道になることもあります。" },
-            { axis: 2, cat: "だるさ", text: "お酒を飲まないのに、体がだるかったり足がむくみやすい。", labels: ["よくある","たまに","ない"], advice: "内臓の疲れが原因かも。定期健診を習慣にしましょう。" },
-            { axis: 2, cat: "消化器", text: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている。", labels: ["よくある","たまに","ない"], advice: "消化に良い食事を心がけ、体を内側から労わって。" },
-            { axis: 2, cat: "タバコ", text: "日常的にタバコを吸っている。", labels: ["吸う","以前吸っていた","吸わない"], advice: "タバコは深刻な病気を隠します。本数を減らす一歩から。" },
-            { axis: 2, cat: "血糖値サイン", text: "急に甘いものが欲しくなったり、食後に強い眠気を感じる。", labels: ["よくある","たまに","ない"], advice: "食後の強い眠気は血糖値のサイン。健診を受けましょう。" },
-            { axis: 2, cat: "むくみ", text: "夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまに","ない"], advice: "軽いストレッチでお口と全身の巡りを良くしましょう。" }
+            { id: 1, axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
+            { id: 2, axis: 1, cat: "舌の汚れ", text: "鏡で舌を見たとき、表面が白く厚く覆われている。", labels: ["真っ白","うっすら","きれい"], advice: "朝の歯磨き前に「舌ブラシ」で優しくケアしましょう。", hasImage: true },
+            { id: 3, axis: 1, cat: "ストレス", text: "現在、仕事や家庭などで強いストレスを感じている。", labels: ["常に強い","時々","あまりない"], advice: "深呼吸を3回するだけでも唾液は出やすくなります。" },
+            { id: 4, axis: 1, cat: "ネバつき", text: "緊張すると口の中がネバネバし、話しにくいと感じることがある。", labels: ["よくある","たまにある","ない"], advice: "唾液腺マッサージで、サラサラ唾液を呼び戻しましょう。" },
+            { id: 5, axis: 1, cat: "水分摂取", text: "日中、水やお茶などの水分をあまり摂らない。", labels: ["摂らない","時々","こまめに摂る"], advice: "一口ずつ、こまめに口を潤す習慣をつけましょう。" },
+            { id: 6, axis: 1, cat: "体調・疲労", text: "睡眠不足や疲れが溜まっていて、体調が万全ではない。", labels: ["かなり疲労","やや疲れ","元気"], advice: "今日はいつもより30分早く寝てみませんか？" },
+            { id: 7, axis: 1, cat: "飲食", text: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ。", labels: ["はい","少し","いいえ"], advice: "リンゴジュースが一時的なニオイの分解を助けます。" },
+            { id: 8, axis: 1, cat: "飲酒", text: "お酒を週に4日以上、または一回に多量に飲む。", labels: ["はい","時々","いいえ"], advice: "お酒の合間に水を飲むだけで、翌朝のニオイが違います。" },
+            { id: 9, axis: 1, cat: "セルフケア", text: "1日の歯磨き回数が、2回以下である。", labels: ["1回以下","2回","3回以上"], advice: "食後のブクブクうがいだけでも細菌の増殖を抑えられます。" },
+            { id: 10, axis: 1, cat: "口呼吸", text: "無意識に口が開いていたり、口で息をすることが多い。", labels: ["よくある","たまにある","ない"], advice: "意識的な鼻呼吸と、寝る前の水分補給を大切に。" },
+            { id: 11, axis: 2, cat: "継続性", text: "口臭の悩みが2週間以上、長く続いている。", labels: ["ずっと","時々","ない"], advice: "長く続く場合は、一度専門家のチェックを受けましょう。" },
+            { id: 12, axis: 2, cat: "歯ぐき", text: "歯を磨くとき、特定の場所から血が出ることがある。", labels: ["毎回","時々","ない"], advice: "出血は歯周病のサイン。早めの受診をおすすめします。" },
+            { id: 13, axis: 2, cat: "口の乾き", text: "口の中が常に乾いていて、話しにくかったり食べにくい。", labels: ["よくある","たまに","ない"], advice: "唾液不足は病気のサインかも。ガムトレも有効です。" },
+            { id: 14, axis: 2, cat: "鼻・喉", text: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある。", labels: ["よくある","たまに","ない"], advice: "耳鼻科への相談が改善の近道になることもあります。" },
+            { id: 15, axis: 2, cat: "内臓ケア", text: "お酒を飲まないのに、体がだるかったり足がむくみやすい。", labels: ["よくある","たまに","ない"], advice: "内臓の疲れが原因かも。定期健診を習慣にしましょう。" },
+            { id: 16, axis: 2, cat: "消化器", text: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている。", labels: ["よくある","たまに","ない"], advice: "消化に良い食事を心がけ、体を内側から労わって。" },
+            { id: 17, axis: 2, cat: "タバコ", text: "日常的にタバコを吸っている。", labels: ["吸う","以前吸っていた","吸わない"], advice: "タバコは深刻な病気を隠します。本数を減らす一歩から。" },
+            { id: 18, axis: 2, cat: "歯の異変", text: "歯がグラついたり、歯ぐきが腫れたりしている場所がある。", labels: ["ある","違和感","ない"], advice: "放置は危険です。早めに歯科医院へ。" },
+            { id: 19, axis: 2, cat: "血糖値", text: "急に甘いものが欲しくなったり、食後に強い眠気を感じる。", labels: ["よくある","たまに","ない"], advice: "食後の強い眠気は血糖値のサイン。健診を受けましょう。" },
+            { id: 20, axis: 2, cat: "むくみ", text: "夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまに","ない"], advice: "軽いストレッチでお口と全身の巡りを良くしましょう。" }
+        ];
+
+        // 仕様書に基づいたリマインドメニュー定義
+        const remindMenus = [
+            { id: "morning", name: "朝と夜の「潤いリマインド」", time: "07:00", triggers: [1], msg: "朝起きてすぐの1杯で爽やかに！" },
+            { id: "tongue", name: "朝の「舌ケア習慣リマインド」", time: "08:00", triggers: [2], msg: "舌が白かったらニオイの元です。" },
+            { id: "water", name: "こまめな「水分補給リマインド」", time: "10:00", triggers: [5, 9], msg: "お口、乾いていませんか？" },
+            { id: "sleep", name: "夜の「早寝・リラックス通知」", time: "21:30", triggers: [6], msg: "今夜はスマホを置いて早めに休みませんか？" },
+            { id: "alcohol", name: "飲み会・内臓ケアアドバイス", time: "18:00", triggers: [8, 15], msg: "お酒の合間に水を挟むのがコツ！" },
+            { id: "nose", name: "鼻呼吸・ガム噛みトレーニング", time: "13:00", triggers: [4, 13], msg: "意識して鼻呼吸できていますか？" },
+            { id: "smoke", name: "本数を減らすための応援通知", time: "11:00", triggers: [17], msg: "1本減らせたら大きな一歩です。" },
+            { id: "rinse", name: "昼の「ブクブクうがい」習慣", time: "12:30", triggers: [9], msg: "食後のうがいでリフレッシュ！" },
+            { id: "gum", name: "鼻呼吸の意識付け・ガムトレ", time: "15:00", triggers: [10], msg: "ガムを噛んで唾液を出しましょう。" },
+            { id: "checkup", name: "食後の体調ケア・健診のススメ", time: "19:00", triggers: [19], msg: "血糖値のサイン、見逃さないで。" },
+            { id: "detox", name: "内臓・デトックスケア習慣", time: "17:00", triggers: [20], msg: "夕方のむくみは巡りのサイン。" },
+            { id: "common", name: "季節の健康・手洗い・下関健診案内", time: "09:00", triggers: [], msg: "下関市の健診は健康のチケット！", isCommon: true }
         ];
 
         let currentIdx = 0, answers = [], lineProfile = null;
@@ -207,7 +221,7 @@
                 btn.className = "w-full bg-white border-2 border-slate-100 p-6 rounded-3xl text-left shadow-sm active:bg-sky-50 flex justify-between items-center";
                 btn.innerHTML = `<span class="opt-btn-text text-sm font-bold">${label}</span><span class="text-sky-300">→</span>`;
                 btn.onclick = () => {
-                    answers.push({ axis: q.axis, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)), advice: q.advice });
+                    answers.push({ qId: q.id, axis: q.axis, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)), advice: q.advice });
                     if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } else { showResult(); }
                 };
                 container.appendChild(btn);
@@ -223,6 +237,7 @@
                 const data = JSON.parse(localStorage.getItem('kuchi_check_result'));
                 if(!data) return;
                 s1 = data.s1; s2 = data.s2; adviceList = data.adviceList;
+                answers = data.answers || []; // 保存された回答を復元
             } else {
                 s1 = 0; s2 = 0; const adviceSet = [];
                 answers.forEach(a => {
@@ -232,10 +247,16 @@
                 });
                 s1 = Math.round(s1); s2 = Math.round(s2);
                 adviceList = [...new Set(adviceSet)].slice(0, 4);
-                localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList }));
+                localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList, answers }));
                 sendData(s1, s2);
             }
+            
             showPage('page-result');
+            renderScoreDisplay(s1, s2, adviceList);
+            renderRemindSection(); // 通知設定画面を生成
+        }
+
+        function renderScoreDisplay(s1, s2, adviceList) {
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
@@ -252,6 +273,50 @@
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start"><span class="text-sky-400 mr-2">●</span>${adv}</div>`).join('');
             document.getElementById('q-counter').innerText = "REPORT";
             document.getElementById('progress').style.width = "100%";
+        }
+
+        // 通知メニューを生成（動的ソート & 初期チェック）
+        function renderRemindSection() {
+            const container = document.getElementById('remind-list');
+            container.innerHTML = "";
+
+            // 各メニューのリスク度を判定
+            const sortedMenus = remindMenus.map(menu => {
+                let maxScore = 0;
+                if (!menu.isCommon) {
+                    menu.triggers.forEach(tId => {
+                        const ans = answers.find(a => a.qId === tId);
+                        if (ans && ans.userScore > maxScore) maxScore = ans.userScore;
+                    });
+                }
+                return { ...menu, riskScore: maxScore };
+            });
+
+            // ソート（リスクが高い順、その次は共通項目）
+            sortedMenus.sort((a, b) => b.riskScore - a.riskScore);
+
+            sortedMenus.forEach(menu => {
+                const isRecommended = menu.riskScore >= 0.5;
+                const isHigh = menu.riskScore === 1;
+
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-2xl border-2 transition-all ${isRecommended ? 'bg-sky-50 border-sky-200' : 'bg-white border-slate-50'}`;
+                
+                item.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="flex items-center font-bold text-sm cursor-pointer">
+                            <input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500" ${isRecommended || menu.isCommon ? 'checked' : ''}>
+                            <span class="flex flex-col">
+                                ${isRecommended ? `<span class="text-[9px] text-sky-600 font-black mb-0.5 tracking-tighter">⭐ ${isHigh ? '今のあなたに必要' : 'あなたにおすすめ'}</span>` : ''}
+                                ${menu.name}
+                            </span>
+                        </label>
+                        <input type="time" value="${menu.time}" class="text-[10px] font-bold border-0 bg-white/80 rounded px-1 py-1 text-slate-600 outline-none">
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-400 ml-8 leading-tight">通知例: 「${menu.msg}」</p>
+                `;
+                container.appendChild(item);
+            });
         }
 
         function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromDetail'); location.reload(); }
