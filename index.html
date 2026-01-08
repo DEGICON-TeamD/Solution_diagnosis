@@ -44,21 +44,11 @@
                 <p class="text-sm font-bold text-slate-600 mb-6 leading-relaxed">
                     口臭は単なるお口の汚れだけでなく、日々の生活習慣や、時には隠れた病気のサインであることも。まずはあなたの現状をチェックしてみましょう。
                 </p>
-                
                 <h2 class="text-sky-600 font-black text-lg mb-3">この診断でわかること</h2>
                 <ul class="text-sm font-bold text-slate-600 space-y-4">
-                    <li class="flex items-start">
-                        <span class="text-sky-400 mr-2 text-lg">●</span>
-                        <span><b>2つのリスクを算出：</b><br>「生活習慣による一時的なもの」か「病気のサイン」かを分析します。</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-sky-400 mr-2 text-lg">●</span>
-                        <span><b>あなた専用のアドバイス：</b><br>診断結果に基づいた、今日から取り組めるケア方法を提案します。</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="text-sky-400 mr-2 text-lg">●</span>
-                        <span><b>下関市の健康サポート：</b><br>市内の医療機関一覧や、役立つ健診情報をすぐにご案内します。</span>
-                    </li>
+                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>2つのリスクを算出：</b>「生活習慣による一時的なもの」か「病気のサイン」かを分析します。</span></li>
+                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>あなた専用のアドバイス：</b>診断結果に基づいたケア方法を提案します。</span></li>
+                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>下関市の健康サポート：</b>市内の医療機関や健診情報をすぐにご案内します。</span></li>
                 </ul>
                 <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-8 text-center border-t pt-4">LINEと接続しています...</p>
             </div>
@@ -104,11 +94,7 @@
                     <p id="label-2" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
                 </div>
             </div>
-            <div class="bg-sky-50/50 p-4 rounded-2xl mb-8 border border-sky-100 text-[9px] text-slate-500 font-bold leading-relaxed space-y-1 text-center">
-                <p><b class="text-sky-600">●一時的リスク：</b> 生活習慣等による一時的なニオイの発生しやすさ</p>
-                <p><b class="text-sky-600">●病的リスク：</b> 歯周病や内分泌系等、身体的要因の可能性</p>
-            </div>
-            <div id="result-message" class="bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 text-sm font-bold text-slate-700 leading-relaxed text-center"></div>
+            <div id="result-message" class="bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 text-sm font-bold text-slate-700 text-center"></div>
             <div class="mb-10">
                 <h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3>
                 <div id="advice-list" class="grid gap-3"></div>
@@ -117,21 +103,26 @@
                 <a href="detail.html" class="block group no-underline">
                     <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-[2.5rem] p-6 shadow-lg shadow-sky-200 active:scale-[0.98] transition-all relative overflow-hidden">
                         <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
-                        <div class="relative z-10 flex items-center justify-between">
-                            <div class="flex-1">
-                                <p class="text-white/80 text-[10px] font-black uppercase tracking-widest mb-1">Knowledge Library</p>
-                                <h3 class="text-white text-lg font-black leading-tight mb-2">もっと詳しく原因と<br>対策を知る</h3>
-                                <p class="text-sky-100 text-[11px] font-bold leading-relaxed">なぜニオイは発生する？専門家が教える<br>20項目の徹底解説ガイドはこちら</p>
+                        <div class="relative z-10 flex items-center justify-between text-white">
+                            <div class="flex-1 text-white">
+                                <p class="text-[10px] font-black uppercase tracking-widest mb-1 opacity-80">Knowledge Library</p>
+                                <h3 class="text-lg font-black leading-tight mb-2">もっと詳しく原因と<br>対策を知る</h3>
+                                <p class="text-[11px] font-bold opacity-90">なぜニオイは発生する？徹底解説ガイドはこちら</p>
                             </div>
-                            <div class="bg-white/20 p-4 rounded-full ml-4"><span class="text-white text-2xl">📖</span></div>
+                            <div class="bg-white/20 p-4 rounded-full ml-4"><span class="text-2xl">📖</span></div>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10 text-center">
-                <button onclick="resetAndStart()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md mb-4">最初からやり直す</button>
-                <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl text-sm active:scale-95">診断を終了する</button>
+            <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
+                <h3 class="text-xl font-black mb-4 italic text-sky-500 text-center">SHIMONOSEKI INFO</h3>
+                <div class="space-y-3">
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white active:bg-slate-800">特定健診（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white active:bg-slate-800">健康診査（全般）</a>
+                </div>
             </div>
+            <button onclick="resetAndStart()" class="w-full bg-slate-400 text-white font-black py-6 rounded-3xl text-lg active:scale-95 shadow-md mb-4">最初からやり直す</button>
+            <button onclick="liff.closeWindow()" class="w-full bg-slate-200 text-slate-500 font-black py-4 rounded-2xl text-sm active:scale-95">診断を終了する</button>
         </section>
     </main>
 
@@ -165,10 +156,20 @@
         let currentIdx = 0, answers = [], lineProfile = null;
 
         window.onload = async () => {
-            // 保存データがあれば「再開ボタン」を表示する（自動遷移はしない）
             const savedData = localStorage.getItem('kuchi_check_result');
+            
+            // 【重要】戻るボタン（back_forward）でのアクセスか判別
+            const perfEntries = performance.getEntriesByType("navigation");
+            const isBackNavigation = perfEntries.length > 0 && perfEntries[0].type === 'back_forward';
+
             if (savedData) {
-                document.getElementById('resume-btn').classList.remove('hidden');
+                if (isBackNavigation) {
+                    // 戻るボタンで帰ってきた時は一発で表示
+                    showResult(true);
+                } else {
+                    // 通常アクセス時はスタート画面にボタンを表示
+                    document.getElementById('resume-btn').classList.remove('hidden');
+                }
             }
 
             try {
