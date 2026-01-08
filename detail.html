@@ -49,7 +49,7 @@
     <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="font-black text-slate-800 text-lg tracking-tighter italic text-sky-600">HEALTH GUIDE</h1>
-            <button onclick="window.history.back()" class="bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all">戻る</button>
+            <button id="back-to-quiz" onclick="window.history.back()" class="hidden bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all active:bg-slate-200">診断に戻る</button>
         </div>
         <div class="max-w-md mx-auto flex border-t border-slate-100 text-center">
             <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">一時的・習慣 (Q1-10)</div>
@@ -60,189 +60,145 @@
     <main class="max-w-md mx-auto p-5">
 
         <div id="physio-content" class="content-section active">
-            
             <section class="logic-card">
                 <span class="kw-badge">☀️ 起床・空腹時のニオイ</span>
                 <h2 class="text-sky-700 mb-3">Q1. 朝や空腹時にお口が臭う</h2>
-                <div class="detail-text">
-                    睡眠中は、口内を殺菌・洗浄する「唾液」の分泌が極端に減少します。その間に口内の細菌が食べかすや粘膜を分解し、ニオイ成分（揮発性硫黄化合物）を大量に発生させます。これを生理的口臭と呼び、朝食を食べたり水分を摂ることで改善します。
-                </div>
+                <div class="detail-text">睡眠中は、口内を殺菌・洗浄する「唾液」の分泌が極端に減少します。その間に口内の細菌が食べかすや粘膜を分解し、ニオイ成分を大量に発生させます。朝食を食べたり水分を摂ることで改善します。</div>
                 <div class="evidence-box">【根拠】厚生労働省：生理的口臭は誰にでもあり、特に起床時や空腹時に強まる特性があります。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">👅 舌の表面の白さ</span>
                 <h2 class="text-sky-700 mb-3">Q2. 舌の上が白く厚くなっている</h2>
-                <div class="detail-text">
-                    舌の表面にある凹凸に、細菌や古くなった細胞が溜まったものを「舌苔（ぜったい）」と呼びます。これが厚くなると、細菌が腐敗ガスを放出しやすくなります。口臭原因の約6割がこの舌苔によるもので、専用のブラシによる優しく正しいケアが推奨されます。
-                </div>
-                
+                <div class="detail-text">舌の表面にある凹凸に、細菌や古くなった細胞が溜まったものを「舌苔（ぜったい）」と呼びます。口臭原因の約6割がこの舌苔によるもので、専用ブラシによるケアが推奨されます。</div>
                 <div class="evidence-box">【根拠】日本歯科医学会：舌苔の清掃は、口臭を物理的に減少させる最も即効性のある方法です。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🌀 強いストレスの状態</span>
                 <h2 class="text-sky-700 mb-3">Q3. 日常的に強いストレスがある</h2>
-                <div class="detail-text">
-                    過度なストレスは自律神経のバランスを崩し、交感神経を優位にします。すると唾液の分泌が抑制され、お口の中が自浄作用を失います。ストレス社会において、心のケアはお口の爽やかさを保つためにも非常に重要な要素となります。
-                </div>
+                <div class="detail-text">過度なストレスは自律神経のバランスを崩し、唾液の分泌を抑制します。お口の中が自浄作用を失うため、心のケアはお口の爽やかさを保つためにも重要です。</div>
                 <div class="evidence-box">【根拠】日本唾液腺学会：ストレス環境下では唾液の量が減り、ネバつきの強い性質に変化します。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">💧 緊張時のネバつき</span>
                 <h2 class="text-sky-700 mb-3">Q4. 緊張で口がネバつく</h2>
-                <div class="detail-text">
-                    緊張した際に感じるネバつきは、唾液中の水分が減りタンパク質成分が濃縮された証拠です。ネバついた唾液は、細菌をお口の中に留めてしまう「接着剤」のような役割をしてしまい、これが不快なニオイや話しにくさを引き起こします。
-                </div>
+                <div class="detail-text">ネバついた唾液は、細菌をお口の中に留めてしまう「接着剤」のような役割をしてしまい、これが不快なニオイや話しにくさを引き起こします。</div>
                 <div class="evidence-box">【根拠】日本口腔外科学会：緊張性の口腔乾燥は、一時的な細菌活性の増大を招きます。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🚰 日中の水分摂取不足</span>
                 <h2 class="text-sky-700 mb-3">Q5. 水分をあまり摂らない</h2>
-                <div class="detail-text">
-                    体内の水分が不足すると、体は重要な機能を優先するために唾液の生産を後回しにします。コーヒーやお茶はカフェインによる利尿作用で逆に脱水を招くことがあるため、純粋な「水」でこまめに喉を潤すことがお口の洗浄に繋がります。
-                </div>
+                <div class="detail-text">体内の水分が不足すると、体は重要な機能を優先するために唾液の生産を後回しにします。純粋な「水」でこまめに喉を潤すことが大切です。</div>
                 <div class="evidence-box">【アドバイス】一口の水を2時間おきに飲む習慣が、口内の細菌濃度を低く保つ秘訣です。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">💤 睡眠不足・体調不良</span>
                 <h2 class="text-sky-700 mb-3">Q6. 睡眠不足や疲れがある</h2>
-                <div class="detail-text">
-                    体の抵抗力が落ちると、お口の中の炎症（歯周病予備軍など）が活発になります。疲れが溜まっている時に口臭を感じるのは、体が「休息」を求めている健康サインでもあります。免疫力を高めることは、口腔内細菌の抑制に直結します。
-                </div>
+                <div class="detail-text">体の抵抗力が落ちると、お口の中の炎症が活発になります。疲れが溜まっている時に口臭を感じるのは、体が休息を求めているサインです。</div>
                 <div class="evidence-box">【根拠】しものせき21：生活習慣、特に休養の質が口腔環境に与える影響を重視しています。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🧄 昨夜の飲食（ニンニク・酒）</span>
                 <h2 class="text-sky-700 mb-3">Q7. ニンニクやお酒を摂取した</h2>
-                <div class="detail-text">
-                    ニンニクの成分やお酒の分解物は、胃から直接臭うのではなく、一度血液に吸収されて肺から「呼気」として排出されます。これが消えるには代謝を待つしかないため、リンゴジュースのポリフェノール等で分解を助けるのが効果的です。
-                </div>
+                <div class="detail-text">これらは一度血液に吸収されて肺から「呼気」として排出されます。リンゴジュースのポリフェノール等で分解を助けるのが効果的です。</div>
                 <div class="evidence-box">【根拠】日本口臭学会：これらは「一過性口臭」に分類され、代謝と共に自然消滅します。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🍷 寝る前の飲酒習慣</span>
                 <h2 class="text-sky-700 mb-3">Q8. 寝酒や多量の飲酒習慣</h2>
-                <div class="detail-text">
-                    アルコールを摂取すると、体内で分解される際に大量の水分を消費します。特に寝る前の飲酒は、睡眠中の激しい口腔乾燥を引き起こし、翌朝の強力なニオイの原因となります。お酒を飲む際は、同量の水を一緒に飲むことが推奨されます。
-                </div>
+                <div class="detail-text">アルコール分解時に大量の水分を消費するため、睡眠中の口腔乾燥を引き起こします。お酒を飲む際は、同量の水を一緒に飲みましょう。</div>
                 <div class="evidence-box">【科学的知見】アルコール由来のアセトアルデヒド自体も強い刺激臭の原因となります。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🪥 歯磨きの回数が少ない</span>
                 <h2 class="text-sky-700 mb-3">Q9. 歯磨きが1日2回以下</h2>
-                <div class="detail-text">
-                    お口の中の細菌は、食事のたびに増殖します。特に寝る前の磨き残しは致命的で、8時間前後の睡眠中に菌が爆発的に増えます。回数が少ないと、細菌が膜を作る「バイオフィルム」化が進み、普通のうがいでは落ちなくなります。
-                </div>
+                <div class="detail-text">寝る前の磨き残しは致命的で、8時間の睡眠中に菌が爆発的に増えます。細菌が膜を作る「バイオフィルム」化が進むと、うがいでは落ちなくなります。</div>
                 <div class="evidence-box">【根拠】日本歯周病学会：プラークコントロール（歯垢除去）が口臭予防の基本です。</div>
             </section>
 
             <section class="logic-card">
                 <span class="kw-badge">🌬️ 口呼吸の習慣</span>
                 <h2 class="text-sky-700 mb-3">Q10. 口で息をすることが多い</h2>
-                <div class="detail-text">
-                    口呼吸は、外気が直接口内を通り過ぎるため、本来湿っているべき粘膜をカラカラに乾燥させます。鼻という高性能な加湿フィルターを使わないことで、細菌の活動を許すだけでなく、風邪やアレルギーの原因にもなりやすい習慣です。
-                </div>
+                <div class="detail-text">口呼吸は、加湿フィルターである鼻を通さないため、お口の中をカラカラに乾燥させ、細菌の活動を許してしまいます。</div>
                 <div class="evidence-box">【根拠】日本耳鼻咽喉科学会：口呼吸は口腔乾燥を招き、咽頭炎などのリスクを高めます。</div>
             </section>
         </div>
 
         <div id="patho-content" class="content-section">
-            
             <section class="patho-card">
                 <span class="kw-badge">📅 2週間以上の継続</span>
                 <h2 class="text-rose-700 mb-3">Q11. 悩みが長く続いている</h2>
-                <div class="detail-text">
-                    一時的な要因であれば数日で改善しますが、2週間以上続く場合は「病的口臭」の可能性を疑います。これはセルフケアだけでは限界があり、歯科や内科による根本的な原因究明が必要なサインです。
-                </div>
+                <div class="detail-text">一時的な要因であれば数日で改善しますが、2週間以上続く場合は「病的口臭」の疑いがあります。セルフケアだけでは限界があるサインです。</div>
                 <div class="patho-box">考えられるリスク：進行性の歯周病、慢性的な内臓疾患</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🩸 歯ぐきからの出血</span>
                 <h2 class="text-rose-700 mb-3">Q12. 歯磨きでの出血がある</h2>
-                <div class="detail-text">
-                    出血は、歯ぐきが細菌に感染し、血管がもろくなっている証拠です。これを放置すると、歯を支える骨が溶け始め、強い腐敗臭を発するようになります。出血は「痛くないから大丈夫」ではなく、最も分かりやすいSOSです。
-                </div>
-                
+                <div class="detail-text">出血は、歯ぐきが細菌に感染し、血管がもろくなっている証拠です。放置すると歯を支える骨が溶け始め、強い腐敗臭を発するようになります。</div>
                 <div class="evidence-box">【根拠】日本歯周病学会：出血は歯周組織の破壊が進行している重要な臨床指標です。</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🌵 慢性的・強い口の乾き</span>
                 <h2 class="text-rose-700 mb-3">Q13. 常に口が乾き、食事がしにくい</h2>
-                <div class="detail-text">
-                    ただの水分不足ではなく、食べ物の味がわかりにくい、飲み込みにくいといった症状がある場合、ドライマウス（口腔乾燥症）が疑われます。これは加齢だけでなく、全身疾患の初期症状として現れることがあります。
-                </div>
+                <div class="detail-text">食べ物の味がわかりにくい、飲み込みにくいといった症状がある場合、ドライマウス（口腔乾燥症）が疑われます。</div>
                 <div class="patho-box">考えられるリスク：糖尿病、シェーグレン症候群、薬剤副作用</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">👃 鼻詰まり・喉への鼻水</span>
                 <h2 class="text-rose-700 mb-3">Q14. 鼻や喉の違和感</h2>
-                <div class="detail-text">
-                    鼻の奥で炎症が起きると、膿が溜まり、そのニオイがお口や鼻から漏れ出します。また、鼻水が喉に流れる「後鼻漏」は、喉の粘膜に細菌を付着させ、強い口臭を発生させます。これは歯科ではなく耳鼻科の領域です。
-                </div>
+                <div class="detail-text">鼻の奥の炎症（膿）のニオイが漏れ出している場合があります。これは歯科ではなく耳鼻科での治療が必要な領域です。</div>
                 <div class="patho-box">考えられるリスク：副鼻腔炎（蓄膿症）、アレルギー性鼻炎、後鼻漏</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">⚖️ 体のだるさ・むくみ</span>
                 <h2 class="text-rose-700 mb-3">Q15. 体がだるく、むくみやすい</h2>
-                <div class="detail-text">
-                    肝臓や腎臓は体内の不要な物質を濾過・解毒する場所です。これらの機能が落ちると、本来尿などで排出されるべき成分が呼気に混じり、アンモニアのような独特のニオイを放つことがあります。
-                </div>
+                <div class="detail-text">肝臓や腎臓の機能が落ちると、本来尿で排出されるべき成分が呼気に混じり、アンモニアのような独特のニオイを放つことがあります。</div>
                 <div class="patho-box">考えられるリスク：肝機能障害、腎機能の低下</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🤢 胃もたれ・胸焼け</span>
                 <h2 class="text-rose-700 mb-3">Q16. 胃腸の不調がある</h2>
-                <div class="detail-text">
-                    胃酸が逆流したり、胃の消化機能が著しく低下していると、食べたものの発酵臭がお口まで上がってきます。お口をいくら清掃しても消えない「酸っぱい」「苦い」ニオイは消化器からのサインかもしれません。
-                </div>
+                <div class="detail-text">胃酸が逆流したり、消化機能が低下していると、発酵臭がお口まで上がってきます。お口を掃除しても消えない場合は消化器を疑います。</div>
                 <div class="patho-box">考えられるリスク：逆流性食道炎、慢性胃炎</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🚬 喫煙習慣（現在・過去）</span>
                 <h2 class="text-rose-700 mb-3">Q17. 日常的にタバコを吸う</h2>
-                <div class="detail-text">
-                    タバコは血管を収縮させ、歯ぐきの酸素を奪います。すると、酸素が大嫌いな「凶悪な歯周病菌」が繁殖しやすい環境になります。タバコのヤニは細菌の格好の住みかとなり、独特の強いタバコ臭を長期間定着させます。
-                </div>
+                <div class="detail-text">タバコは血管を収縮させ、歯周病菌が繁殖しやすい「酸素のない環境」を作ります。ヤニは細菌の住みかとなり、強いニオイを定着させます。</div>
                 <div class="evidence-box">【根拠】厚生労働省：喫煙者は非喫煙者に比べ、歯周病の進行スピードが数倍速い。</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🚨 歯のグラつき・腫れ</span>
                 <h2 class="text-rose-700 mb-3">Q18. 歯が動く・歯ぐきが腫れる</h2>
-                <div class="detail-text">
-                    歯が動く感覚があるのは、歯を支える土台の骨が溶けている「重度歯周病」の典型的なサインです。歯周ポケットの奥深くから出る膿は、極めて強い悪臭（メチルメルカプタン等）を放ち、早急な歯科治療が必要です。
-                </div>
+                <div class="detail-text">歯が動く感覚があるのは、骨が溶けている「重度歯周病」のサインです。ポケットの奥の膿は極めて強い悪臭を放ちます。</div>
                 <div class="patho-box">考えられるリスク：重度歯周炎（一刻も早い受診を推奨）</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🧁 甘いもの欲求・食後の眠気</span>
                 <h2 class="text-rose-700 mb-3">Q19. 食後の強い眠気や異常な食欲</h2>
-                <div class="detail-text">
-                    食後の激しい眠気は、血糖値が急激に上下する「血糖スパイク」の可能性があります。高血糖状態はお口の中の糖分を増やし、細菌が酸を作りやすい環境を作ります。これが口臭を悪化させ、歯周病を劇的に進行させます。
-                </div>
+                <div class="detail-text">高血糖状態はお口の中の糖分を増やし、細菌が酸を作りやすい環境を作ります。これが歯周病を劇的に進行させます。</div>
                 <div class="patho-box">考えられるリスク：糖尿病（アセトン臭がすることもあります）</div>
             </section>
 
             <section class="patho-card">
                 <span class="kw-badge">🦵 夕方の足のむくみ</span>
                 <h2 class="text-rose-700 mb-3">Q20. 夕方に靴がきつく感じる</h2>
-                <div class="detail-text">
-                    足のむくみは全身の血液循環や代謝の低下を示しています。お口の中も血行が悪くなると、唾液の出が悪くなり自浄作用が低下します。全身の巡りを良くすることは、実はお口の健康維持にも深く関わっています。
-                </div>
+                <div class="detail-text">全身の循環不良はお口の唾液分泌低下にも繋がります。全身の巡りを良くすることは、お口の健康維持にも重要です。</div>
                 <div class="advice-box">軽い運動やストレッチで全身の循環を促し、水分を適切に摂取しましょう。</div>
             </section>
         </div>
@@ -250,20 +206,37 @@
         <div class="mt-12 bg-slate-800 rounded-[2.5rem] p-8 text-white">
             <h3 class="font-black text-lg text-sky-400 mb-4 italic text-center underline decoration-sky-600">SHIMONOSEKI HEALTH POLICY</h3>
             <p class="text-[11px] leading-relaxed opacity-90 mb-6 text-justify">
-                下関市では、第2次下関市健康づくり計画「しものせき21」に基づき、お口の健康から始まる生活習慣病の予防を推進しています。お口の異変は全身の疾患と繋がっていることが近年の研究で明らかになっています。
+                下関市では、第2次下関市健康づくり計画「しものせき21」に基づき、お口の健康から始まる生活習慣病の予防を推進しています。
             </p>
-            <div class="border-t border-white/20 pt-4">
-                <ul class="text-[9px] opacity-60 list-none space-y-1">
-                    <li>● 厚生労働省 e-ヘルスネット 引用</li>
-                    <li>● 日本歯周病学会・日本口臭学会 ガイドライン準拠</li>
-                    <li>● 下関市保健部作成資料「歯の健康と全身の関係」参照</li>
-                </ul>
+            <div class="border-t border-white/20 pt-4 text-center">
+                <button onclick="location.href='index.html'" class="bg-white/10 text-white border border-white/20 px-6 py-3 rounded-2xl text-xs font-bold active:bg-white/20 transition-all">診断トップに戻る</button>
             </div>
         </div>
 
     </main>
 
     <script>
+        // --- 画面読み込み時の処理 ---
+        window.onload = function() {
+            // 1. 診断結果画面からのフラグチェック
+            const fromQuiz = sessionStorage.getItem('fromQuiz');
+            if (fromQuiz === 'true') {
+                document.getElementById('back-to-quiz').classList.remove('hidden');
+                // 一度表示したらフラグを消す（直接URLを叩き直した時は消えるようにする）
+                sessionStorage.removeItem('fromQuiz');
+            }
+
+            // 2. 診断スコアに基づいた初期タブの切り替え
+            const savedData = localStorage.getItem('kuchi_check_result');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                // 病的リスク(s2)が一定以上なら、最初から病的カテゴリを表示
+                if (data.s2 > 35) {
+                    switchCategory('patho');
+                }
+            }
+        };
+
         function switchCategory(cat) {
             const physio = document.getElementById('physio-content');
             const patho = document.getElementById('patho-content');
