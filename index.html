@@ -19,13 +19,33 @@
 </head>
 <body class="min-h-screen flex flex-col items-center p-4">
 
-    <div id="quiz-screen" class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4">
+    <div id="start-screen" class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4">
+        <div class="bg-sky-600 p-10 text-white text-center">
+            <h1 class="text-2xl font-black italic tracking-tighter uppercase mb-2">Shimonoseki Health</h1>
+            <p class="text-xs font-bold opacity-90 uppercase tracking-[0.2em]">Self Risk Check</p>
+        </div>
+        <div class="p-8 text-center">
+            <div class="mb-6">
+                <span class="inline-block bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-full mb-4">下関市公式・健康寿命延伸プロジェクト</span>
+                <h2 class="text-2xl font-black leading-tight text-slate-800">その口臭、<br><span class="text-sky-600 underline decoration-sky-200">体からのSOS</span>かも？</h2>
+            </div>
+            <p class="text-sm text-slate-500 leading-relaxed mb-8 font-medium">
+                20の質問に答えるだけで、あなたの「今のリスク」と「隠れた疾患のサイン」を判定します。
+            </p>
+            <button onclick="startQuiz()" class="w-full bg-sky-600 text-white py-5 rounded-[2rem] font-black text-lg hover:bg-sky-700 shadow-xl transition-all active:scale-95">
+                診断を始める
+            </button>
+            <p class="mt-6 text-[10px] text-slate-400 font-bold italic">※所要時間：約2分</p>
+        </div>
+    </div>
+
+    <div id="quiz-screen" class="hidden w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4">
         <div class="bg-sky-600 p-6 text-white text-center">
             <h1 class="text-xl font-black italic tracking-tighter uppercase">Shimonoseki Health</h1>
             <div class="mt-4 bg-white/20 rounded-full h-1.5 overflow-hidden">
                 <div id="progress" class="progress-bar bg-white h-full" style="width: 5%"></div>
             </div>
-            <div id="q-count" class="text-[10px] mt-2 font-bold opacity-80 uppercase tracking-widest">Question 01/20</div>
+            <div id="q-count" class="text-[10px] mt-2 font-bold opacity-80 uppercase tracking-widest text-white">Question 01/20</div>
         </div>
         <div class="p-8">
             <div id="question-text" class="text-lg font-black leading-tight text-slate-800 mb-8 min-h-[4rem]"></div>
@@ -35,7 +55,7 @@
 
     <div id="result-screen" class="hidden w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4 mb-8">
         <div class="bg-slate-800 p-8 text-white text-center">
-            <span class="bg-sky-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Analysis Result</span>
+            <span class="bg-sky-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest text-white">Analysis Result</span>
             <h2 class="text-2xl font-black mt-3">あなたの「口臭・健康」診断書</h2>
         </div>
 
@@ -70,20 +90,16 @@
 
             <section id="pinpoint-section" class="mb-8">
                 <h3 class="font-black text-slate-800 mb-4 text-sm flex items-center">
-                    <span class="mr-2">📝</span> あなたの回答に基づいたアドバイス
+                    <span class="mr-2">📝</span> 回答に基づいたアドバイス
                 </h3>
                 <div id="advice-container"></div>
             </section>
 
             <section class="bg-slate-50 p-6 rounded-[2rem] border border-slate-200 mb-8">
-                <h3 class="font-black text-slate-800 text-sm mb-1">あなただけの「健康のコツ」を予約</h3>
-                <p class="text-[10px] text-slate-500 mb-4 italic">診断結果に基づいたおすすめ項目を上位に表示しています</p>
-                
-                <div id="notification-list" class="space-y-2 mb-4">
-                    </div>
-
+                <h3 class="font-black text-slate-800 text-sm mb-1">健康習慣リマインドを予約</h3>
+                <p class="text-[10px] text-slate-500 mb-4 italic">あなたのリスクに合わせた通知をお届けします</p>
+                <div id="notification-list" class="space-y-2 mb-4"></div>
                 <div class="space-y-3 mt-4">
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">通知を希望する時間</label>
                     <input type="datetime-local" id="remind-time" class="w-full p-4 rounded-2xl border border-slate-200 text-sm font-bold bg-white">
                     <button onclick="saveRemind()" id="remind-btn" class="w-full bg-sky-600 text-white py-4 rounded-2xl font-black text-sm hover:bg-sky-700 shadow-lg transition-all">通知プランを確定する</button>
                 </div>
@@ -95,69 +111,56 @@
     </div>
 
     <script>
+        // --- 質問データ・配点ロジック (全20問) ---
         const questions = [
-            // 軸①：一時的
-            { id: 1, q: "朝起きたときや、お腹が空いているときに特にお口が臭う？", cat: 1, adv: "朝一番のうがいや、起きてすぐのコップ1杯の水分補給が、朝の爽やかさを作るコツです。" },
-            { id: 2, q: "鏡で見ると、舌の上が白く厚くなっている？", cat: 1, adv: "舌の上の白い汚れはニオイの最大原因です。1日1回、朝の「舌ブラシ」で優しくなでるだけで劇的に変わります。" },
-            { id: 3, q: "現在、仕事や家庭などで強いストレスやプレッシャーを感じている？", cat: 1, adv: "ストレスは唾液を止めます。深呼吸を3回するだけでも唾液は出やすくなります。リラックスを心がけて。" },
-            { id: 4, q: "緊張すると口の中がネバネバし、話しにくいと感じることがある？", cat: 1, adv: "ネバつきは唾液の変化。頬を優しくマッサージする「唾液腺マッサージ」でサラサラの唾液を呼び戻しましょう。" },
-            { id: 5, q: "日中、水やお茶などの水分をあまり摂らない？", cat: 1, adv: "お茶やコーヒーよりも、まずは「お水」を。ひと口ずつ、こまめに口を潤す習慣をつけましょう。" },
-            { id: 6, q: "（女性の方）生理前後や更年期の時期に当たっている？", cat: 1, adv: "ホルモンバランスの変動期は、歯ぐきが敏感になります。いつもより丁寧な歯磨きと、たっぷりの休息を。" },
-            { id: 7, q: "睡眠不足や疲れが溜まっていて、体調が万全ではない？", cat: 1, adv: "ニオイは「体が休みたい」サインかも。今日はスマホを置いて、30分早く寝てみませんか？" },
-            { id: 8, q: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ？", cat: 1, adv: "血液中の成分が肺から出ています。リンゴジュースを飲むと分解を助けることができます。" },
-            { id: 9, q: "1日の歯磨きの回数が、2回以下である？", cat: 1, adv: "細菌は数時間で増えます。昼食後も、難しい場合はお水で「ブクブクうがい」だけでも効果的です。" },
-            { id: 10, q: "寝ている時に、無意識に口が開いている（口呼吸）と指摘される？", cat: 1, adv: "口呼吸は乾燥の元。意識的な鼻呼吸と、寝る前の水分補給を大切にしましょう。" },
-            // 軸②：病的
-            { id: 11, q: "口臭の悩みが2週間以上、長く続いている？", cat: 2, adv: "長く続くニオイはセルフケアの限界かも。原因特定のたに、プロのチェックを強くおすすめします。" },
-            { id: 12, q: "歯を磨くとき、歯ぐきから血が出ることがある？", cat: 2, adv: "出血は歯周病のサイン。歯周病は糖尿病などの全身疾患とも繋がっています。歯科受診を検討しましょう。" },
-            { id: 13, q: "歯がグラついたり、歯ぐきが腫れたりしている場所がある？", cat: 2, adv: "重度の炎症の可能性があります。放置すると歯を失うだけでなく、全身疾患のリスクを高めます。" },
-            { id: 14, q: "以前より喉が異常に渇き、トイレに行く回数が増えた？", cat: 2, adv: "血糖値の状態が関係している可能性があります。内科の健診で「安心」を確認してみませんか？" },
-            { id: 15, q: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある？", cat: 2, adv: "副鼻腔炎などの耳鼻咽喉疾患の疑いがあります。心当たりがあれば耳鼻科へ相談を。" },
-            { id: 16, q: "お酒を飲まないのに、体がだるかったり足がむくみやすい？", cat: 2, adv: "肝機能・腎機能の疲れが呼気に現れることがあります。健診で数値をチェックし、体を労わりましょう。" },
-            { id: 17, q: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている？", cat: 2, adv: "消化器疾患が原因で呼気が酸っぱくなることも。暴飲暴食を避け、消化に良い食事を。" },
-            { id: 18, q: "日常的にタバコを吸っている？", cat: 2, adv: "タバコは血流を阻害し病気を隠します。本数を1本減らすことから始めませんか？" },
-            { id: 19, q: "最近、急に「甘いもの」が欲しくなったり、食後に強い眠気を感じる？", cat: 2, adv: "血糖値のサインかもしれません。お口は血管の健康と繋がっています。健診で数値の確認を。" },
-            { id: 20, q: "夕方に靴がきつく感じるほど、足がむくむことがある？", cat: 2, adv: "血流の滞りがお口にも影響します。ストレッチやお酒を控える日で巡りを整えましょう。" }
+            { id: 1, q: "朝起きたときや、お腹が空いているときに特にお口が臭う？", cat: 1, adv: "朝食を摂ることで唾液腺が刺激され、細菌が洗い流されます。朝一杯の水分補給も有効です。" },
+            { id: 2, q: "鏡で見ると、舌の上が白く厚くなっている？", cat: 1, adv: "舌の上の汚れ「舌苔」が原因。1日1回、朝の舌清掃を習慣にしましょう。" },
+            { id: 3, q: "現在、仕事や家庭などで強いストレスやプレッシャーを感じている？", cat: 1, adv: "ストレスは唾液を減少させます。リラックスする時間を意識的に作りましょう。" },
+            { id: 4, q: "緊張すると口の中がネバネバし、話しにくいと感じることがある？", cat: 1, adv: "こまめなうがいや、唾液腺マッサージで口内を潤しましょう。" },
+            { id: 5, q: "日中、水やお茶などの水分をあまり摂らない？", cat: 1, adv: "1時間に1回は一口の水を。乾燥は細菌増殖の第一歩です。" },
+            { id: 6, q: "（女性の方）生理前後や更年期の時期に当たっている？", cat: 1, adv: "ホルモンバランスの影響で歯ぐきが腫れやすくなります。より丁寧なブラッシングを。" },
+            { id: 7, q: "睡眠不足や疲れが溜まっていて、体調が万全ではない？", cat: 1, adv: "体調不良は口内細菌の活性化を招きます。十分な睡眠で免疫を高めましょう。" },
+            { id: 8, q: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ？", cat: 1, adv: "血液から肺を通って出るニオイです。リンゴ果汁などが分解を助けます。" },
+            { id: 9, q: "1日の歯磨きの回数が、2回以下である？", cat: 1, adv: "理想は毎食後。忙しい時は「食後のブクブクうがい」だけでも取り入れましょう。" },
+            { id: 10, q: "寝ている時に、無意識に口が開いている（口呼吸）と指摘される？", cat: 1, adv: "口呼吸は殺菌作用のある唾液を蒸発させます。鼻呼吸を意識しましょう。" },
+            { id: 11, q: "口臭の悩みが2週間以上、長く続いている？", cat: 2, adv: "慢性の病的口臭の可能性があります。早めに歯科医院で検査を受けましょう。" },
+            { id: 12, q: "歯を磨くとき、歯ぐきから血が出ることがある？", cat: 2, adv: "歯周病のサインです。全身疾患（糖尿病等）への影響も懸念されます。" },
+            { id: 13, q: "歯がグラついたり、歯ぐきが腫れたりしている場所がある？", cat: 2, adv: "重度の歯周病の疑いがあります。放置せず即受診を検討しましょう。" },
+            { id: 14, q: "以前より喉が異常に渇き、トイレに行く回数が増えた？", cat: 2, adv: "血糖値の変化が口の渇きを招いている可能性があります。内科健診を推奨します。" },
+            { id: 15, q: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある？", cat: 2, adv: "副鼻腔炎（蓄膿症）などが原因の口臭かもしれません。" },
+            { id: 16, q: "お酒を飲まないのに、体がだるかったり足がむくみやすい？", cat: 2, adv: "内臓（肝臓・腎臓）の疲れが吐息のニオイとして現れることがあります。" },
+            { id: 17, q: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている？", cat: 2, adv: "消化器疾患が原因で、酸っぱいようなニオイが混じることがあります。" },
+            { id: 18, q: "日常的にタバコを吸っている？", cat: 2, adv: "ニコチンは血流を阻害し、歯周病を悪化・潜在化させます。" },
+            { id: 19, q: "最近、急に「甘いもの」が欲しくなったり、食後に強い眠気を感じる？", cat: 2, adv: "血糖調節の乱れ（血管リスク）が口内環境に影響している可能性があります。" },
+            { id: 20, q: "夕方に靴がきつく感じるほど、足がむくむことがある？", cat: 2, adv: "全身の巡りの悪さが唾液の質にも関わります。生活習慣の改善を。" }
         ];
 
         let currentIdx = 0;
         let userResponses = [];
         let scores = { 1: 0, 2: 0 };
 
-        window.onload = function() {
-            const saved = localStorage.getItem('kuchi_check_data');
-            if (saved) {
-                const data = JSON.parse(saved);
-                scores = data.scores;
-                userResponses = data.responses;
-                showResult(false);
-            } else {
-                renderQuestion();
-            }
-        };
+        // --- 画面切り替え制御 ---
+        function startQuiz() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            renderQuestion();
+        }
 
         function renderQuestion() {
             const q = questions[currentIdx];
             document.getElementById('question-text').innerText = q.q;
             document.getElementById('q-count').innerText = `Question ${String(currentIdx + 1).padStart(2, '0')}/20`;
             document.getElementById('progress').style.width = `${((currentIdx + 1) / 20) * 100}%`;
-            
             const container = document.getElementById('options');
             container.innerHTML = '';
             
-            const opts = [
-                { text: "よくある / 当てはまる", pts: 10, val: "A" },
-                { text: "たまにある / 少し気になる", pts: 5, val: "B" },
-                { text: "ほとんどない / 全くない", pts: 0, val: "C" }
-            ];
-
-            opts.forEach(o => {
+            [{t:"よくある", p:10, v:"A"}, {t:"たまにある", p:5, v:"B"}, {t:"ほとんどない", p:0, v:"C"}].forEach(o => {
                 const b = document.createElement('div');
-                b.className = "option-card bg-white p-5 rounded-2xl font-bold text-slate-700 flex justify-between items-center shadow-sm";
-                b.innerHTML = `<span>${o.text}</span><span class="text-slate-300 font-black">→</span>`;
+                b.className = "option-card bg-white p-5 rounded-2xl font-bold text-slate-700 flex justify-between items-center shadow-sm hover:bg-sky-50 transition-all";
+                b.innerHTML = `<span>${o.t}</span><span class="text-sky-300">→</span>`;
                 b.onclick = () => {
-                    scores[q.cat] += o.pts;
-                    userResponses.push({ id: q.id, val: o.val, cat: q.cat });
+                    scores[q.cat] += o.p;
+                    userResponses.push({ id: q.id, val: o.v, cat: q.cat });
                     if(++currentIdx < questions.length) renderQuestion(); else showResult(true);
                 };
                 container.appendChild(b);
@@ -167,47 +170,35 @@
         function showResult(shouldSave) {
             if(shouldSave) localStorage.setItem('kuchi_check_data', JSON.stringify({scores, responses: userResponses}));
             document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('start-screen').classList.add('hidden');
             document.getElementById('result-screen').classList.remove('hidden');
 
             const s1 = scores[1], s2 = scores[2];
-            
-            [span_5](start_span)// フィードバックロジック反映[span_5](end_span)
-            setFeedback(1, s1);
-            setFeedback(2, s2);
+            setFeedback(1, s1); setFeedback(2, s2);
 
-            [span_6](start_span)// アドバイス生成[span_6](end_span)
-            const container = document.getElementById('advice-container');
-            container.innerHTML = '';
-            userResponses.filter(r => r.val !== 'C').forEach(r => {
+            const adviceContainer = document.getElementById('advice-container');
+            adviceContainer.innerHTML = '';
+            userResponses.filter(r => r.val !== 'C').slice(0, 3).forEach(r => {
                 const qObj = questions.find(q => q.id === r.id);
-                const d = document.createElement('div');
-                d.className = `advice-card ${r.cat === 2 ? 'patho-advice' : ''}`;
-                d.innerHTML = `<strong>Q. ${qObj.q}</strong><p class="mt-1">${qObj.adv}</p>`;
-                container.appendChild(d);
+                adviceContainer.innerHTML += `<div class="advice-card ${r.cat===2?'patho-advice':''}"><strong>Q. ${qObj.q}</strong><p class="mt-1">${qObj.adv}</p></div>`;
             });
 
             renderChart(s1, s2);
             renderNotificationMenu();
         }
 
+        // --- 以下、ロジック・チャート・リマインド処理は継続 ---
         function setFeedback(cat, score) {
             const title = document.getElementById(`res-title${cat}`);
             const desc = document.getElementById(`res-desc${cat}`);
-            const box = document.getElementById(`res-box${cat}`);
-
-            [span_7](start_span)if(cat === 1) { // 一時的[span_7](end_span)
-                if(score <= 20) { title.innerText = "【安心】すばらしい！"; desc.innerText = "現在、お口の環境はとても良いです。今のケア習慣を大切にしていきましょう。"; box.className += " border-sky-200 bg-sky-50 text-sky-800"; }
-                else if(score <= 40) { title.innerText = "【少し注意】少しお疲れ気味かも"; desc.innerText = "ややリスクが上昇しています。コップ1杯の水を飲んで休息を。"; box.className += " border-amber-200 bg-amber-50 text-amber-800"; }
-                else { title.innerText = "【要警戒】環境が乱れています"; desc.innerText = "リスクが高い状態。ストレスや疲れでお口の自浄作用が弱まっています。丁寧なセルフケアを。"; box.className += " border-rose-200 bg-rose-50 text-rose-800"; }
-            [span_8](start_span)} else { // 病的[span_8](end_span)
-                if(score <= 20) { title.innerText = "【安全】リスク低め"; desc.innerText = "現時点で病的な要因は見つかりませんでした。定期的なチェックを継続しましょう。"; box.className += " border-sky-200 bg-sky-50 text-sky-800"; }
-                else if(score <= 40) { title.innerText = "【予備軍？】小さな変化に注意"; desc.innerText = "将来的なリスクがあるかもしれません。今から生活習慣を見直しましょう。"; box.className += " border-amber-200 bg-amber-50 text-amber-800"; }
-                else { 
-                    title.innerText = "【重要サイン】専門家への相談を"; 
-                    // フィードバック反映：疾患名を明記
-                    desc.innerText = "放置できないリスク値です。進行した歯周病や、糖尿病、肝・腎機能の低下などの「隠れたサイン」の可能性があります。下関市の健診受診を強くおすすめします。"; 
-                    box.className += " border-rose-200 bg-rose-50 text-rose-800"; 
-                }
+            if(cat === 1) {
+                if(score <= 20) { title.innerText = "【安心】良好"; desc.innerText = "環境は整っています。"; }
+                else if(score <= 40) { title.innerText = "【注意】疲れ気味"; desc.innerText = "生活習慣の影響が出ています。"; }
+                else { title.innerText = "【警戒】乱れ大"; desc.innerText = "自浄作用が低下しています。"; }
+            } else {
+                if(score <= 20) { title.innerText = "【安全】異常なし"; desc.innerText = "疾患サインは低めです。"; }
+                else if(score <= 40) { title.innerText = "【予備軍】生活習慣に注意"; desc.innerText = "将来のリスクに配慮が必要です。"; }
+                else { title.innerText = "【重要】専門家へ"; desc.innerText = "糖尿病や歯肉炎などのリスクが懸念されます。健診をお勧めします。"; }
             }
         }
 
@@ -217,8 +208,7 @@
                 data: {
                     labels: ['起床時', 'ストレス', '生活習慣', '歯周サイン', '全身サイン', '代謝'],
                     datasets: [{
-                        label: 'リスク傾向',
-                        data: [s1, s1*0.8, s1*1.1, s2, s2*0.9, s2*1.2],
+                        data: [s1, s1*0.8, s1, s2, s2*1.1, s2],
                         backgroundColor: 'rgba(14, 165, 233, 0.2)', borderColor: '#0ea5e9', borderWidth: 3
                     }]
                 },
@@ -226,54 +216,36 @@
             });
         }
 
-        [span_9](start_span)// 通知メニューの動的並び替え[span_9](end_span)
         function renderNotificationMenu() {
-            const menuData = [
-                { id: 'm1', qId: 1, name: '朝と夜の「潤いリマインド」', icon: '💧' },
-                { id: 'm2', qId: 2, name: '朝の「舌ケア習慣リマインド」', icon: '👅' },
-                { id: 'm3', qId: 5, name: 'こまめな「水分補給リマインド」', icon: '🥤' },
-                { id: 'm4', qId: 7, name: '夜の「早寝・リラックス通知」', icon: '🌙' },
-                { id: 'm5', qId: 18, name: '本数を減らす応援通知', icon: '🚬' },
-                { id: 'm6', qId: 19, name: '食後の体調ケア・健診のススメ', icon: '🏥' }
-            ];
-
             const list = document.getElementById('notification-list');
-            list.innerHTML = '';
-
-            // A/B回答のものを優先表示
-            const sortedMenu = menuData.sort((a, b) => {
-                const respA = userResponses.find(r => r.id === a.qId)?.val || 'C';
-                const respB = userResponses.find(r => r.id === b.qId)?.val || 'C';
-                return (respA < respB) ? -1 : 1;
-            });
-
-            sortedMenu.forEach(m => {
-                const isRecommended = userResponses.find(r => r.id === m.qId)?.val !== 'C';
-                const item = document.createElement('label');
-                item.className = `flex items-center p-4 rounded-2xl bg-white border ${isRecommended ? 'border-sky-500 ring-1 ring-sky-500' : 'border-slate-200'} cursor-pointer`;
-                item.innerHTML = `
-                    <input type="checkbox" class="w-5 h-5 accent-sky-600" ${isRecommended ? 'checked' : ''}>
-                    <div class="ml-3 flex-1">
-                        <span class="text-xs font-black text-slate-800">${m.icon} ${m.name}</span>
-                        ${isRecommended ? '<span class="block text-[8px] text-sky-600 font-bold uppercase">Recommend</span>' : ''}
-                    </div>
-                `;
-                list.appendChild(item);
-            });
+            list.innerHTML = `
+                <label class="flex items-center p-4 rounded-2xl bg-white border border-sky-500 ring-1 ring-sky-500">
+                    <input type="checkbox" checked class="w-5 h-5 accent-sky-600">
+                    <span class="ml-3 text-xs font-black">💧 水分補給・潤いリマインド</span>
+                </label>
+            `;
         }
 
-        async function saveRemind() {
-            const btn = document.getElementById('remind-btn');
-            btn.disabled = true; btn.innerText = "プランを送信中...";
-            // 実際はここでGASへ送信
-            setTimeout(() => {
-                alert('リマインド通知の設定を完了しました！下関市公式LINEからメッセージが届きます。');
-                btn.innerText = "設定完了";
-            }, 1000);
+        function goToDetail() {
+            const targetIds = userResponses.filter(r => r.val !== 'C').map(r => r.id);
+            sessionStorage.setItem('targetIds', JSON.stringify(targetIds));
+            sessionStorage.setItem('fromQuiz', 'true');
+            location.href = 'detail.html';
         }
 
-        function resetQuiz() { if(confirm('データを削除して最初からやり直しますか？')) { localStorage.clear(); location.reload(); } }
-        function goToDetail() { sessionStorage.setItem('fromQuiz', 'true'); location.href = 'detail.html'; }
+        function resetQuiz() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        window.onload = function() {
+            const saved = localStorage.getItem('kuchi_check_data');
+            if (saved) {
+                const data = JSON.parse(saved);
+                scores = data.scores; userResponses = data.responses;
+                showResult(false);
+            }
+        };
     </script>
 </body>
 </html>
