@@ -12,123 +12,185 @@
         .content-section { display: none; }
         .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
-        .logic-card { border-top: 5px solid #38bdf8; position: relative; }
-        .patho-card { border-top: 5px solid #fb7185; position: relative; }
-        .q-badge { position: absolute; top: 1rem; right: 1rem; font-size: 10px; font-weight: 900; padding: 2px 8px; border-radius: 9999px; background: #F1F5F9; color: #64748B; }
-        .evidence-box { background-color: #F8FAFC; border: 1px dashed #CBD5E1; }
+        .logic-card { border-top: 5px solid #38bdf8; position: relative; margin-bottom: 1.5rem; }
+        .patho-card { border-top: 5px solid #fb7185; position: relative; margin-bottom: 1.5rem; }
+        .kw-badge { position: absolute; top: 1rem; right: 1rem; font-size: 10px; font-weight: 900; padding: 2px 10px; border-radius: 9999px; background: #F1F5F9; color: #0369a1; border: 1px solid #E2E8F0; }
+        .patho-card .kw-badge { color: #9f1239; background: #FFF1F2; border-color: #FECDD3; }
+        .evidence-box { background-color: #F8FAFC; border: 1px dashed #CBD5E1; margin-top: 10px; padding: 0.75rem; border-radius: 0.75rem; font-size: 9px; color: #64748B; line-height: 1.4; }
+        .advice-box { background-color: #F0F9FF; border-left: 4px solid #38bdf8; padding: 0.75rem; margin-top: 10px; border-radius: 0.5rem; font-size: 11px; }
+        .patho-box { background-color: #FFF1F2; border-left: 4px solid #fb7185; padding: 0.75rem; margin-top: 10px; border-radius: 0.5rem; font-size: 11px; }
     </style>
 </head>
 <body class="pb-24">
 
     <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="font-black text-slate-800 text-lg tracking-tighter">口臭・健康深掘りガイド</h1>
-            <button onclick="window.history.back()" class="bg-slate-100 hover:bg-slate-200 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold">戻る</button>
+            <h1 class="font-black text-slate-800 text-lg">HEALTH GUIDE</h1>
+            <button onclick="window.history.back()" class="bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold">戻る</button>
         </div>
-        <div class="max-w-md mx-auto flex border-t border-slate-100">
-            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">
-                ① 生理的な変化と予防
-            </div>
-            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">
-                ② 生活習慣と病的リスク
-            </div>
+        <div class="max-w-md mx-auto flex border-t border-slate-100 text-center">
+            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">生活習慣（Q1-10）</div>
+            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">疾患リスク（Q11-20）</div>
         </div>
     </header>
 
     <main class="max-w-md mx-auto p-5">
 
-        <div id="physio-content" class="content-section active space-y-8">
+        <div id="physio-content" class="content-section active">
             
-            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
-                <span class="q-badge">Q1 に関連</span>
-                <h2 class="font-black text-base mb-3 text-sky-700">起床時や空腹時のニオイ</h2>
-                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
-                    <p>睡眠中は唾液による自浄作用が低下し、細菌が爆発的に増殖します。これが「生理的口臭」の代表です。</p>
-                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
-                        <p class="font-bold mb-1">【改善のアドバイス】</p>
-                        起床後すぐの洗口と、朝食をよく噛んで食べることで新鮮な唾液を分泌させましょう。
-                    </div>
-                    <div class="evidence-box rounded-xl p-3 text-[9px] text-slate-500">
-                        <p class="font-bold mb-1">💡 専門的根拠・出典</p>
-                        厚生労働省 e-ヘルスネットによると、生理的口臭は誰にでもあるものであり、唾液分泌が減る時間帯に強まることが科学的に示されています。
-                    </div>
-                </div>
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">起床時・空腹時</span>
+                <h2 class="font-black text-sky-700 mb-2">Q1. 朝のニオイ・お腹が空いた時</h2>
+                <p class="text-[12px] text-slate-600">唾液が減り細菌が増える「生理的口臭」です。誰にでも起こります。</p>
+                <div class="evidence-box">【根拠】厚労省e-ヘルスネット：唾液分泌が減る時間帯に細菌がVSC（ガス）を作ります。</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 logic-card">
-                <span class="q-badge">Q2 に関連</span>
-                <h2 class="font-black text-base mb-3 text-sky-700">舌の汚れ「舌苔」の影響</h2>
-                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
-                    <p>舌苔（ぜったい）は口臭成分である揮発性硫黄化合物（VSC）の主要な発生源です。</p>
-                    <div class="bg-sky-50 rounded-xl p-4 text-[11px] text-sky-900 border-l-2 border-sky-300">
-                        <p class="font-bold mb-1">【改善のアドバイス】</p>
-                        1日1回、舌ブラシによる清掃を習慣化しましょう。
-                    </div>
-                    <div class="evidence-box rounded-xl p-3 text-[9px] text-slate-500">
-                        <p class="font-bold mb-1">💡 専門的根拠・出典</p>
-                        日本歯科医学会の指針では、口臭原因の約6割が舌苔に由来するとされており、舌清掃は最も有効なセルフケアの一つとされています。
-                    </div>
-                </div>
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">舌の白さ</span>
+                <h2 class="font-black text-sky-700 mb-2">Q2. 舌の汚れ（舌苔）</h2>
+                <p class="text-[12px] text-slate-600">舌の表面に付いた細菌や細胞の死骸。口臭の最大の原因です。</p>
+                <div class="evidence-box">【根拠】日本歯科医学会：口臭原因の約6割が舌苔由来とされています。</div>
             </section>
 
-            </div>
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">緊張・ストレス</span>
+                <h2 class="font-black text-sky-700 mb-2">Q3. ストレスを感じている</h2>
+                <p class="text-[12px] text-slate-600">ストレスで自律神経が乱れると、唾液がネバつき自浄作用が落ちます。</p>
+                <div class="evidence-box">【根拠】日本唾液腺学会：ストレス下では交感神経が優位になり唾液量が激減します。</div>
+            </section>
 
-        <div id="patho-content" class="content-section space-y-8">
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">口の渇き・ネバつき</span>
+                <h2 class="font-black text-sky-700 mb-2">Q4. 口の乾燥（ドライマウス）</h2>
+                <p class="text-[12px] text-slate-600">唾液には殺菌成分が含まれます。乾燥は細菌にとって「天国」です。</p>
+                <div class="evidence-box">【根拠】ドライマウス研究会：口腔乾燥は細菌の揮発性物質を濃縮させます。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">ニンニク・お酒</span>
+                <h2 class="font-black text-sky-700 mb-2">Q5. 食べ物や飲み物の影響</h2>
+                <p class="text-[12px] text-slate-600">吸収された成分が血液を通って肺から吐き出されます。</p>
+                <div class="evidence-box">【根拠】日本口臭学会：これらは「一過性口臭」に分類され、時間の経過で消失します。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">睡眠不足・疲れ</span>
+                <h2 class="font-black text-sky-700 mb-2">Q6. 疲労や睡眠不足</h2>
+                <p class="text-[12px] text-slate-600">体の疲れは抵抗力を下げ、お口の中の炎症を悪化させます。</p>
+                <div class="evidence-box">【根拠】下関市しものせき21：休養は口腔保健において重要な一要素です。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">食後のニオイ</span>
+                <h2 class="font-black text-sky-700 mb-2">Q7. 食後の歯磨きをしない</h2>
+                <p class="text-[12px] text-slate-600">食べかすが数時間で発酵し、ニオイの元に変わります。</p>
+                <div class="evidence-box">【根拠】日本歯周病学会：歯垢（プラーク）は細菌の塊そのものです。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">アルコール習慣</span>
+                <h2 class="font-black text-sky-700 mb-2">Q8. お酒をよく飲む</h2>
+                <p class="text-[12px] text-slate-600">アルコールの利尿作用は体から水分を奪い、お口を乾燥させます。</p>
+                <div class="evidence-box">【根拠】アルコールによる脱水と口臭の関係（各医学論文より）。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">水分不足</span>
+                <h2 class="font-black text-sky-700 mb-2">Q9. 水をあまり飲まない</h2>
+                <p class="text-[12px] text-slate-600">体内の水分不足は唾液を減らし、口内の洗浄力を弱めます。</p>
+                <div class="advice-box">1.5〜2時間おきに一口の水分補給が推奨されます。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md logic-card">
+                <span class="kw-badge">口呼吸</span>
+                <h2 class="font-black text-sky-700 mb-2">Q10. 口で息をしている</h2>
+                <p class="text-[12px] text-slate-600">空気が直接入ることで唾液が蒸発し、菌が繁殖しやすくなります。</p>
+                <div class="evidence-box">【根拠】日本耳鼻咽喉科学会：口呼吸は口腔内フローラを悪化させます。</div>
+            </section>
+        </div>
+
+        <div id="patho-content" class="content-section">
             
-            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
-                <span class="q-badge">Q12, Q18 に関連</span>
-                <h2 class="font-black text-base mb-3 text-rose-700">歯周病と全身への影響</h2>
-                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
-                    <p>歯周病菌は口内だけでなく、血管を通じて全身に悪影響を及ぼすことがわかっています。</p>
-                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
-                        <p class="font-bold mb-1">【注意が必要な疾患例】</p>
-                        進行した歯周病は、<b>糖尿病、心疾患、誤嚥性肺炎</b>のリスクを高める要因となります。
-                    </div>
-                    <div class="evidence-box rounded-xl p-3 text-[9px] text-slate-500">
-                        <p class="font-bold mb-1">💡 専門性・エビデンス</p>
-                        日本歯周病学会のエビデンス集では、歯周病と糖尿病が双方向に悪影響を及ぼし合うことが証明されており、お口の管理が全身疾患の予防につながることが明記されています。
-                    </div>
-                </div>
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">継続的な悩み</span>
+                <h2 class="font-black text-rose-700 mb-2">Q11. 2週間以上悩んでいる</h2>
+                <p class="text-[12px] text-slate-600">一時的なものではなく、病的な要因が潜んでいる可能性があります。</p>
+                <div class="patho-box"><b>疾患例：</b> 歯周病、糖尿病、消化器疾患</div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-md border border-rose-100 patho-card">
-                <span class="q-badge">Q15, Q19 に関連</span>
-                <h2 class="font-black text-base mb-3 text-rose-700">内臓由来の口臭サイン</h2>
-                <div class="text-[12px] text-slate-600 space-y-3 leading-relaxed">
-                    <p>肝機能や腎機能、血糖値の異常が、特有のニオイとして現れることがあります。</p>
-                    <div class="bg-rose-50 rounded-xl p-4 text-[11px] text-rose-900 border-l-2 border-rose-300">
-                        <p class="font-bold mb-1">【考えられる疾患例】</p>
-                        肝疾患（アンモニア臭）、糖尿病（アセトン臭）、逆流性食道炎（酸っぱいニオイ）など。
-                    </div>
-                    <div class="evidence-box rounded-xl p-3 text-[9px] text-slate-500">
-                        <p class="font-bold mb-1">💡 専門性・エビデンス</p>
-                        これらは「病的口臭（全身疾患由来）」に分類され、医学的にも診断の補助指標として認められています（出典：日本口臭学会会誌ほか）。
-                    </div>
-                </div>
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">歯ぐきの出血</span>
+                <h2 class="font-black text-rose-700 mb-2">Q12. 歯磨きでの出血</h2>
+                <p class="text-[12px] text-slate-600">歯ぐきの炎症（歯周病）のサイン。そこからニオイ成分が発生します。</p>
+                <div class="evidence-box">【根拠】日本歯周病学会：出血は歯周組織破壊の初期症状です。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">異常な喉の渇き</span>
+                <h2 class="font-black text-rose-700 mb-2">Q13. 喉が異常に渇く</h2>
+                <p class="text-[12px] text-slate-600">ただの乾燥ではなく、体の代謝異常が隠れていることがあります。</p>
+                <div class="patho-box"><b>疾患例：</b> 糖尿病（高血糖による多尿と脱水）</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">鼻・喉の不調</span>
+                <h2 class="font-black text-rose-700 mb-2">Q14. 鼻づまり・膿が出る</h2>
+                <p class="text-[12px] text-slate-600">鼻の奥の膿のニオイが呼気に混ざることがあります。</p>
+                <div class="patho-box"><b>疾患例：</b> 蓄膿症（副鼻腔炎）、後鼻漏</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">むくみ・だるさ</span>
+                <h2 class="font-black text-rose-700 mb-2">Q15. 体がむくみやすい</h2>
+                <p class="text-[12px] text-slate-600">内臓の解毒機能が低下すると、呼気に特有の成分が混ざります。</p>
+                <div class="patho-box"><b>疾患例：</b> 腎機能障害、肝機能障害</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">胃の不調</span>
+                <h2 class="font-black text-rose-700 mb-2">Q16. 胃もたれ・胸焼け</h2>
+                <p class="text-[12px] text-slate-600">胃酸や未消化の物のニオイが逆流してくることがあります。</p>
+                <div class="patho-box"><b>疾患例：</b> 逆流性食道炎、胃炎</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">喫煙習慣</span>
+                <h2 class="font-black text-rose-700 mb-2">Q17. タバコを吸う</h2>
+                <p class="text-[12px] text-slate-600">血流を悪くし歯周病を劇的に悪化させ、出血も隠してしまいます。</p>
+                <div class="evidence-box">【根拠】厚生労働省：喫煙は口腔がん・歯周病の最大のリスク因子です。</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">歯のグラつき</span>
+                <h2 class="font-black text-rose-700 mb-2">Q18. 歯が動く感じがする</h2>
+                <p class="text-[12px] text-slate-600">歯を支える骨が溶けている深刻なサイン。強い腐敗臭を発します。</p>
+                <div class="patho-box"><b>疾患例：</b> 中度〜重度歯周病</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">急な眠気</span>
+                <h2 class="font-black text-rose-700 mb-2">Q19. 食後に強い眠気がくる</h2>
+                <p class="text-[12px] text-slate-600">血糖値の急変は血管にダメージを与え、お口の自浄力を下げます。</p>
+                <div class="patho-box"><b>疾患例：</b> 糖尿病予備軍（血糖スパイク）</div>
+            </section>
+
+            <section class="bg-white rounded-3xl p-6 shadow-md patho-card">
+                <span class="kw-badge">家族の指摘</span>
+                <h2 class="font-black text-rose-700 mb-2">Q20. 身近な人に指摘された</h2>
+                <p class="text-[12px] text-slate-600">他人が感じるニオイは、病的口臭である確率が高まります。</p>
+                <div class="advice-box">自分では慣れてしまうため、周囲の指摘は重要な健康のサインです。</div>
             </section>
         </div>
 
-        <div class="mt-12 bg-slate-800 rounded-[2.5rem] p-8 text-white">
-            <h3 class="font-black text-lg text-sky-400 mb-4 italic">SHIMONOSEKI PRIDE</h3>
-            <p class="text-xs leading-relaxed opacity-90 mb-4">
-                下関市では、市民の皆様の生涯を通じた健康づくりを推進する「しものせき21（第2次）」に基づき、お口の健康から全身の健康を守る取り組みを強化しています。
-            </p>
-            <div class="space-y-2 border-t border-white/20 pt-4">
-                <p class="text-[10px] font-bold text-sky-300">参考文献・公式データ元</p>
-                <ul class="text-[9px] opacity-70 list-disc list-inside">
-                    <li>厚生労働省 e-ヘルスネット（口臭のメカニズム）</li>
-                    <li>日本歯周病学会「歯周病と全身健康の関係」</li>
-                    <li>日本口臭学会「口臭診療ガイドライン」</li>
-                </ul>
-            </div>
+        <div class="mt-8 bg-slate-800 rounded-3xl p-6 text-white text-[10px]">
+            <p class="font-black text-sky-400 mb-2">【参考文献・出典】</p>
+            <ul class="opacity-70 space-y-1">
+                <li>・厚生労働省 e-ヘルスネット「口臭の原因・対策」</li>
+                <li>・日本歯周病学会「歯周治療ガイドライン」</li>
+                <li>・日本口臭学会「口臭診療指針」</li>
+                <li>・下関市健康増進計画 しものせき21</li>
+            </ul>
         </div>
-
-        <div class="mt-8 text-center pb-8">
-            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">
-                © 2026 Shimonoseki City Health Promotion
-            </p>
-        </div>
-
     </main>
 
     <script>
@@ -137,17 +199,14 @@
             const patho = document.getElementById('patho-content');
             const tab1 = document.getElementById('tab1');
             const tab2 = document.getElementById('tab2');
-
             if (cat === 'physio') {
-                physio.classList.add('active');
-                patho.classList.remove('active');
-                tab1.className = "w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab";
-                tab2.className = "w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
+                physio.classList.add('active'); patho.classList.remove('active');
+                tab1.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab";
+                tab2.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
             } else {
-                patho.classList.add('active');
-                physio.classList.remove('active');
-                tab2.className = "w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-rose-500 text-rose-600 bg-rose-50/50 category-tab";
-                tab1.className = "w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
+                patho.classList.add('active'); physio.classList.remove('active');
+                tab2.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-rose-500 text-rose-600 bg-rose-50/50 category-tab";
+                tab1.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
             }
             window.scrollTo(0, 0);
         }
