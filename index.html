@@ -87,7 +87,7 @@
                 </div>
             </div>
             
-            <div id="result-message" class="bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 text-sm font-bold text-slate-700"></div>
+            <div id="result-message" class="bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] text-sm font-bold text-slate-700"></div>
 
             <div class="mb-10"><h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3><div id="advice-list" class="grid gap-3"></div></div>
 
@@ -253,48 +253,76 @@
             renderRemindSection();
         }
 
+        // --- 充実させた結果メッセージ表示ロジック ---
         function renderScoreDisplay(s1, s2, adviceList) {
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
                 el.innerText = score;
-                if (score <= 40) { el.className = "text-5xl score-blue"; lbl.innerText = "安心"; lbl.className = "text-[10px] font-black bg-blue-tag px-4 py-1 rounded-full"; }
-                else if (score <= 60) { el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; }
-                else { el.className = "text-5xl score-red"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; }
+                if (score <= 40) { 
+                    el.className = "text-5xl score-blue"; lbl.innerText = "安心"; 
+                    lbl.className = "text-[10px] font-black bg-blue-tag px-4 py-1 rounded-full"; 
+                } else if (score <= 60) { 
+                    el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; 
+                    lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; 
+                } else { 
+                    el.className = "text-5xl score-red"; lbl.innerText = "警戒"; 
+                    lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; 
+                }
             };
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
             const msgEl = document.getElementById('result-message');
             
-            // ③④ 有識者フィードバックを反映した動的解説
-            if (s2 > 40) {
-                msgEl.innerHTML = `
-                    <div class="text-left">
-                        <p class="mb-2">お口の反応は、体内からの重要なサインです。</p>
-                        <div class="text-[11px] text-red-600 bg-red-50 p-3 rounded-2xl border border-red-100">
-                            <p class="font-black mb-1">【考えられる原因の例】</p>
-                            進行した歯周病のほか、呼吸器疾患、糖尿病、消化器系の不調などが隠れている可能性があります。
-                        </div>
-                        <p class="mt-2 text-[10px] text-slate-500">※自己判断せず、下関市の健診や歯科医院への相談を強くおすすめします。</p>
-                    </div>`;
-                msgEl.className = "bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 border-red-400 text-sm font-bold text-slate-700";
+            let title = "";
+            let description = "";
+            let borderColor = "";
+
+            if (s2 > 60) {
+                title = "【警戒】体内サインを優先してください";
+                description = "お口の反応は、体内からの重要なSOSです。進行した歯周病や、生活習慣病のリスクが高まっている可能性があります。早めに専門家へ相談しましょう。";
+                borderColor = "border-red-500";
+            } else if (s2 > 35) {
+                title = "【注意】放置するとリスクが高まります";
+                description = "少し気になる症状が出ていませんか？日々のケア不足や、お疲れが溜まっているサインです。一度リセットするためにプロのクリーニングが効果的です。";
+                borderColor = "border-amber-400";
             } else if (s1 > 50) {
-                msgEl.innerHTML = `
-                    <div class="text-left">
-                        <p class="mb-2">生活習慣に起因する反応が見られます。</p>
-                        <div class="text-[11px] text-sky-600 bg-sky-50 p-3 rounded-2xl border border-sky-100">
-                            <p class="font-black mb-1">【健康への気づき】</p>
-                            唾液の減少や自律神経の乱れ、疲労の蓄積が考えられます。水分補給や睡眠の質の改善が、お口と全身の健康につながります。
-                        </div>
-                    </div>`;
-                msgEl.className = "bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 border-sky-400 text-sm font-bold text-slate-700";
+                title = "【生活習慣】お口の乾燥に注意しましょう";
+                description = "生活習慣の影響でお口の自浄作用が少し弱まっているようです。水分補給やリラックスを心がけるだけで、ニオイの質はすぐに変わります。";
+                borderColor = "border-sky-400";
             } else {
-                msgEl.innerText = "良好な状態です。この調子でセルフケアと定期的な健診を続けていきましょう！";
-                msgEl.className = "bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 border-blue-400 text-sm font-bold text-slate-700 text-center";
+                title = "【安心】素晴らしい健康状態です！";
+                description = "現在、目立ったリスクは見られません。下関市の健診などを活用して、この「お口の若さ」を10年後も維持していきましょう。";
+                borderColor = "border-green-400";
             }
 
-            document.getElementById('advice-list').innerHTML = adviceList.map(adv => `<div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs font-bold text-slate-600 flex items-start"><span class="text-sky-400 mr-2">●</span>${adv}</div>`).join('');
+            msgEl.innerHTML = `
+                <div class="space-y-3">
+                    <h4 class="text-base font-black text-slate-800 flex items-center">
+                        <span class="mr-2">📋</span>${title}
+                    </h4>
+                    <p class="text-[12px] leading-relaxed text-slate-600 font-bold">${description}</p>
+                    <hr class="border-slate-100">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[10px] font-black text-sky-600 uppercase tracking-tighter">Your Focus Point</p>
+                        <p class="text-[10px] font-bold text-slate-400 italic">詳細は下のボタンへ</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        ${s2 > 40 ? '<span class="bg-red-50 text-red-700 text-[9px] px-2 py-1 rounded-md font-black"># 疾患リスクの確認</span>' : ''}
+                        ${s1 > 50 ? '<span class="bg-sky-50 text-sky-700 text-[9px] px-2 py-1 rounded-md font-black"># 生活習慣の改善</span>' : ''}
+                        <span class="bg-slate-100 text-slate-600 text-[9px] px-2 py-1 rounded-md font-black"># 定期健診のススメ</span>
+                    </div>
+                </div>
+            `;
+            msgEl.style.borderLeftColor = "transparent"; 
+            msgEl.className = `bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] ${borderColor}`;
+
+            document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
+                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-[11px] font-bold text-slate-600 flex items-start leading-snug">
+                    <span class="text-sky-400 mr-2">✔</span>${adv}
+                </div>`).join('');
+
             document.getElementById('q-counter').innerText = "REPORT";
             document.getElementById('progress').style.width = "100%";
         }
