@@ -7,113 +7,263 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F1F5F9; color: #1E293B; }
-        .category-tab { cursor: pointer; transition: all 0.3s; }
-        .content-card { display: none; }
-        .content-card.active { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F8FAFC; color: #1E293B; scroll-behavior: smooth; }
+        .category-tab { cursor: pointer; transition: all 0.2s; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .logic-card { border-left: 4px solid #38bdf8; }
+        .patho-card { border-left: 4px solid #fb7185; }
     </style>
 </head>
 <body class="pb-20">
 
-    <header class="bg-white shadow-sm sticky top-0 z-10">
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="font-black text-sky-600 text-lg">口臭・健康ガイド</h1>
-            <button onclick="window.history.back()" class="text-xs font-bold text-slate-400">戻る</button>
+            <h1 class="font-black text-slate-800 text-lg tracking-tighter">お口と体の健康ガイド</h1>
+            <button onclick="window.history.back()" class="bg-slate-100 hover:bg-slate-200 text-slate-500 px-3 py-1 rounded-full text-xs font-bold transition-colors">戻る</button>
         </div>
-        <div class="max-w-md mx-auto flex border-t">
-            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-3 text-center text-xs font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50 category-tab">
-                ①一時的・生理的リスク
+        <div class="max-w-md mx-auto flex border-t border-slate-100">
+            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">
+                ① 一時的・生理的要因
             </div>
-            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-3 text-center text-xs font-black border-b-2 border-transparent text-slate-400 category-tab">
-                ②生活習慣・病的リスク
+            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-center text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">
+                ② 生活習慣・病的要因
             </div>
         </div>
     </header>
 
-    <main class="max-w-md mx-auto p-6">
+    <main class="max-w-md mx-auto p-5">
 
-        <div id="physio-content" class="space-y-6 content-card active">
+        <div id="physio-content" class="content-section active space-y-6">
             
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
                 <div class="flex items-center mb-3">
-                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q1</span>
-                    <h2 class="font-black text-sm">起床時や空腹時のニオイ</h2>
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q1</span>
+                    <h2 class="font-bold text-sm">起床時や空腹時のニオイ</h2>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    睡眠中は唾液の分泌が極端に減り、口内細菌が爆発的に増殖します。これを「モーニングブレス」と呼びます。
-                </p>
-                <div class="bg-slate-50 rounded-xl p-4">
-                    <h3 class="text-[11px] font-black text-sky-700 mb-2">💡 深掘り解説</h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">
-                        空腹時は血液中の脂肪酸が分解され、ニオイの元となる物質が作られやすくなります。朝一番のうがいで細菌を流し、水を飲んで唾液腺を刺激することが科学的に有効です。
-                    </p>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">睡眠中は唾液の分泌が減り、口内細菌が日中の約30倍に増殖します。これを「モーニングブレス」と呼びます。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>空腹時は血液中の脂肪酸が分解され、ニオイ物質が肺から排出されやすくなります。起きたらまず「うがい」で菌を出し、コップ1杯の水を飲みましょう。
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
                 <div class="flex items-center mb-3">
-                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q2</span>
-                    <h2 class="font-black text-sm">舌の上の白い汚れ（舌苔）</h2>
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q2</span>
+                    <h2 class="font-bold text-sm">舌の上の白い汚れ（舌苔）</h2>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    白い汚れは「舌苔（ぜったい）」と呼ばれ、細菌や食べかす、剥がれた粘膜が溜まったものです。
-                </p>
-                <div class="bg-slate-50 rounded-xl p-4 text-[11px] text-slate-500 space-y-2">
-                    <p>口臭の約6割は舌苔が原因と言われています。ケアは「朝」が最適。夜間に溜まった汚れを優しく除去しましょう。※やりすぎは舌を傷つけるので逆効果です。</p>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">舌苔（ぜったい）は、死んだ細胞や細菌の塊です。口臭原因の約6割がここから発生します。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>鏡で見て白く厚い場合は要注意。1日1回、朝に「専用の舌ブラシ」で奥から手前へ優しく掃除を。こすりすぎは逆効果です。
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
                 <div class="flex items-center mb-3">
-                    <span class="bg-sky-100 text-sky-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q3-4</span>
-                    <h2 class="font-black text-sm">ストレス・ネバつきと唾液</h2>
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q3</span>
+                    <h2 class="font-bold text-sm">強いストレスと口の渇き</h2>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    緊張すると口が渇くのは、自律神経が影響しています。
-                </p>
-                <div class="bg-sky-50 border-l-4 border-sky-300 p-3 text-[11px] text-sky-800">
-                    <strong>唾液腺マッサージ：</strong>耳の下（耳下腺）、顎の下（顎下腺・舌下腺）を指の腹で円を描くように刺激すると、新鮮なサラサラ唾液が出やすくなります。
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">緊張すると口が渇くのは、交感神経が優位になり唾液が止まるためです。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>唾液の「自浄作用」が失われると一気にニオイが強まります。深呼吸を3回し、意識的にリラックスすることで唾液分泌を促しましょう。
                 </div>
             </section>
 
-            </div>
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q4</span>
+                    <h2 class="font-bold text-sm">緊張時のネバつき</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">ネバつく唾液は「ムチン」が多く、細菌を吸着しやすくニオイも強めです。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>耳の下（耳下腺）を指の腹で円を描くようにマッサージしてください。サラサラした唾液を出し、口内を中和することが大切です。
+                </div>
+            </section>
 
-        <div id="patho-content" class="space-y-6 content-card">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q5</span>
+                    <h2 class="font-bold text-sm">日中の水分摂取</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">コーヒーやお茶は利尿作用があるため、実は体内の水分を奪うこともあります。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>お口を潤すには「お水」がベスト。1.5〜2時間おきに一口ずつ飲む習慣を。乾燥を防ぐだけでニオイ物質の濃度は下がります。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q6</span>
+                    <h2 class="font-bold text-sm">生理・更年期の変化</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">ホルモンバランスの変化で歯ぐきが腫れやすくなる「ホルモン性歯肉炎」が影響します。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>この時期は血液中の揮発性硫黄化合物が増えるというデータもあります。いつもより丁寧なフロスと、十分な睡眠を心がけましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q7</span>
+                    <h2 class="font-bold text-sm">疲れと免疫力の低下</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">疲れがたまるとお口の免疫力が下がり、細菌が活動的になります。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>「最近臭うな」と感じるのは体からのSOSかもしれません。内臓の疲れも呼気に現れます。今日はスマホを置いて30分早く寝てみましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q8</span>
+                    <h2 class="font-bold text-sm">ニンニク・お酒の影響</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">飲食物のニオイは、胃ではなく「血液」に取り込まれて「肺」から出てきます。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>分解を助けるにはリンゴジュース（ポリフェノール）が有効。お酒の後は脱水を防ぐためにコップ2杯の水を多めに飲みましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q9</span>
+                    <h2 class="font-bold text-sm">歯磨きの頻度と効果</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">細菌は数時間で爆発的に増えます。汚れが停滞する時間が長いほどニオイが発生します。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>磨けないときは「お水でうがい」だけでも効果的。お口の汚れを物理的に薄める工夫をしましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-100 logic-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-sky-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q10</span>
+                    <h2 class="font-bold text-sm">口呼吸と乾燥リスク</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">口で息をすると、せっかくの唾液が蒸発してしまい、殺菌作用がゼロになります。</p>
+                <div class="bg-sky-50 rounded-xl p-3 text-[11px] text-sky-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>特に就寝中の口呼吸は要注意。寝る前の水分補給や、鼻呼吸をサポートするテープ（市販）の活用も検討してみましょう。
+                </div>
+            </section>
+        </div>
+
+        <div id="patho-content" class="content-section space-y-6">
             
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
                 <div class="flex items-center mb-3">
-                    <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q1</span>
-                    <h2 class="font-black text-sm">2週間以上続く口臭</h2>
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q1</span>
+                    <h2 class="font-bold text-sm">2週間以上続く悩み</h2>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    生理的な口臭は一時的ですが、2週間以上続く場合は「病的口臭」の可能性が高いです。
-                </p>
-                <div class="bg-rose-50 rounded-xl p-4">
-                    <h3 class="text-[11px] font-black text-rose-700 mb-2">⚠️ リスクの深掘り</h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">
-                        病的口臭の90%はお口の中に原因（歯周病・虫歯など）がありますが、残りの10%は呼吸器や消化器、糖尿病などの全身疾患が隠れていることがあります。
-                    </p>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">一時的な口臭は誰にでもありますが、長く続くのは「原因」が定着しているサインです。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>病的口臭の90%は口内、10%は全身疾患と言われています。セルフケアで改善しない場合は、プロのチェックで原因を特定することが最短ルートです。
                 </div>
             </section>
 
-            <section class="bg-white rounded-3xl p-6 shadow-sm border border-rose-100">
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
                 <div class="flex items-center mb-3">
-                    <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-2 py-1 rounded-md mr-2">Q2-3</span>
-                    <h2 class="font-black text-sm">歯ぐきからの出血・腫れ</h2>
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q2</span>
+                    <h2 class="font-bold text-sm">歯ぐきからの出血</h2>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    歯周病菌が放出する「メチルメルカプタン」は、玉ねぎが腐ったような強いニオイを放ちます。
-                </p>
-                <div class="text-[11px] text-slate-500 p-4 bg-slate-50 rounded-xl">
-                    歯周病は、血管を通じて全身に炎症物質を運び、糖尿病の悪化や動脈硬化のリスクを高めることが近年の研究で判明しています。
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">出血は歯周病の初期サイン。歯肉の溝に潜む細菌が「ガス」を出している状態です。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>歯周病菌が放出する「メチルメルカプタン」は、玉ねぎが腐ったような強いニオイ。血液を通じて全身へ炎症を広げるリスクもあります。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q3</span>
+                    <h2 class="font-bold text-sm">歯のグラつき・腫れ</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">歯周病が進行し、歯を支える骨が溶け始めている可能性があります。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>重度の歯周病は、強烈な口臭を伴うだけでなく、心疾患や脳梗塞のリスクを高めることも。早期の歯科受診を強くおすすめします。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q4</span>
+                    <h2 class="font-bold text-sm">喉の渇きと頻尿</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">異常な喉の渇きは、糖尿病などの血糖値トラブルの代表的なサインです。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>高血糖状態では尿の回数が増え、体内の水分が失われて口が激しく渇きます。お口の乾きが続く場合は、内科での血液検査を検討しましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q5</span>
+                    <h2 class="font-bold text-sm">鼻詰まり・後鼻漏</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">鼻水が喉に落ちる「後鼻漏」や「副鼻腔炎（蓄膿症）」が原因のことがあります。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>副鼻腔に溜まった膿が、呼吸とともにニオイとして放出されます。歯を磨いても解決しない鼻由来の口臭は、耳鼻咽喉科への相談が必要です。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q6</span>
+                    <h2 class="font-bold text-sm">内臓の疲れと呼気</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">肝臓や腎臓は、本来体内の毒素をろ過する場所。その働きが弱まるとニオイが血液に混ざります。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>アンモニア臭や独特なニオイが呼気に現れることがあります。だるさやむくみが続く場合は、健診で数値をチェックしましょう。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q7</span>
+                    <h2 class="font-bold text-sm">胃もたれ・胸焼け</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">消化不良で胃の内容物が発酵したり、逆流性食道炎があったりすると呼気が酸っぱくなります。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>胃が悪いと感じる時は、まず食事量を控え、消化に良いものを選んでください。症状が長引く場合は消化器内科への相談が有効です。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q8</span>
+                    <h2 class="font-bold text-sm">喫煙習慣とリスク</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">タバコは最強の「お口の乾燥剤」です。ニコチンが毛細血管を縮め、歯ぐきの病気を悪化させます。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>タバコの汚れ（タール）は細菌の格好のすみかになります。さらに、血管収縮により「歯ぐきからの出血」という危険信号を隠してしまうのが一番の怖さです。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q9</span>
+                    <h2 class="font-bold text-sm">食後の眠気・糖分</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">「血管の健康」はお口の健康と直結しています。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>糖分が多い生活は、プラーク（細菌の塊）を爆発的に増やし、口臭と虫歯の原因になります。食後の強い眠気は血糖値の乱高下のサインかもしれません。
+                </div>
+            </section>
+
+            <section class="bg-white rounded-[2rem] p-6 shadow-sm border border-rose-100 patho-card">
+                <div class="flex items-center mb-3">
+                    <span class="bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded mr-2">Q10</span>
+                    <h2 class="font-bold text-sm">足のむくみと血流</h2>
+                </div>
+                <p class="text-[12px] text-slate-600 leading-relaxed mb-3">体の巡り（血流）が滞ると、お口の粘膜の健康維持も難しくなります。</p>
+                <div class="bg-rose-50 rounded-xl p-3 text-[11px] text-rose-800 leading-relaxed">
+                    <strong>💡 深掘り：</strong>特に塩分やアルコールの摂りすぎは、むくみを引き起こし、睡眠の質を下げ、結果的にお口の不調を招きます。軽いストレッチで全身の血流を促しましょう。
                 </div>
             </section>
 
         </div>
 
-        <p class="text-center text-[10px] text-slate-400 mt-12 px-6 italic">
-            ※本内容は一般的な健康情報です。個別の診断については、下関市の実施医療機関など専門家にご相談ください。
+        <p class="text-center text-[10px] text-slate-400 mt-12 mb-6 px-6 italic">
+            ※本内容は一般的な健康情報です。個別の症状については、下関市の実施医療機関など専門家にご相談ください。
         </p>
 
     </main>
@@ -128,19 +278,23 @@
             if (cat === 'physio') {
                 physio.classList.add('active');
                 patho.classList.remove('active');
-                tab1.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab1.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
                 tab1.classList.remove('border-transparent', 'text-slate-400');
-                tab2.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab2.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
                 tab2.classList.add('border-transparent', 'text-slate-400');
+                window.scrollTo(0, 0);
             } else {
                 patho.classList.add('active');
                 physio.classList.remove('active');
-                tab2.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab2.classList.add('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
                 tab2.classList.remove('border-transparent', 'text-slate-400');
-                tab1.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50');
+                tab1.classList.remove('border-sky-500', 'text-sky-600', 'bg-sky-50/50');
                 tab1.classList.add('border-transparent', 'text-slate-400');
+                window.scrollTo(0, 0);
             }
         }
     </script>
 </body>
 </html>
+
+
