@@ -64,8 +64,6 @@
             </div>
             
             <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300" disabled>診断を開始する</button>
-            
-            <button id="resume-btn" onclick="showResult(true)" class="w-full mt-4 bg-white text-sky-500 border-2 border-sky-500 font-black py-4 rounded-3xl text-sm hidden">前回の診断結果を見る</button>
         </section>
         
         <section id="page-q" class="page">
@@ -238,10 +236,10 @@
         let currentIdx = 0, answers = [], lineProfile = null;
 
         window.onload = async () => {
-            // 前回の結果があるか確認
+            // 前回の結果があるか確認し、あれば即座に表示
             const savedData = localStorage.getItem('kuchi_check_result');
             if (savedData) {
-                document.getElementById('resume-btn').classList.remove('hidden');
+                showResult(true);
             }
 
             try {
@@ -260,7 +258,7 @@
         function startQuiz() { 
             currentIdx = 0; 
             answers = []; 
-            localStorage.removeItem('kuchi_check_result'); // 新規開始時は削除
+            localStorage.removeItem('kuchi_check_result'); 
             showPage('page-q'); 
             updateQuestion(); 
         }
@@ -300,13 +298,11 @@
             let s1, s2, adviceList;
 
             if (isResume) {
-                // 保存されたデータを復元
                 const data = JSON.parse(localStorage.getItem('kuchi_check_result'));
                 s1 = data.s1;
                 s2 = data.s2;
                 adviceList = data.adviceList;
             } else {
-                // 新規計算
                 s1 = 0; s2 = 0;
                 const adviceSet = [];
                 answers.forEach(a => {
@@ -317,8 +313,6 @@
                 s1 = Math.round(s1);
                 s2 = Math.round(s2);
                 adviceList = [...new Set(adviceSet)].slice(0, 4);
-
-                // データを保存
                 localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList }));
                 sendData(s1, s2);
             }
