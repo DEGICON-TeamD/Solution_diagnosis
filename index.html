@@ -92,7 +92,7 @@
             <div class="mb-10"><h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3><div id="advice-list" class="grid gap-3"></div></div>
 
             <div class="mb-10">
-                <a href="detail.html" onclick="setRedirectFlag()" class="block group no-underline">
+                <a href="detail.html" onclick="sessionStorage.setItem('fromQuiz', 'true')" class="block group no-underline">
                     <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-[2.5rem] p-6 shadow-lg shadow-sky-200 active:scale-[0.98] transition-all relative overflow-hidden">
                         <div class="relative z-10 flex items-center justify-between text-white">
                             <div class="flex-1">
@@ -183,14 +183,11 @@
 
         let currentIdx = 0, answers = [], lineProfile = null;
 
-        function setRedirectFlag() { sessionStorage.setItem('fromDetail', 'true'); }
-
         window.onload = async () => {
             const savedData = localStorage.getItem('kuchi_check_result');
-            const fromDetail = sessionStorage.getItem('fromDetail');
             if (savedData) {
-                if (fromDetail === 'true') { sessionStorage.removeItem('fromDetail'); showResult(true); } 
-                else { const rBtn = document.getElementById('resume-btn'); if(rBtn) rBtn.classList.remove('hidden'); }
+                const rBtn = document.getElementById('resume-btn');
+                if(rBtn) rBtn.classList.remove('hidden');
             }
             try {
                 await liff.init({ liffId: LIFF_ID });
@@ -253,7 +250,6 @@
             renderRemindSection();
         }
 
-        // --- 充実させた結果メッセージ表示ロジック ---
         function renderScoreDisplay(s1, s2, adviceList) {
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
@@ -274,10 +270,7 @@
             renderScore(s2, 'score-2', 'label-2');
 
             const msgEl = document.getElementById('result-message');
-            
-            let title = "";
-            let description = "";
-            let borderColor = "";
+            let title = "", description = "", borderColor = "";
 
             if (s2 > 60) {
                 title = "【警戒】体内サインを優先してください";
@@ -299,14 +292,11 @@
 
             msgEl.innerHTML = `
                 <div class="space-y-3">
-                    <h4 class="text-base font-black text-slate-800 flex items-center">
-                        <span class="mr-2">📋</span>${title}
-                    </h4>
+                    <h4 class="text-base font-black text-slate-800 flex items-center"><span class="mr-2">📋</span>${title}</h4>
                     <p class="text-[12px] leading-relaxed text-slate-600 font-bold">${description}</p>
                     <hr class="border-slate-100">
                     <div class="flex items-center justify-between">
                         <p class="text-[10px] font-black text-sky-600 uppercase tracking-tighter">Your Focus Point</p>
-                        <p class="text-[10px] font-bold text-slate-400 italic">詳細は下のボタンへ</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         ${s2 > 40 ? '<span class="bg-red-50 text-red-700 text-[9px] px-2 py-1 rounded-md font-black"># 疾患リスクの確認</span>' : ''}
@@ -315,7 +305,6 @@
                     </div>
                 </div>
             `;
-            msgEl.style.borderLeftColor = "transparent"; 
             msgEl.className = `bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] ${borderColor}`;
 
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
@@ -358,7 +347,7 @@
             });
         }
 
-        function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromDetail'); location.reload(); }
+        function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromQuiz'); location.reload(); }
         async function sendData(s1, s2) { if (!lineProfile || !GAS_URL) return; const data = { name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2 }; fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); }
     </script>
 </body>
