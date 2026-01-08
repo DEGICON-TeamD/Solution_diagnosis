@@ -92,7 +92,7 @@
             <div class="mb-10"><h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3><div id="advice-list" class="grid gap-3"></div></div>
 
             <div class="mb-10">
-                <a href="detail.html" onclick="sessionStorage.setItem('fromQuiz', 'true')" class="block group no-underline">
+                <a href="detail.html" onclick="goToDetail()" class="block group no-underline">
                     <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-[2.5rem] p-6 shadow-lg shadow-sky-200 active:scale-[0.98] transition-all relative overflow-hidden">
                         <div class="relative z-10 flex items-center justify-between text-white">
                             <div class="flex-1">
@@ -154,14 +154,14 @@
             { id: 9, axis: 1, cat: "歯磨き回数", text: "1日の歯磨き回数が、2回以下である。", labels: ["1回以下","2回","3回以上"], advice: "食後のブクブクうがいだけでも細菌の増殖を抑えられます。" },
             { id: 10, axis: 1, cat: "口呼吸", text: "無意識に口が開いていたり、口で息をすることが多い。", labels: ["よくある","たまにある","ない"], advice: "意識的な鼻呼吸と、寝る前の水分補給を大切に。" },
             { id: 11, axis: 2, cat: "継続性", text: "口臭の悩みが2週間以上、長く続いている。", labels: ["ずっと","時々","ない"], advice: "長く続く場合は、一度専門家のチェックを受けましょう。" },
-            { id: 12, axis: 2, cat: "歯ぐき", text: "歯を磨くとき、特定の場所から血が出ることがある。", labels: ["毎回","時々","ない"], advice: "出血は歯周病のサイン。早めの受診をおすすめします。" },
-            { id: 13, axis: 2, cat: "口の乾き", text: "口の中が常に乾いていて、話しにくかったり食べにくい。", labels: ["よくある","たまに","ない"], advice: "唾液不足は病気のサインかも。ガムトレも有効です。" },
+            { id: 12, axis: 2, cat: "歯ぐき", text: "歯を磨くとき、特定の場所から血が出ることがある。", labels: ["毎回","時々","ない"], advice: "出血は歯周病のサイン. 早めの受診をおすすめします。" },
+            { id: 13, axis: 2, cat: "口の乾き", text: "口の中が常に乾いていて、話しにくかったり食べにくい。", labels: ["よくある","たまに","ない"], advice: "唾液不足は病気のサインかも. ガムトレも有効です。" },
             { id: 14, axis: 2, cat: "鼻・喉", text: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある。", labels: ["よくある","たまに","ない"], advice: "耳鼻科への相談が改善の近道になることもあります。" },
             { id: 15, axis: 2, cat: "内臓だるさ", text: "お酒を飲まないのに、体がだるかったり足がむくみやすい。", labels: ["よくある","たまに","ない"], advice: "内分泌の健診で数値を一度確認してみましょう。" },
             { id: 16, axis: 2, cat: "消化器", text: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている。", labels: ["よくある","たまに","ない"], advice: "消化に良い食事を心がけ、体を内側から労わって。" },
-            { id: 17, axis: 2, cat: "喫煙習慣", text: "日常的にタバコを吸っている。", labels: ["吸う","以前吸っていた","吸わない"], advice: "タバコは深刻な病気を隠します。本数を減らす一歩から。" },
-            { id: 18, axis: 2, cat: "歯の異変", text: "歯がグラついたり、歯ぐきが腫れたりしている場所がある。", labels: ["ある","違和感","ない"], advice: "放置は危険です。早めに歯科医院へ。" },
-            { id: 19, axis: 2, cat: "血糖値", text: "急に甘いものが欲しくなったり、食後に強い眠気を感じる。", labels: ["よくある","たまに","ない"], advice: "食後の強い眠気は血糖値のサイン。健診を受けましょう。" },
+            { id: 17, axis: 2, cat: "喫煙習慣", text: "日常的にタバコを吸っている。", labels: ["吸う","以前吸っていた","吸わない"], advice: "タバコは深刻な病気を隠します. 本数を減らす一歩から。" },
+            { id: 18, axis: 2, cat: "歯の異変", text: "歯がグラついたり、歯ぐきが腫れたりしている場所がある。", labels: ["ある","違和感","ない"], advice: "放置は危険です. 早めに歯科医院へ。" },
+            { id: 19, axis: 2, cat: "血糖値", text: "急に甘いものが欲しくなったり、食後に強い眠気を感じる。", labels: ["よくある","たまに","ない"], advice: "食後の強い眠気は血糖値のサイン. 健診を受けましょう。" },
             { id: 20, axis: 2, cat: "足のむくみ", text: "夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまに","ない"], advice: "軽いストレッチでお口と全身の巡りを良くしましょう。" }
         ];
 
@@ -171,11 +171,11 @@
             { id: "water", name: "こまめな「水分補給リマインド」", time1: "10:00", time2: "15:00", triggers: [5, 9], msg: "水分不足はニオイを強くします。お水飲みませんか？" },
             { id: "sleep", name: "夜の「早寝・リラックス通知」", time1: "21:30", triggers: [6], msg: "睡眠不足は自浄作用を下げます。早めに休みましょう。" },
             { id: "alcohol", name: "飲み会・内臓ケアアドバイス", time1: "18:00", triggers: [8, 15], msg: "お酒の合間に水を挟むのが翌朝残さないプロのコツ。" },
-            { id: "dry", name: "鼻呼吸・ガム噛みトレーニング", time1: "13:00", triggers: [4, 13], msg: "口呼吸は乾燥の元。意識して鼻呼吸をしましょう。" },
-            { id: "smoke", name: "本数を減らすための応援通知", time1: "11:00", time2: "16:00", triggers: [17], msg: "タバコの後のうがいでリフレッシュ。1歩ずついこう。" },
+            { id: "dry", name: "鼻呼吸・ガム噛みトレーニング", time1: "13:00", triggers: [4, 13], msg: "口呼吸は乾燥の元. 意識して鼻呼吸をしましょう。" },
+            { id: "smoke", name: "本数を減らすための応援通知", time1: "11:00", time2: "16:00", triggers: [17], msg: "タバコの後のうがいでリフレッシュ. 1歩ずついこう。" },
             { id: "brush", name: "昼の「ブクブクうがい」習慣", time1: "12:30", triggers: [9], msg: "歯磨きができない時はブクブクうがいだけでOK！" },
             { id: "nose", name: "鼻呼吸の意識付け・ガムトレ", time1: "15:00", triggers: [10], msg: "気づいた時に口を閉じ、唾液を出す練習を！" },
-            { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [19], msg: "食後の強い眠気は血糖値のサイン。体を労わって。" },
+            { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [19], msg: "食後の強い眠気は血糖値のサイン. 体を労わって。" },
             { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [20], msg: "軽いストレッチで全身とお口の巡りを良くしよう。" },
             { id: "season", name: "季節の健康アドバイス", time1: "09:00", triggers: [], msg: "季節の変わり目、お口の乾きに注意しましょう。", isCommon: true },
             { id: "kensin", name: "下関市 健診案内通知", type: "period", triggers: [], msg: "そろそろ健診の時期です。早めに予約をしませんか？", isCommon: true }
@@ -184,11 +184,6 @@
         let currentIdx = 0, answers = [], lineProfile = null;
 
         window.onload = async () => {
-            const savedData = localStorage.getItem('kuchi_check_result');
-            if (savedData) {
-                const rBtn = document.getElementById('resume-btn');
-                if(rBtn) rBtn.classList.remove('hidden');
-            }
             try {
                 await liff.init({ liffId: LIFF_ID });
                 if (liff.isLoggedIn()) {
@@ -197,6 +192,17 @@
                     document.getElementById('start-btn').disabled = false;
                 } else { liff.login(); }
             } catch (e) { document.getElementById('start-btn').disabled = false; }
+
+            // --- 修正箇所：詳細から戻った時または保存データがある時の復元 ---
+            const savedData = localStorage.getItem('kuchi_check_result');
+            const fromDetail = sessionStorage.getItem('fromQuiz');
+
+            if (fromDetail === 'true' && savedData) {
+                showResult(true); 
+            } else if (savedData) {
+                const rBtn = document.getElementById('resume-btn');
+                if(rBtn) rBtn.classList.remove('hidden');
+            }
         };
 
         function startQuiz() { currentIdx = 0; answers = []; localStorage.removeItem('kuchi_check_result'); showPage('page-q'); updateQuestion(); }
@@ -274,19 +280,19 @@
 
             if (s2 > 60) {
                 title = "【警戒】体内サインを優先してください";
-                description = "お口の反応は、体内からの重要なSOSです。進行した歯周病や、生活習慣病のリスクが高まっている可能性があります。早めに専門家へ相談しましょう。";
+                description = "お口の反応は、体内からの重要なSOSです. 進行した歯周病や、生活習慣病のリスクが高まっている可能性があります. 早めに専門家へ相談しましょう.";
                 borderColor = "border-red-500";
             } else if (s2 > 35) {
                 title = "【注意】放置するとリスクが高まります";
-                description = "少し気になる症状が出ていませんか？日々のケア不足や、お疲れが溜まっているサインです。一度リセットするためにプロのクリーニングが効果的です。";
+                description = "少し気になる症状が出ていませんか？日々のケア不足や、お疲れが溜まっているサインです. 一度リセットするためにプロのクリーニングが効果的です.";
                 borderColor = "border-amber-400";
             } else if (s1 > 50) {
                 title = "【生活習慣】お口の乾燥に注意しましょう";
-                description = "生活習慣の影響でお口の自浄作用が少し弱まっているようです。水分補給やリラックスを心がけるだけで、ニオイの質はすぐに変わります。";
+                description = "生活習慣の影響でお口の自浄作用が少し弱まっているようです. 水分補給やリラックスを心がけるだけで、ニオイの質はすぐに変わります.";
                 borderColor = "border-sky-400";
             } else {
                 title = "【安心】素晴らしい健康状態です！";
-                description = "現在、目立ったリスクは見られません。下関市の健診などを活用して、この「お口の若さ」を10年後も維持していきましょう。";
+                description = "現在、目立ったリスクは見られません. 下関市の健診などを活用して、この「お口の若さ」を10年後も維持していきましょう.";
                 borderColor = "border-green-400";
             }
 
@@ -345,6 +351,12 @@
                 item.innerHTML = `<div class="flex items-start justify-between"><label class="flex items-start font-bold text-sm cursor-pointer flex-1 pt-1"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500 mt-1" ${isRecommended || menu.isCommon ? 'checked' : ''}><span class="flex flex-col">${isRecommended ? `<span class="text-[9px] text-sky-600 font-black mb-0.5 tracking-tighter">⭐ ${isHigh ? '今のあなたに必要' : 'あなたにおすすめ'}</span>` : ''}<span class="text-slate-700">${menu.name}</span><p class="text-[9px] font-bold text-slate-400 mt-1 leading-tight italic">「${menu.msg}」</p></span></label><div class="flex flex-col ml-2">${ctrl}</div></div>`;
                 container.appendChild(item);
             });
+        }
+
+        // --- 修正箇所：詳細ページ遷移時のフラグ保存 ---
+        function goToDetail() {
+            sessionStorage.setItem('fromQuiz', 'true');
+            location.href = 'detail.html';
         }
 
         function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromQuiz'); location.reload(); }
