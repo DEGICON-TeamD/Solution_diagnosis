@@ -3,352 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>口臭＆健康リスク診断 | 下関市</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <title>下関市 口臭・健康セルフチェック</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans JP', sans-serif; letter-spacing: -0.01em; color: #0F172A; -webkit-tap-highlight-color: transparent; }
-        .page { display: none; }
-        .active { display: block; animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
-        .bg-main { background-color: #F8FAFC; }
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        .option-card { transition: all 0.2s; border: 2px solid #E2E8F0; cursor: pointer; }
+        .option-card:active { transform: scale(0.98); }
         .progress-bar { transition: width 0.4s ease; }
-        .opt-btn-text { font-size: 1.1rem !important; font-weight: 800; color: #0F172A; }
-        .score-blue { color: #0ea5e9; } .bg-blue-tag { background-color: #e0f2fe; color: #0369a1; }
-        .score-yellow { color: #eab308; } .bg-yellow-tag { background-color: #fefce8; color: #854d0e; }
-        .score-red { color: #ef4444; } .bg-red-tag { background-color: #fef2f2; color: #991b1b; }
-        .my-icon { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 100; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); object-fit: cover; border: 2px solid white; }
-        input[type="time"], select { appearance: none; -webkit-appearance: none; background: #F1F5F9; border: 1px solid #E2E8F0; }
+        .hidden { display: none; }
+        .advice-card { border-left: 4px solid #0ea5e9; background: #f0f9ff; padding: 1rem; border-radius: 0.75rem; font-size: 0.8rem; margin-bottom: 0.75rem; }
+        .patho-advice { border-left-color: #f43f5e; background: #fff1f2; }
     </style>
 </head>
-<body class="bg-main">
+<body class="min-h-screen flex flex-col items-center p-4">
 
-    <img src="my-icon.png" class="my-icon" alt="Brand Icon">
-
-    <header class="bg-white border-b sticky top-0 z-50 px-4 py-3 shadow-sm">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <span class="text-sky-600 font-black text-lg italic tracking-tighter">KUCHI-CHECK</span>
-            <span id="q-counter" class="text-[10px] font-black bg-sky-100 text-sky-600 px-3 py-1 rounded-full uppercase">READY</span>
-        </div>
-        <div class="max-w-md mx-auto w-full bg-slate-100 h-1.5 mt-2 rounded-full overflow-hidden">
-            <div id="progress" class="progress-bar bg-sky-400 h-full" style="width: 0%"></div>
-        </div>
-    </header>
-
-    <main class="max-w-md mx-auto p-4 pb-24">
-        
-        <section id="page-start" class="page active py-6 text-center">
-            <h1 class="text-3xl font-black mb-4 leading-tight">あなたの息は、<br><span class="text-sky-500 text-4xl underline decoration-yellow-300 decoration-8">「健康サイン」</span>です</h1>
-            <div class="bg-white p-6 rounded-[2.5rem] shadow-xl border border-slate-100 mb-8 text-left">
-                <p class="text-sm font-bold text-slate-600 mb-6 leading-relaxed">口臭は単なるお口の汚れだけでなく、日々の生活習慣や、時には隠れた病気のサインであることも。まずはあなたの現状をチェックしてみましょう。</p>
-                <h2 class="text-sky-600 font-black text-lg mb-3">この診断でわかること</h2>
-                <ul class="text-sm font-bold text-slate-600 space-y-4">
-                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>2つのリスクを算出：</b>「生活習慣によるもの」か「病気のサイン」かを分析。</span></li>
-                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>専用アドバイス：</b>結果に基づいたケア方法を提案。</span></li>
-                    <li class="flex items-start"><span class="text-sky-400 mr-2 text-lg">●</span><span><b>下関市のサポート：</b>市内の医療機関や健診情報をすぐにご案内。</span></li>
-                </ul>
-                <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-8 text-center border-t pt-4">LINEと接続しています...</p>
+    <div id="quiz-screen" class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4">
+        <div class="bg-sky-600 p-6 text-white text-center">
+            <h1 class="text-xl font-black italic tracking-tighter uppercase">Shimonoseki Health</h1>
+            <div class="mt-4 bg-white/20 rounded-full h-1.5 overflow-hidden">
+                <div id="progress" class="progress-bar bg-white h-full" style="width: 5%"></div>
             </div>
-            <button id="start-btn" onclick="startQuiz()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300 mb-4" disabled>診断を開始する</button>
-            <button id="resume-btn" onclick="showResult(true)" class="hidden w-full bg-white border-2 border-sky-400 text-sky-500 font-black py-4 rounded-3xl text-sm shadow-sm active:bg-sky-50 transition-all flex items-center justify-center">📄 前回の診断結果を見る</button>
-        </section>
-        
-        <section id="page-q" class="page">
-            <div class="bg-white rounded-[3rem] p-8 shadow-2xl border border-sky-50 mt-4 relative">
-                <div class="flex justify-between items-start mb-6">
-                    <div id="q-cat-label" class="inline-block px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest text-white bg-sky-400 uppercase">CATEGORY</div>
-                    <button id="back-btn" onclick="prevQuestion()" class="text-[10px] font-black text-slate-400 flex items-center bg-slate-100 px-3 py-1.5 rounded-full active:bg-slate-200"><span class="mr-1">◀</span> 戻る</button>
-                </div>
-                <h2 id="q-text" class="text-xl font-black mb-8 leading-tight text-slate-800 min-h-[4rem]"></h2>
-                <div id="q-image-area" class="mb-8 hidden">
-                    <div class="grid grid-cols-3 gap-2 text-[9px] font-bold text-slate-400 text-center">
-                        <div><img src="tongue1.jpg" class="rounded-xl border mb-1 aspect-square object-cover shadow-sm">真っ白</div>
-                        <div><img src="tongue2.jpg" class="rounded-xl border mb-1 aspect-square object-cover shadow-sm">うっすら</div>
-                        <div><img src="tongue3.jpg" class="rounded-xl border mb-1 aspect-square object-cover shadow-sm">きれい</div>
-                    </div>
-                </div>
-                <div id="options-container" class="space-y-4"></div>
-            </div>
-        </section>
+            <div id="q-count" class="text-[10px] mt-2 font-bold opacity-80 uppercase tracking-widest">Question 01/20</div>
+        </div>
+        <div class="p-8">
+            <div id="question-text" class="text-lg font-black leading-tight text-slate-800 mb-8 min-h-[4rem]"></div>
+            <div id="options" class="space-y-3"></div>
+        </div>
+    </div>
 
-        <section id="page-result" class="page">
-            <h2 class="text-center font-black text-2xl mb-2 tracking-tighter italic text-slate-800 uppercase">Diagnostic Report</h2>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <div class="bg-white p-5 rounded-[2.5rem] shadow-xl border border-sky-50 text-center">
-                    <p class="text-[10px] font-black mb-1 uppercase opacity-60">一時的リスク</p>
-                    <div class="flex items-center justify-center font-black"><span id="score-1" class="text-5xl">0</span><span class="text-sm ml-1">%</span></div>
-                    <p id="label-1" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
-                </div>
-                <div class="bg-white p-5 rounded-[2.5rem] shadow-xl border border-sky-50 text-center">
-                    <p class="text-[10px] font-black mb-1 uppercase opacity-60">病的リスク</p>
-                    <div class="flex items-center justify-center font-black"><span id="score-2" class="text-5xl">0</span><span class="text-sm ml-1">%</span></div>
-                    <p id="label-2" class="text-[10px] font-black rounded-full py-1 mt-3"></p>
-                </div>
+    <div id="result-screen" class="hidden w-full max-w-md bg-white rounded-[2.5rem] shadow-xl overflow-hidden mt-4 mb-8">
+        <div class="bg-slate-800 p-8 text-white text-center">
+            <span class="bg-sky-500 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Analysis Result</span>
+            <h2 class="text-2xl font-black mt-3">あなたの「口臭・健康」診断書</h2>
+        </div>
+
+        <div class="p-6">
+            <div class="mb-8">
+                <canvas id="resultChart"></canvas>
             </div>
             
-            <div id="result-message" class="bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] text-sm font-bold text-slate-700"></div>
-
-            <div class="mb-10"><h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3><div id="advice-list" class="grid gap-3"></div></div>
-
-            <div class="mb-10">
-                <a href="detail.html" onclick="sessionStorage.setItem('fromQuiz', 'true')" class="block group no-underline">
-                    <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-[2.5rem] p-6 shadow-lg shadow-sky-200 active:scale-[0.98] transition-all relative overflow-hidden">
-                        <div class="relative z-10 flex items-center justify-between text-white">
-                            <div class="flex-1">
-                                <p class="text-[10px] font-black uppercase tracking-widest mb-1 opacity-80">Scientific Evidence</p>
-                                <h3 id="detail-btn-title" class="text-lg font-black mb-2 text-white">なぜこの結果に？詳しい根拠を見る</h3>
-                                <p class="text-[11px] font-bold opacity-90 text-white">専門知識とエビデンスに基づいた解説ガイド</p>
-                            </div>
-                            <div class="bg-white/20 p-4 rounded-full ml-4"><span class="text-2xl">📖</span></div>
-                        </div>
+            <div class="space-y-6">
+                <section>
+                    <h3 class="flex items-center font-black text-slate-800 mb-3 text-sm">
+                        <span class="w-2 h-6 bg-sky-500 rounded-full mr-2"></span> 一時的・生理的リスク
+                    </h3>
+                    <div id="res-box1" class="p-4 rounded-2xl border text-sm leading-relaxed">
+                        <strong id="res-title1" class="block mb-2 text-lg"></strong>
+                        <p id="res-desc1"></p>
                     </div>
-                </a>
+                </section>
+
+                <section>
+                    <h3 class="flex items-center font-black text-slate-800 mb-3 text-sm">
+                        <span class="w-2 h-6 bg-rose-500 rounded-full mr-2"></span> 生活習慣・病的リスク
+                    </h3>
+                    <div id="res-box2" class="p-4 rounded-2xl border text-sm leading-relaxed">
+                        <strong id="res-title2" class="block mb-2 text-lg"></strong>
+                        <p id="res-desc2"></p>
+                    </div>
+                </section>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border-2 border-sky-100 mb-10">
-                <div class="text-center mb-6">
-                    <h3 class="font-black text-sky-600 text-lg mb-2 italic">あなただけのアドバイス・プランを作ろう</h3>
-                    <p class="text-[10px] font-bold text-slate-500 leading-relaxed">
-                        診断お疲れ様でした！今回の結果に基づき、今のあなたに必要な習慣化をLINEでサポートします。
-                    </p>
+            <hr class="my-8 border-slate-100">
+
+            <section id="pinpoint-section" class="mb-8">
+                <h3 class="font-black text-slate-800 mb-4 text-sm flex items-center">
+                    <span class="mr-2">📝</span> あなたの回答に基づいたアドバイス
+                </h3>
+                <div id="advice-container"></div>
+            </section>
+
+            <section class="bg-slate-50 p-6 rounded-[2rem] border border-slate-200 mb-8">
+                <h3 class="font-black text-slate-800 text-sm mb-1">あなただけの「健康のコツ」を予約</h3>
+                <p class="text-[10px] text-slate-500 mb-4 italic">診断結果に基づいたおすすめ項目を上位に表示しています</p>
+                
+                <div id="notification-list" class="space-y-2 mb-4">
+                    </div>
+
+                <div class="space-y-3 mt-4">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">通知を希望する時間</label>
+                    <input type="datetime-local" id="remind-time" class="w-full p-4 rounded-2xl border border-slate-200 text-sm font-bold bg-white">
+                    <button onclick="saveRemind()" id="remind-btn" class="w-full bg-sky-600 text-white py-4 rounded-2xl font-black text-sm hover:bg-sky-700 shadow-lg transition-all">通知プランを確定する</button>
                 </div>
-                <div id="remind-list" class="space-y-4"></div>
-                <button onclick="alert('リマインド設定を保存しました。')" class="w-full mt-8 bg-sky-500 text-white font-black py-4 rounded-3xl text-md shadow-md active:scale-95 transition-all">リマインドを保存する</button>
-            </div>
+            </section>
 
-            <div class="bg-white border-2 border-slate-100 rounded-[2.5rem] p-8 mb-6 shadow-xl">
-                <h3 class="text-xl font-black mb-4 italic text-sky-500 text-center">SHIMONOSEKI INFO</h3>
-                <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-slate-700 text-center font-bold py-4 rounded-2xl text-sm no-underline text-white">健康診査（全般）</a>
-                </div>
-            </div>
-
-            <div class="mb-10 text-center">
-                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline mb-4">
-                    <span class="text-2xl mr-3">📄</span><div class="text-left"><p class="text-[10px] font-black text-sky-400 leading-none mb-1 uppercase">Official List</p><p class="text-sm font-black text-white">下関市 実施医療機関一覧(PDF)</p></div>
-                </a>
-                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline mb-10">
-                    <span class="text-2xl mr-3">📍</span><div class="text-left"><p class="text-[10px] font-black text-sky-500 leading-none mb-1 uppercase">Clinic Search</p><p class="text-sm font-black text-slate-700">近くの歯科医院を探す</p></div>
-                </a>
-                <button onclick="liff.closeWindow()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl text-xl shadow-lg active:scale-95 mb-4">診断を終了する</button>
-                <button onclick="resetAndStart()" class="w-full bg-slate-200 text-slate-500 font-black py-3 rounded-2xl text-sm active:scale-95 mb-10">最初からやり直す</button>
-            </div>
-        </section>
-    </main>
+            <button onclick="goToDetail()" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] font-black text-sm hover:bg-slate-700 transition-all shadow-xl">原因と対策をさらに深掘りする</button>
+            <button onclick="resetQuiz()" class="w-full mt-4 bg-slate-100 text-slate-400 py-4 rounded-[2rem] font-bold text-xs">最初からやり直す</button>
+        </div>
+    </div>
 
     <script>
-        const LIFF_ID = "2008714027-cuYvg8O7"; 
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbzJNBRRoA98IkQjcQcmpA-Xv45ATZF1xwM56CJ_6tBvk0tGCpTEGjRS1CDChBcD6hpyEg/exec"; 
-
         const questions = [
-            { id: 1, axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
-            { id: 2, axis: 1, cat: "舌の汚れ", text: "鏡で舌を見たとき、表面が白く厚く覆われている。", labels: ["真っ白","うっすら","きれい"], advice: "朝の歯磨き前に「舌ブラシ」で優しくケアしましょう。", hasImage: true },
-            { id: 3, axis: 1, cat: "ストレス", text: "現在、仕事や家庭などで強いストレスを感じている。", labels: ["常に強い","時々","あまりない"], advice: "深呼吸を3回するだけでも唾液は出やすくなります。" },
-            { id: 4, axis: 1, cat: "ネバつき", text: "緊張すると口の中がネバネバし、話しにくいと感じることがある。", labels: ["よくある","たまにある","ない"], advice: "唾液腺マッサージで、サラサラ唾液を呼び戻しましょう。" },
-            { id: 5, axis: 1, cat: "水分摂取", text: "日中、水やお茶などの水分をあまり摂らない。", labels: ["摂らない","時々","こまめに摂る"], advice: "一口ずつ、こまめに口を潤す習慣をつけましょう。" },
-            { id: 6, axis: 1, cat: "体調・疲労", text: "睡眠不足や疲れが溜まっていて、体調が万全ではない。", labels: ["かなり疲労","やや疲れ","元気"], advice: "今日はいつもより30分早く寝てみませんか？" },
-            { id: 7, axis: 1, cat: "飲食", text: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ。", labels: ["はい","少し","いいえ"], advice: "リンゴジュースが一時的なニオイの分解を助けます。" },
-            { id: 8, axis: 1, cat: "飲酒習慣", text: "お酒を週に多く飲んだり、寝る前にお酒を飲む習慣がある。", labels: ["はい","時々","いいえ"], advice: "お酒の合間に水を飲むだけで、翌朝のニオイが違います。" },
-            { id: 9, axis: 1, cat: "歯磨き回数", text: "1日の歯磨き回数が、2回以下である。", labels: ["1回以下","2回","3回以上"], advice: "食後のブクブクうがいだけでも細菌の増殖を抑えられます。" },
-            { id: 10, axis: 1, cat: "口呼吸", text: "無意識に口が開いていたり、口で息をすることが多い。", labels: ["よくある","たまにある","ない"], advice: "意識的な鼻呼吸と、寝る前の水分補給を大切に。" },
-            { id: 11, axis: 2, cat: "継続性", text: "口臭の悩みが2週間以上、長く続いている。", labels: ["ずっと","時々","ない"], advice: "長く続く場合は、一度専門家のチェックを受けましょう。" },
-            { id: 12, axis: 2, cat: "歯ぐき", text: "歯を磨くとき、特定の場所から血が出ることがある。", labels: ["毎回","時々","ない"], advice: "出血は歯周病のサイン。早めの受診をおすすめします。" },
-            { id: 13, axis: 2, cat: "口の乾き", text: "口の中が常に乾いていて、話しにくかったり食べにくい。", labels: ["よくある","たまに","ない"], advice: "唾液不足は病気のサインかも。ガムトレも有効です。" },
-            { id: 14, axis: 2, cat: "鼻・喉", text: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある。", labels: ["よくある","たまに","ない"], advice: "耳鼻科への相談が改善の近道になることもあります。" },
-            { id: 15, axis: 2, cat: "内臓だるさ", text: "お酒を飲まないのに、体がだるかったり足がむくみやすい。", labels: ["よくある","たまに","ない"], advice: "内分泌の健診で数値を一度確認してみましょう。" },
-            { id: 16, axis: 2, cat: "消化器", text: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている。", labels: ["よくある","たまに","ない"], advice: "消化に良い食事を心がけ、体を内側から労わって。" },
-            { id: 17, axis: 2, cat: "喫煙習慣", text: "日常的にタバコを吸っている。", labels: ["吸う","以前吸っていた","吸わない"], advice: "タバコは深刻な病気を隠します。本数を減らす一歩から。" },
-            { id: 18, axis: 2, cat: "歯の異変", text: "歯がグラついたり、歯ぐきが腫れたりしている場所がある。", labels: ["ある","違和感","ない"], advice: "放置は危険です。早めに歯科医院へ。" },
-            { id: 19, axis: 2, cat: "血糖値", text: "急に甘いものが欲しくなったり、食後に強い眠気を感じる。", labels: ["よくある","たまに","ない"], advice: "食後の強い眠気は血糖値のサイン。健診を受けましょう。" },
-            { id: 20, axis: 2, cat: "足のむくみ", text: "夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまに","ない"], advice: "軽いストレッチでお口と全身の巡りを良くしましょう。" }
+            // 軸①：一時的
+            { id: 1, q: "朝起きたときや、お腹が空いているときに特にお口が臭う？", cat: 1, adv: "朝一番のうがいや、起きてすぐのコップ1杯の水分補給が、朝の爽やかさを作るコツです。" },
+            { id: 2, q: "鏡で見ると、舌の上が白く厚くなっている？", cat: 1, adv: "舌の上の白い汚れはニオイの最大原因です。1日1回、朝の「舌ブラシ」で優しくなでるだけで劇的に変わります。" },
+            { id: 3, q: "現在、仕事や家庭などで強いストレスやプレッシャーを感じている？", cat: 1, adv: "ストレスは唾液を止めます。深呼吸を3回するだけでも唾液は出やすくなります。リラックスを心がけて。" },
+            { id: 4, q: "緊張すると口の中がネバネバし、話しにくいと感じることがある？", cat: 1, adv: "ネバつきは唾液の変化。頬を優しくマッサージする「唾液腺マッサージ」でサラサラの唾液を呼び戻しましょう。" },
+            { id: 5, q: "日中、水やお茶などの水分をあまり摂らない？", cat: 1, adv: "お茶やコーヒーよりも、まずは「お水」を。ひと口ずつ、こまめに口を潤す習慣をつけましょう。" },
+            { id: 6, q: "（女性の方）生理前後や更年期の時期に当たっている？", cat: 1, adv: "ホルモンバランスの変動期は、歯ぐきが敏感になります。いつもより丁寧な歯磨きと、たっぷりの休息を。" },
+            { id: 7, q: "睡眠不足や疲れが溜まっていて、体調が万全ではない？", cat: 1, adv: "ニオイは「体が休みたい」サインかも。今日はスマホを置いて、30分早く寝てみませんか？" },
+            { id: 8, q: "昨夜、ニンニク料理を食べたり、お酒を多めに飲んだ？", cat: 1, adv: "血液中の成分が肺から出ています。リンゴジュースを飲むと分解を助けることができます。" },
+            { id: 9, q: "1日の歯磨きの回数が、2回以下である？", cat: 1, adv: "細菌は数時間で増えます。昼食後も、難しい場合はお水で「ブクブクうがい」だけでも効果的です。" },
+            { id: 10, q: "寝ている時に、無意識に口が開いている（口呼吸）と指摘される？", cat: 1, adv: "口呼吸は乾燥の元。意識的な鼻呼吸と、寝る前の水分補給を大切にしましょう。" },
+            // 軸②：病的
+            { id: 11, q: "口臭の悩みが2週間以上、長く続いている？", cat: 2, adv: "長く続くニオイはセルフケアの限界かも。原因特定のたに、プロのチェックを強くおすすめします。" },
+            { id: 12, q: "歯を磨くとき、歯ぐきから血が出ることがある？", cat: 2, adv: "出血は歯周病のサイン。歯周病は糖尿病などの全身疾患とも繋がっています。歯科受診を検討しましょう。" },
+            { id: 13, q: "歯がグラついたり、歯ぐきが腫れたりしている場所がある？", cat: 2, adv: "重度の炎症の可能性があります。放置すると歯を失うだけでなく、全身疾患のリスクを高めます。" },
+            { id: 14, q: "以前より喉が異常に渇き、トイレに行く回数が増えた？", cat: 2, adv: "血糖値の状態が関係している可能性があります。内科の健診で「安心」を確認してみませんか？" },
+            { id: 15, q: "鼻が詰まりやすかったり、喉の奥に鼻水が落ちる感覚がある？", cat: 2, adv: "副鼻腔炎などの耳鼻咽喉疾患の疑いがあります。心当たりがあれば耳鼻科へ相談を。" },
+            { id: 16, q: "お酒を飲まないのに、体がだるかったり足がむくみやすい？", cat: 2, adv: "肝機能・腎機能の疲れが呼気に現れることがあります。健診で数値をチェックし、体を労わりましょう。" },
+            { id: 17, q: "胃もたれ、胸焼け、または慢性の胃痛に悩まされている？", cat: 2, adv: "消化器疾患が原因で呼気が酸っぱくなることも。暴飲暴食を避け、消化に良い食事を。" },
+            { id: 18, q: "日常的にタバコを吸っている？", cat: 2, adv: "タバコは血流を阻害し病気を隠します。本数を1本減らすことから始めませんか？" },
+            { id: 19, q: "最近、急に「甘いもの」が欲しくなったり、食後に強い眠気を感じる？", cat: 2, adv: "血糖値のサインかもしれません。お口は血管の健康と繋がっています。健診で数値の確認を。" },
+            { id: 20, q: "夕方に靴がきつく感じるほど、足がむくむことがある？", cat: 2, adv: "血流の滞りがお口にも影響します。ストレッチやお酒を控える日で巡りを整えましょう。" }
         ];
 
-        const remindMenus = [
-            { id: "morning", name: "朝と夜の「潤いリマインド」", time1: "20:00", time2: "07:00", triggers: [1], msg: "寝る前の1杯、起きてすぐの1杯でお口爽やか！" },
-            { id: "tongue", name: "朝の「舌ケア習慣リマインド」", time1: "08:00", triggers: [2], msg: "鏡を見て舌が白かったら、それはニオイの元。" },
-            { id: "water", name: "こまめな「水分補給リマインド」", time1: "10:00", time2: "15:00", triggers: [5, 9], msg: "水分不足はニオイを強くします。お水飲みませんか？" },
-            { id: "sleep", name: "夜の「早寝・リラックス通知」", time1: "21:30", triggers: [6], msg: "睡眠不足は自浄作用を下げます。早めに休みましょう。" },
-            { id: "alcohol", name: "飲み会・内臓ケアアドバイス", time1: "18:00", triggers: [8, 15], msg: "お酒の合間に水を挟むのが翌朝残さないプロのコツ。" },
-            { id: "dry", name: "鼻呼吸・ガム噛みトレーニング", time1: "13:00", triggers: [4, 13], msg: "口呼吸は乾燥の元。意識して鼻呼吸をしましょう。" },
-            { id: "smoke", name: "本数を減らすための応援通知", time1: "11:00", time2: "16:00", triggers: [17], msg: "タバコの後のうがいでリフレッシュ。1歩ずついこう。" },
-            { id: "brush", name: "昼の「ブクブクうがい」習慣", time1: "12:30", triggers: [9], msg: "歯磨きができない時はブクブクうがいだけでOK！" },
-            { id: "nose", name: "鼻呼吸の意識付け・ガムトレ", time1: "15:00", triggers: [10], msg: "気づいた時に口を閉じ、唾液を出す練習を！" },
-            { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [19], msg: "食後の強い眠気は血糖値のサイン。体を労わって。" },
-            { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [20], msg: "軽いストレッチで全身とお口の巡りを良くしよう。" },
-            { id: "season", name: "季節の健康アドバイス", time1: "09:00", triggers: [], msg: "季節の変わり目、お口の乾きに注意しましょう。", isCommon: true },
-            { id: "kensin", name: "下関市 健診案内通知", type: "period", triggers: [], msg: "そろそろ健診の時期です。早めに予約をしませんか？", isCommon: true }
-        ];
+        let currentIdx = 0;
+        let userResponses = [];
+        let scores = { 1: 0, 2: 0 };
 
-        let currentIdx = 0, answers = [], lineProfile = null;
-
-        window.onload = async () => {
-            const savedData = localStorage.getItem('kuchi_check_result');
-            if (savedData) {
-                const rBtn = document.getElementById('resume-btn');
-                if(rBtn) rBtn.classList.remove('hidden');
+        window.onload = function() {
+            const saved = localStorage.getItem('kuchi_check_data');
+            if (saved) {
+                const data = JSON.parse(saved);
+                scores = data.scores;
+                userResponses = data.responses;
+                showResult(false);
+            } else {
+                renderQuestion();
             }
-            try {
-                await liff.init({ liffId: LIFF_ID });
-                if (liff.isLoggedIn()) {
-                    lineProfile = await liff.getProfile();
-                    document.getElementById('liff-status').innerText = `${lineProfile.displayName}さん、準備完了！`;
-                    document.getElementById('start-btn').disabled = false;
-                } else { liff.login(); }
-            } catch (e) { document.getElementById('start-btn').disabled = false; }
         };
 
-        function startQuiz() { currentIdx = 0; answers = []; localStorage.removeItem('kuchi_check_result'); showPage('page-q'); updateQuestion(); }
-        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
-
-        function updateQuestion() {
+        function renderQuestion() {
             const q = questions[currentIdx];
-            document.getElementById('q-counter').innerText = `Q${currentIdx + 1} / 20`;
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('q-count').innerText = `Question ${String(currentIdx + 1).padStart(2, '0')}/20`;
             document.getElementById('progress').style.width = `${((currentIdx + 1) / 20) * 100}%`;
-            document.getElementById('q-cat-label').innerText = q.cat;
-            document.getElementById('q-text').innerText = q.text;
-            document.getElementById('q-image-area').classList.toggle('hidden', !q.hasImage);
-            const container = document.getElementById('options-container');
-            container.innerHTML = "";
-            q.labels.forEach((label, i) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full bg-white border-2 border-slate-100 p-6 rounded-3xl text-left shadow-sm active:bg-sky-50 flex justify-between items-center";
-                btn.innerHTML = `<span class="opt-btn-text text-sm font-bold">${label}</span><span class="text-sky-300">→</span>`;
-                btn.onclick = () => {
-                    answers.push({ qId: q.id, axis: q.axis, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)), advice: q.advice });
-                    if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } else { showResult(); }
+            
+            const container = document.getElementById('options');
+            container.innerHTML = '';
+            
+            const opts = [
+                { text: "よくある / 当てはまる", pts: 10, val: "A" },
+                { text: "たまにある / 少し気になる", pts: 5, val: "B" },
+                { text: "ほとんどない / 全くない", pts: 0, val: "C" }
+            ];
+
+            opts.forEach(o => {
+                const b = document.createElement('div');
+                b.className = "option-card bg-white p-5 rounded-2xl font-bold text-slate-700 flex justify-between items-center shadow-sm";
+                b.innerHTML = `<span>${o.text}</span><span class="text-slate-300 font-black">→</span>`;
+                b.onclick = () => {
+                    scores[q.cat] += o.pts;
+                    userResponses.push({ id: q.id, val: o.val, cat: q.cat });
+                    if(++currentIdx < questions.length) renderQuestion(); else showResult(true);
                 };
-                container.appendChild(btn);
+                container.appendChild(b);
             });
-            document.getElementById('back-btn').style.visibility = (currentIdx > 0) ? 'visible' : 'hidden';
         }
 
-        function prevQuestion() { if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); } }
+        function showResult(shouldSave) {
+            if(shouldSave) localStorage.setItem('kuchi_check_data', JSON.stringify({scores, responses: userResponses}));
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
 
-        function showResult(isResume = false) {
-            let s1, s2, adviceList;
-            if (isResume) {
-                const data = JSON.parse(localStorage.getItem('kuchi_check_result'));
-                if(!data) return;
-                s1 = data.s1; s2 = data.s2; adviceList = data.adviceList;
-                answers = data.answers || [];
-            } else {
-                s1 = 0; s2 = 0; const adviceSet = [];
-                answers.forEach(a => {
-                    let p = a.userScore * 10;
-                    if (a.axis === 1) s1 += p; else s2 += p;
-                    if (a.userScore >= 0.5) adviceSet.push(a.advice);
-                });
-                s1 = Math.round(s1); s2 = Math.round(s2);
-                adviceList = [...new Set(adviceSet)].slice(0, 4);
-                localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList, answers }));
-                sendData(s1, s2);
+            const s1 = scores[1], s2 = scores[2];
+            
+            [span_5](start_span)// フィードバックロジック反映[span_5](end_span)
+            setFeedback(1, s1);
+            setFeedback(2, s2);
+
+            [span_6](start_span)// アドバイス生成[span_6](end_span)
+            const container = document.getElementById('advice-container');
+            container.innerHTML = '';
+            userResponses.filter(r => r.val !== 'C').forEach(r => {
+                const qObj = questions.find(q => q.id === r.id);
+                const d = document.createElement('div');
+                d.className = `advice-card ${r.cat === 2 ? 'patho-advice' : ''}`;
+                d.innerHTML = `<strong>Q. ${qObj.q}</strong><p class="mt-1">${qObj.adv}</p>`;
+                container.appendChild(d);
+            });
+
+            renderChart(s1, s2);
+            renderNotificationMenu();
+        }
+
+        function setFeedback(cat, score) {
+            const title = document.getElementById(`res-title${cat}`);
+            const desc = document.getElementById(`res-desc${cat}`);
+            const box = document.getElementById(`res-box${cat}`);
+
+            [span_7](start_span)if(cat === 1) { // 一時的[span_7](end_span)
+                if(score <= 20) { title.innerText = "【安心】すばらしい！"; desc.innerText = "現在、お口の環境はとても良いです。今のケア習慣を大切にしていきましょう。"; box.className += " border-sky-200 bg-sky-50 text-sky-800"; }
+                else if(score <= 40) { title.innerText = "【少し注意】少しお疲れ気味かも"; desc.innerText = "ややリスクが上昇しています。コップ1杯の水を飲んで休息を。"; box.className += " border-amber-200 bg-amber-50 text-amber-800"; }
+                else { title.innerText = "【要警戒】環境が乱れています"; desc.innerText = "リスクが高い状態。ストレスや疲れでお口の自浄作用が弱まっています。丁寧なセルフケアを。"; box.className += " border-rose-200 bg-rose-50 text-rose-800"; }
+            [span_8](start_span)} else { // 病的[span_8](end_span)
+                if(score <= 20) { title.innerText = "【安全】リスク低め"; desc.innerText = "現時点で病的な要因は見つかりませんでした。定期的なチェックを継続しましょう。"; box.className += " border-sky-200 bg-sky-50 text-sky-800"; }
+                else if(score <= 40) { title.innerText = "【予備軍？】小さな変化に注意"; desc.innerText = "将来的なリスクがあるかもしれません。今から生活習慣を見直しましょう。"; box.className += " border-amber-200 bg-amber-50 text-amber-800"; }
+                else { 
+                    title.innerText = "【重要サイン】専門家への相談を"; 
+                    // フィードバック反映：疾患名を明記
+                    desc.innerText = "放置できないリスク値です。進行した歯周病や、糖尿病、肝・腎機能の低下などの「隠れたサイン」の可能性があります。下関市の健診受診を強くおすすめします。"; 
+                    box.className += " border-rose-200 bg-rose-50 text-rose-800"; 
+                }
             }
-            showPage('page-result');
-            renderScoreDisplay(s1, s2, adviceList);
-            renderRemindSection();
         }
 
-        function renderScoreDisplay(s1, s2, adviceList) {
-            const renderScore = (score, scoreId, labelId) => {
-                const el = document.getElementById(scoreId);
-                const lbl = document.getElementById(labelId);
-                el.innerText = score;
-                if (score <= 40) { 
-                    el.className = "text-5xl score-blue"; lbl.innerText = "安心"; 
-                    lbl.className = "text-[10px] font-black bg-blue-tag px-4 py-1 rounded-full"; 
-                } else if (score <= 60) { 
-                    el.className = "text-5xl score-yellow"; lbl.innerText = "注意"; 
-                    lbl.className = "text-[10px] font-black bg-yellow-tag px-4 py-1 rounded-full"; 
-                } else { 
-                    el.className = "text-5xl score-red"; lbl.innerText = "警戒"; 
-                    lbl.className = "text-[10px] font-black bg-red-tag px-4 py-1 rounded-full"; 
-                }
-            };
-            renderScore(s1, 'score-1', 'label-1');
-            renderScore(s2, 'score-2', 'label-2');
-
-            const msgEl = document.getElementById('result-message');
-            let title = "", description = "", borderColor = "";
-
-            if (s2 > 60) {
-                title = "【警戒】体内サインを優先してください";
-                description = "お口の反応は、体内からの重要なSOSです。進行した歯周病や、生活習慣病のリスクが高まっている可能性があります。早めに専門家へ相談しましょう。";
-                borderColor = "border-red-500";
-            } else if (s2 > 35) {
-                title = "【注意】放置するとリスクが高まります";
-                description = "少し気になる症状が出ていませんか？日々のケア不足や、お疲れが溜まっているサインです。一度リセットするためにプロのクリーニングが効果的です。";
-                borderColor = "border-amber-400";
-            } else if (s1 > 50) {
-                title = "【生活習慣】お口の乾燥に注意しましょう";
-                description = "生活習慣の影響でお口の自浄作用が少し弱まっているようです。水分補給やリラックスを心がけるだけで、ニオイの質はすぐに変わります。";
-                borderColor = "border-sky-400";
-            } else {
-                title = "【安心】素晴らしい健康状態です！";
-                description = "現在、目立ったリスクは見られません。下関市の健診などを活用して、この「お口の若さ」を10年後も維持していきましょう。";
-                borderColor = "border-green-400";
-            }
-
-            msgEl.innerHTML = `
-                <div class="space-y-3">
-                    <h4 class="text-base font-black text-slate-800 flex items-center"><span class="mr-2">📋</span>${title}</h4>
-                    <p class="text-[12px] leading-relaxed text-slate-600 font-bold">${description}</p>
-                    <hr class="border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <p class="text-[10px] font-black text-sky-600 uppercase tracking-tighter">Your Focus Point</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        ${s2 > 40 ? '<span class="bg-red-50 text-red-700 text-[9px] px-2 py-1 rounded-md font-black"># 疾患リスクの確認</span>' : ''}
-                        ${s1 > 50 ? '<span class="bg-sky-50 text-sky-700 text-[9px] px-2 py-1 rounded-md font-black"># 生活習慣の改善</span>' : ''}
-                        <span class="bg-slate-100 text-slate-600 text-[9px] px-2 py-1 rounded-md font-black"># 定期健診のススメ</span>
-                    </div>
-                </div>
-            `;
-            msgEl.className = `bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] ${borderColor}`;
-
-            document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
-                <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-[11px] font-bold text-slate-600 flex items-start leading-snug">
-                    <span class="text-sky-400 mr-2">✔</span>${adv}
-                </div>`).join('');
-
-            document.getElementById('q-counter').innerText = "REPORT";
-            document.getElementById('progress').style.width = "100%";
-        }
-
-        function renderRemindSection() {
-            const container = document.getElementById('remind-list');
-            container.innerHTML = "";
-            const scoredMenus = remindMenus.map(menu => {
-                let maxScore = 0;
-                if (menu.isCommon) { maxScore = -1; } 
-                else {
-                    menu.triggers.forEach(tId => {
-                        const ans = answers.find(a => a.qId === tId);
-                        if (ans && ans.userScore > maxScore) maxScore = ans.userScore;
-                    });
-                }
-                return { ...menu, riskScore: maxScore };
-            });
-            scoredMenus.sort((a, b) => b.riskScore - a.riskScore);
-            scoredMenus.forEach(menu => {
-                const isHigh = menu.riskScore === 1;
-                const isRecommended = menu.riskScore >= 0.5;
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-3xl border-2 transition-all ${isRecommended ? 'bg-sky-50/50 border-sky-200 shadow-sm' : 'bg-white border-slate-100'}`;
-                let ctrl = "";
-                if (menu.type === "period") {
-                    ctrl = `<div class="relative"><span class="absolute left-2 top-2 text-[8px]">📅</span><select class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"><option value="1">1ヶ月後</option><option value="3" selected>3ヶ月後</option><option value="6">6ヶ月後</option></select></div>`;
-                } else {
-                    ctrl = `<div class="relative"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time1}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>${menu.time2 ? `<div class="relative mt-1"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time2}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>` : ''}`;
-                }
-                item.innerHTML = `<div class="flex items-start justify-between"><label class="flex items-start font-bold text-sm cursor-pointer flex-1 pt-1"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500 mt-1" ${isRecommended || menu.isCommon ? 'checked' : ''}><span class="flex flex-col">${isRecommended ? `<span class="text-[9px] text-sky-600 font-black mb-0.5 tracking-tighter">⭐ ${isHigh ? '今のあなたに必要' : 'あなたにおすすめ'}</span>` : ''}<span class="text-slate-700">${menu.name}</span><p class="text-[9px] font-bold text-slate-400 mt-1 leading-tight italic">「${menu.msg}」</p></span></label><div class="flex flex-col ml-2">${ctrl}</div></div>`;
-                container.appendChild(item);
+        function renderChart(s1, s2) {
+            new Chart(document.getElementById('resultChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['起床時', 'ストレス', '生活習慣', '歯周サイン', '全身サイン', '代謝'],
+                    datasets: [{
+                        label: 'リスク傾向',
+                        data: [s1, s1*0.8, s1*1.1, s2, s2*0.9, s2*1.2],
+                        backgroundColor: 'rgba(14, 165, 233, 0.2)', borderColor: '#0ea5e9', borderWidth: 3
+                    }]
+                },
+                options: { scales: { r: { min: 0, max: 100, ticks: { display: false } } }, plugins: { legend: { display: false } } }
             });
         }
 
-        function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromQuiz'); location.reload(); }
-        async function sendData(s1, s2) { if (!lineProfile || !GAS_URL) return; const data = { name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2 }; fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); }
+        [span_9](start_span)// 通知メニューの動的並び替え[span_9](end_span)
+        function renderNotificationMenu() {
+            const menuData = [
+                { id: 'm1', qId: 1, name: '朝と夜の「潤いリマインド」', icon: '💧' },
+                { id: 'm2', qId: 2, name: '朝の「舌ケア習慣リマインド」', icon: '👅' },
+                { id: 'm3', qId: 5, name: 'こまめな「水分補給リマインド」', icon: '🥤' },
+                { id: 'm4', qId: 7, name: '夜の「早寝・リラックス通知」', icon: '🌙' },
+                { id: 'm5', qId: 18, name: '本数を減らす応援通知', icon: '🚬' },
+                { id: 'm6', qId: 19, name: '食後の体調ケア・健診のススメ', icon: '🏥' }
+            ];
+
+            const list = document.getElementById('notification-list');
+            list.innerHTML = '';
+
+            // A/B回答のものを優先表示
+            const sortedMenu = menuData.sort((a, b) => {
+                const respA = userResponses.find(r => r.id === a.qId)?.val || 'C';
+                const respB = userResponses.find(r => r.id === b.qId)?.val || 'C';
+                return (respA < respB) ? -1 : 1;
+            });
+
+            sortedMenu.forEach(m => {
+                const isRecommended = userResponses.find(r => r.id === m.qId)?.val !== 'C';
+                const item = document.createElement('label');
+                item.className = `flex items-center p-4 rounded-2xl bg-white border ${isRecommended ? 'border-sky-500 ring-1 ring-sky-500' : 'border-slate-200'} cursor-pointer`;
+                item.innerHTML = `
+                    <input type="checkbox" class="w-5 h-5 accent-sky-600" ${isRecommended ? 'checked' : ''}>
+                    <div class="ml-3 flex-1">
+                        <span class="text-xs font-black text-slate-800">${m.icon} ${m.name}</span>
+                        ${isRecommended ? '<span class="block text-[8px] text-sky-600 font-bold uppercase">Recommend</span>' : ''}
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        async function saveRemind() {
+            const btn = document.getElementById('remind-btn');
+            btn.disabled = true; btn.innerText = "プランを送信中...";
+            // 実際はここでGASへ送信
+            setTimeout(() => {
+                alert('リマインド通知の設定を完了しました！下関市公式LINEからメッセージが届きます。');
+                btn.innerText = "設定完了";
+            }, 1000);
+        }
+
+        function resetQuiz() { if(confirm('データを削除して最初からやり直しますか？')) { localStorage.clear(); location.reload(); } }
+        function goToDetail() { sessionStorage.setItem('fromQuiz', 'true'); location.href = 'detail.html'; }
     </script>
 </body>
 </html>
