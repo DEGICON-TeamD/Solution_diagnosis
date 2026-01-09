@@ -110,7 +110,8 @@
                 <div class="text-center mb-6">
                     <h3 class="font-black text-sky-600 text-lg mb-2 italic">あなただけのアドバイス・プランを作ろう</h3>
                     <p class="text-[10px] font-bold text-slate-500 leading-relaxed">
-                        診断お疲れ様でした！今回の結果に基づき、今のあなたに必要な習慣化をLINEでサポートします。
+                        診断お疲れ様でした！今回の結果から、今のあなたにピッタリな「健康のコツ」をLINEでお届けします。<br>
+                        気になる項目を選んでください（<span class="text-sky-500">★</span>印は今のあなたに特におすすめの項目です）。
                     </p>
                 </div>
                 <div id="remind-list" class="space-y-4"></div>
@@ -165,20 +166,21 @@
             { id: 20, axis: 2, cat: "足のむくみ", text: "以前より足がむくみやすかったり、夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまにある","ない"], advice: "体の巡り（血流）が滞ると、お口の環境にも影響が出やすくなります。お酒を控える日を作ったり、軽いストレッチで体を労わってあげてください。" }
         ];
 
+        // --- リマインド通知運用仕様書に基づき更新 ---
         const remindMenus = [
-            { id: "morning", name: "朝と夜の「潤いリマインド」", time1: "20:00", time2: "07:00", triggers: [1], msg: "寝る前の1杯、起きてすぐの1杯でお口爽やか！" },
-            { id: "tongue", name: "朝の「舌ケア習慣リマインド」", time1: "08:00", triggers: [2], msg: "鏡を見て舌が白かったら、それはニオイの元。" },
-            { id: "water", name: "こまめな「水分補給リマインド」", time1: "10:00", time2: "15:00", triggers: [5, 9], msg: "水分不足はニオイを強くします。お水飲みませんか？" },
-            { id: "sleep", name: "夜の「早寝・リラックス通知」", time1: "21:30", triggers: [6], msg: "睡眠不足は自浄作用を下げます。早めに休みましょう。" },
-            { id: "alcohol", name: "飲み会・内臓ケアアドバイス", time1: "18:00", triggers: [8, 15], msg: "お酒の合間に水を挟むのが翌朝残さないプロのコツ。" },
-            { id: "dry", name: "鼻呼吸・ガム噛みトレーニング", time1: "13:00", triggers: [4, 13], msg: "口呼吸は乾燥の元. 意識して鼻呼吸をしましょう。" },
-            { id: "smoke", name: "本数を減らすための応援通知", time1: "11:00", time2: "16:00", triggers: [17], msg: "タバコの後のうがいでリフレッシュ. 1歩ずついこう。" },
-            { id: "brush", name: "昼の「ブクブクうがい」習慣", time1: "12:30", triggers: [9], msg: "歯磨きができない時はブクブクうがいだけでOK！" },
-            { id: "nose", name: "鼻呼吸の意識付け・ガムトレ", time1: "15:00", triggers: [10], msg: "気づいた時に口を閉じ、唾液を出す練習を！" },
-            { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [19], msg: "食後の強い眠気は血糖値のサイン. 体を労わって。" },
-            { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [20], msg: "軽いストレッチで全身とお口の巡りを良くしよう。" },
-            { id: "season", name: "季節の健康アドバイス", time1: "09:00", triggers: [], msg: "季節の変わり目、お口の乾きに注意しましょう。", isCommon: true },
-            { id: "kensin", name: "下関市 健診案内通知", type: "period", triggers: [], msg: "そろそろ健診の時期です。早めに予約をしませんか？", isCommon: true }
+            { id: "morning", name: "朝と夜の「潤いリマインド」", time1: "07:00", time2: "20:00", triggers: [1], msg: "寝る前の1杯、起きてすぐの1杯。この『水飲み習慣』だけで、翌朝の爽やかさが劇的に変わります。お水を飲みませんか？" },
+            { id: "tongue", name: "朝の「舌ケア習慣リマインド」", time1: "08:00", triggers: [2], msg: "鏡を見て舌が白かったら、それは『ニオイの元』。専用ブラシで優しくなでるだけで、今日の吐息に自信が持てますよ！" },
+            { id: "water", name: "こまめな「水分補給リマインド」", time1: "10:00", time2: "15:00", triggers: [5, 10], msg: "お口、乾いていませんか？水分不足はニオイを強くするだけでなく、健康の黄色信号。こまめな給水で、体もお口も潤しましょう！" },
+            { id: "sleep", name: "夜の「早寝・リラックス通知」", time1: "21:30", triggers: [7], msg: "今日もお疲れ様でした。睡眠不足はお口の自浄作用を下げてしまいます。今夜はスマホを置いて、少し早めに休みませんか？" },
+            { id: "alcohol", name: "飲み会・内臓ケアアドバイス", time1: "18:00", triggers: [8], msg: "今夜はお酒の予定ですか？アルコールは口を乾燥させます。お酒の合間に『お水』を挟むのが、翌朝にニオイを残さないプロのコツ！" },
+            { id: "dry", name: "鼻呼吸・ガム噛みトレーニング", time1: "13:00", triggers: [4], msg: "意識して『鼻呼吸』できていますか？口呼吸はニオイと乾燥の元。気づいた時に口を閉じ、ガムを噛んで唾液を出す練習をしてみましょう！" },
+            { id: "smoke", name: "本数を減らすための応援通知", time1: "11:00", time2: "16:00", triggers: [18], msg: "お口のリフレッシュタイム！タバコの後のうがいで、少しだけケア。いつか『1本減らしてみようかな』と思えたら、それは大きな一歩です。" },
+            { id: "brush", name: "昼の「ブクブクうがい」習慣", time1: "12:30", triggers: [9], msg: "歯磨きができない時はブクブクうがいだけでOK！食べ終わったらお水でブクブク。これだけでお口の酸性化を防げます。" },
+            { id: "nose", name: "鼻呼吸の意識付け・ガムトレ", time1: "15:00", triggers: [10], msg: "気づいた時に口を閉じ、唾液を出す練習を！口呼吸は乾燥の元。意識して鼻呼吸をしましょう。" },
+            { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [14, 19], msg: "食後の強い眠気や異常な渇きは血糖値のサイン。体調変化をお口が伝えている可能性があります。安心のためにも早めの健診を。" },
+            { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [16, 20], msg: "軽いストレッチでお口と全身の巡りを良くしましょう。全身の循環不良はお口のトラブルに繋がります。" },
+            { id: "gums", name: "定期的な歯ぐきチェック習慣", time1: "09:00", triggers: [12, 13], msg: "歯ぐきは正直者！鏡で10秒チェックして。ピンクなら健康、赤や紫ならSOS。歯ぐきは嘘をつかないあなたの健康のバロメーターです。", day: "土曜" },
+            { id: "common", name: "季節の健康・下関健診案内", time1: "10:00", triggers: [], msg: "下関市の健診はあなたの『健康のチケット』。おトクにメンテナンスして安心を手に入れよう！", isCommon: true }
         ];
 
         let currentIdx = 0, answers = [], lineProfile = null;
@@ -193,7 +195,6 @@
                 } else { liff.login(); }
             } catch (e) { document.getElementById('start-btn').disabled = false; }
 
-            // --- 修正箇所：詳細から戻った時または保存データがある時の復元 ---
             const savedData = localStorage.getItem('kuchi_check_result');
             const fromDetail = sessionStorage.getItem('fromQuiz');
 
@@ -295,7 +296,6 @@
                 description = "わずかに将来的な健康リスクがあるかも…あまり気づけない程度の小さなサインですが、今のうちに生活習慣を見直すことで、リスクを低下させることができるかも。";
                 borderColor = "border-sky-400";
             } 
-            // 2. 病的リスクが低い場合、一時的リスク(s1)の重い方を判定
             else if (s1 >= 81) {
                 title = "【重要サイン】お口が体調変化を伝えている可能性があります";
                 description = "リスクが非常に高い状態です。強い疲労や生活リズムの乱れが重なり、お口の環境が大きく崩れている可能性があります。まずは休息やセルフケアを意識し、改善しない場合は専門家への相談も検討してみましょう。";
@@ -313,7 +313,6 @@
                 description = "ややリスクが上昇しています。忙しい時や水分が足りない時にニオイがでていませんか？コップ一杯の水を飲んで、深呼吸をしてみるのも良いかも知れません。";
                 borderColor = "border-sky-400";
             } else {
-                // 両方のリスクが20%以下の場合
                 title = "【安心】すばらしい！";
                 description = "現在、お口の環境はとても良いです。唾液がしっかり出ており、自浄作用が正常に働いていると考えられます。今のケア習慣を大切にしていきましょう。";
                 borderColor = "border-green-400";
@@ -323,15 +322,6 @@
                 <div class="space-y-3">
                     <h4 class="text-base font-black text-slate-800 flex items-center"><span class="mr-2">📋</span>${title}</h4>
                     <p class="text-[12px] leading-relaxed text-slate-600 font-bold">${description}</p>
-                    <hr class="border-slate-100">
-                    <div class="flex items-center justify-between">
-                        <p class="text-[10px] font-black text-sky-600 uppercase tracking-tighter">Your Focus Point</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        ${s2 > 40 ? '<span class="bg-red-50 text-red-700 text-[9px] px-2 py-1 rounded-md font-black"># 疾患リスクの確認</span>' : ''}
-                        ${s1 > 50 ? '<span class="bg-sky-50 text-sky-700 text-[9px] px-2 py-1 rounded-md font-black"># 生活習慣の改善</span>' : ''}
-                        <span class="bg-slate-100 text-slate-600 text-[9px] px-2 py-1 rounded-md font-black"># 定期健診のススメ</span>
-                    </div>
                 </div>
             `;
             msgEl.className = `bg-white p-6 rounded-[2rem] mb-8 shadow-md border-l-[12px] ${borderColor}`;
@@ -348,6 +338,8 @@
         function renderRemindSection() {
             const container = document.getElementById('remind-list');
             container.innerHTML = "";
+            
+            // --- 仕様書に基づいた並び替えと初期チェック判定 ---
             const scoredMenus = remindMenus.map(menu => {
                 let maxScore = 0;
                 if (menu.isCommon) { maxScore = -1; } 
@@ -359,24 +351,38 @@
                 }
                 return { ...menu, riskScore: maxScore };
             });
+
+            // 高リスク順にソート
             scoredMenus.sort((a, b) => b.riskScore - a.riskScore);
+
             scoredMenus.forEach(menu => {
-                const isHigh = menu.riskScore === 1;
-                const isRecommended = menu.riskScore >= 0.5;
+                const isPriority = menu.riskScore === 1;     // 「当てはまる（10点）」
+                const isRecommended = menu.riskScore >= 0.5; // 「少し（5点）」以上
+                
                 const item = document.createElement('div');
                 item.className = `p-4 rounded-3xl border-2 transition-all ${isRecommended ? 'bg-sky-50/50 border-sky-200 shadow-sm' : 'bg-white border-slate-100'}`;
-                let ctrl = "";
-                if (menu.type === "period") {
-                    ctrl = `<div class="relative"><span class="absolute left-2 top-2 text-[8px]">📅</span><select class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"><option value="1">1ヶ月後</option><option value="3" selected>3ヶ月後</option><option value="6">6ヶ月後</option></select></div>`;
-                } else {
-                    ctrl = `<div class="relative"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time1}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>${menu.time2 ? `<div class="relative mt-1"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time2}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>` : ''}`;
+                
+                let ctrl = `<div class="relative"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time1}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>`;
+                if(menu.time2) {
+                    ctrl += `<div class="relative mt-1"><span class="absolute left-2 top-1.5 text-[8px]">🕒</span><input type="time" value="${menu.time2}" class="text-[11px] font-black pl-6 pr-2 py-1.5 rounded-xl border border-slate-200 bg-slate-100 text-slate-600 outline-none"></div>`;
                 }
-                item.innerHTML = `<div class="flex items-start justify-between"><label class="flex items-start font-bold text-sm cursor-pointer flex-1 pt-1"><input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500 mt-1" ${isRecommended || menu.isCommon ? 'checked' : ''}><span class="flex flex-col">${isRecommended ? `<span class="text-[9px] text-sky-600 font-black mb-0.5 tracking-tighter">⭐ ${isHigh ? '今のあなたに必要' : 'あなたにおすすめ'}</span>` : ''}<span class="text-slate-700">${menu.name}</span><p class="text-[9px] font-bold text-slate-400 mt-1 leading-tight italic">「${menu.msg}」</p></span></label><div class="flex flex-col ml-2">${ctrl}</div></div>`;
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between">
+                        <label class="flex items-start font-bold text-sm cursor-pointer flex-1 pt-1">
+                            <input type="checkbox" class="w-5 h-5 mr-3 accent-sky-500 mt-1" ${isRecommended || menu.isCommon ? 'checked' : ''}>
+                            <span class="flex flex-col">
+                                ${isRecommended ? `<span class="text-[9px] text-sky-600 font-black mb-0.5 tracking-tighter">★ ${isPriority ? '今のあなたに必要' : 'あなたにおすすめ'}</span>` : ''}
+                                <span class="text-slate-700">${menu.name}</span>
+                                <p class="text-[9px] font-bold text-slate-400 mt-1 leading-tight italic">「${menu.msg}」</p>
+                            </span>
+                        </label>
+                        <div class="flex flex-col ml-2">${ctrl}</div>
+                    </div>`;
                 container.appendChild(item);
             });
         }
 
-        // --- 修正箇所：詳細ページ遷移時のフラグ保存 ---
         function goToDetail() {
             sessionStorage.setItem('fromQuiz', 'true');
             location.href = 'detail.html';
