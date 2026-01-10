@@ -166,7 +166,6 @@
             { id: 20, axis: 2, cat: "足のむくみ", text: "以前より足がむくみやすかったり、夕方に靴がきつく感じることが増えたりした。", labels: ["よくある","たまにある","ない"], advice: "体の巡り（血流）が滞ると、お口の環境にも影響が出やすくなります。お酒を控える日を作ったり、軽いストレッチで体を労わってあげてください。" }
         ];
 
-        // --- リマインド通知運用仕様書に基づき更新 ---
         const remindMenus = [
             { id: "morning", name: "朝と夜の「潤いリマインド」", time1: "07:00", time2: "20:00", triggers: [1], msg: "寝る前の1杯、起きてすぐの1杯。この『水飲み習慣』だけで、翌朝の爽やかさが劇的に変わります。お水を飲みませんか？" },
             { id: "tongue", name: "朝の「舌ケア習慣リマインド」", time1: "08:00", triggers: [2], msg: "鏡を見て舌が白かったら、それは『ニオイの元』。専用ブラシで優しくなでるだけで、今日の吐息に自信が持てますよ！" },
@@ -180,7 +179,8 @@
             { id: "sugar", name: "食後の体調ケア・健診のススメ", time1: "19:00", triggers: [14, 19], msg: "食後の強い眠気や異常な渇きは血糖値のサイン。体調変化をお口が伝えている可能性があります。安心のためにも早めの健診を。" },
             { id: "edema", name: "内臓・デトックスケア習慣", time1: "17:00", triggers: [16, 20], msg: "軽いストレッチでお口と全身の巡りを良くしましょう。全身の循環不良はお口のトラブルに繋がります。" },
             { id: "gums", name: "定期的な歯ぐきチェック習慣", time1: "09:00", triggers: [12, 13], msg: "歯ぐきは正直者！鏡で10秒チェックして。ピンクなら健康、赤や紫ならSOS。歯ぐきは嘘をつかないあなたの健康のバロメーターです。", day: "土曜" },
-            { id: "common", name: "季節の健康・下関健診案内", time1: "10:00", triggers: [], msg: "下関市の健診はあなたの『健康のチケット』。おトクにメンテナンスして安心を手に入れよう！", isCommon: true }
+            { id: "seasonal", name: "季節の健康・体調管理", time1: "10:00", triggers: [], msg: "季節の変わり目は、お口も体もデリケート。無理せず休息をとりながら、自分を労わってあげましょう。", isCommon: true },
+            { id: "city_check", name: "下関市からのお知らせ（健診等）", time1: "10:00", triggers: [], msg: "下関市の健診はあなたの『健康のチケット』。おトクにメンテナンスして安心を手に入れよう！", isCommon: true }
         ];
 
         let currentIdx = 0, answers = [], lineProfile = null;
@@ -339,7 +339,6 @@
             const container = document.getElementById('remind-list');
             container.innerHTML = "";
             
-            // --- 仕様書に基づいた並び替えと初期チェック判定 ---
             const scoredMenus = remindMenus.map(menu => {
                 let maxScore = 0;
                 if (menu.isCommon) { maxScore = -1; } 
@@ -352,12 +351,11 @@
                 return { ...menu, riskScore: maxScore };
             });
 
-            // 高リスク順にソート
             scoredMenus.sort((a, b) => b.riskScore - a.riskScore);
 
             scoredMenus.forEach(menu => {
-                const isPriority = menu.riskScore === 1;     // 「当てはまる（10点）」
-                const isRecommended = menu.riskScore >= 0.5; // 「少し（5点）」以上
+                const isPriority = menu.riskScore === 1;
+                const isRecommended = menu.riskScore >= 0.5;
                 
                 const item = document.createElement('div');
                 item.className = `p-4 rounded-3xl border-2 transition-all ${isRecommended ? 'bg-sky-50/50 border-sky-200 shadow-sm' : 'bg-white border-slate-100'}`;
