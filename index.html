@@ -130,9 +130,10 @@
                 <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="w-full bg-slate-800 text-white py-5 rounded-[2rem] shadow-lg flex items-center justify-center no-underline mb-4">
                     <span class="text-2xl mr-3">📄</span><div class="text-left"><p class="text-[10px] font-black text-sky-400 leading-none mb-1 uppercase">Official List</p><p class="text-sm font-black text-white">下関市 実施医療機関一覧(PDF)</p></div>
                 </a>
-                <a href="https://www.google.com/maps/search/%E6%AD%AF%E7%A7%91%E5%8C%BB%E9%99%A2/" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline mb-10">
-                    <span class="text-2xl mr-3">📍</span><div class="text-left"><p class="text-[10px] font-black text-sky-500 leading-none mb-1 uppercase">Clinic Search</p><p class="text-sm font-black text-slate-700">近くの歯科医院を探す</p></div>
-                </a>
+                
+                <div id="dynamic-map-btn-area">
+                    </div>
+
                 <button onclick="liff.closeWindow()" class="w-full bg-sky-500 text-white font-black py-6 rounded-3xl text-xl shadow-lg active:scale-95 mb-4">診断を終了する</button>
                 <button onclick="resetAndStart()" class="w-full bg-slate-200 text-slate-500 font-black py-3 rounded-2xl text-sm active:scale-95 mb-10">最初からやり直す</button>
             </div>
@@ -330,6 +331,40 @@
                 <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-[11px] font-bold text-slate-600 flex items-start leading-snug">
                     <span class="text-sky-400 mr-2">✔</span>${adv}
                 </div>`).join('');
+
+            // --- 病院検索ボタンの動的変更 ---
+            let searchKeyword = "歯科医院";
+            let searchIcon = "📍";
+            let searchLabel = "近くの歯科医院を探す";
+
+            if (s2 >= 41) {
+                const hasNoseIssue = answers.find(a => a.qId === 15 && a.userScore >= 0.5);
+                const hasInternalIssue = answers.find(a => [14, 16, 17, 19].includes(a.qId) && a.userScore >= 0.5);
+
+                if (hasNoseIssue) {
+                    searchKeyword = "耳鼻咽喉科";
+                    searchIcon = "👂";
+                    searchLabel = "近くの耳鼻咽喉科を探す";
+                } else if (hasInternalIssue) {
+                    searchKeyword = "内科 胃腸科";
+                    searchIcon = "🏥";
+                    searchLabel = "近くの内科・胃腸科を探す";
+                } else {
+                    searchKeyword = "歯科 歯周病";
+                    searchIcon = "🔍";
+                    searchLabel = "歯周病に強い歯科を探す";
+                }
+            }
+            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchKeyword)}`;
+            document.getElementById('dynamic-map-btn-area').innerHTML = `
+                <a href="${mapUrl}" target="_blank" class="w-full bg-white border-2 border-sky-100 py-5 rounded-[2rem] shadow-md flex items-center justify-center no-underline mb-10">
+                    <span class="text-2xl mr-3">${searchIcon}</span>
+                    <div class="text-left">
+                        <p class="text-[10px] font-black text-sky-500 leading-none mb-1 uppercase">Clinic Search</p>
+                        <p class="text-sm font-black text-slate-700">${searchLabel}</p>
+                    </div>
+                </a>
+            `;
 
             document.getElementById('q-counter').innerText = "REPORT";
             document.getElementById('progress').style.width = "100%";
