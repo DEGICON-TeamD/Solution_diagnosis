@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口臭・健康深掘りガイド | 下関市公式</title>
     <title>口臭＆健康リスクチェック | 下関市</title>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #F8FAFC; color: #1E293B; scroll-behavior: smooth; }
+        .category-tab { cursor: pointer; transition: all 0.2s; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+        
+        .logic-card, .patho-card { 
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3.5rem 1.5rem 1.5rem 1.5rem; 
+            position: relative; 
+            margin-bottom: 2rem; 
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
@@ -14,6 +29,19 @@
             background-color: #F7FAFC;
             line-height: 1.6;
         }
+        .logic-card { border-top: 6px solid #38bdf8; }
+        .patho-card { border-top: 6px solid #fb7185; }
+
+        .kw-badge { 
+            position: absolute; 
+            top: 1.25rem; 
+            left: 1.5rem; 
+            font-size: 11px; 
+            font-weight: 900; 
+            padding: 4px 12px; 
+            border-radius: 9999px; 
+            background: #F1F5F9; 
+            color: #0369a1; 
         .page { display: none; }
         .active { display: block; }
         .btn-primary {
@@ -40,7 +68,12 @@
             padding: 4px 8px;
             border-radius: 4px;
         }
+        .patho-card .kw-badge { color: #9f1239; background: #FFF1F2; border-color: #FECDD3; }
 
+        .evidence-box { background-color: #F8FAFC; border-left: 3px solid #CBD5E1; margin-top: 15px; padding: 0.75rem; font-size: 10px; color: #64748B; }
+        .detail-text { font-size: 13px; line-height: 1.7; color: #475569; text-align: justify; }
+        .patho-box { background-color: #FFF1F2; border-left: 4px solid #fb7185; padding: 0.75rem; margin-top: 10px; border-radius: 0.5rem; font-size: 11px; color: #991b1b; font-weight: bold; }
+        h2 { font-size: 1.15rem !important; font-weight: 900; line-height: 1.4; }
         /* カスタムの洗練されたリンクデザイン */
         .clinic-link {
             position: relative;
@@ -59,18 +92,27 @@
         }
     </style>
 </head>
+<body class="pb-24">
 <body>
 
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="font-black text-slate-800 text-lg tracking-tighter italic text-sky-600">HEALTH GUIDE</h1>
+            <button id="back-to-quiz" onclick="backToResult()" class="hidden bg-slate-100 text-slate-500 px-4 py-1.5 rounded-full text-xs font-bold transition-all active:bg-slate-200">診断に戻る</button>
     <header class="bg-white border-b px-6 py-4 sticky top-0 z-50">
         <div class="max-w-xl mx-auto flex justify-between items-center">
             <span class="text-[#1A365D] font-bold text-lg tracking-tight">口臭＆健康リスク診断</span>
             <span id="q-counter" class="text-xs font-medium text-slate-500">準備中</span>
         </div>
+        <div class="max-w-md mx-auto flex border-t border-slate-100 text-center">
+            <div id="tab1" onclick="switchCategory('physio')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab">一時的・習慣 (Q1-10)</div>
+            <div id="tab2" onclick="switchCategory('patho')" class="w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab">病的・疾患サイン (Q11-20)</div>
         <div class="max-w-xl mx-auto w-full progress-bg h-1 mt-3 rounded-full overflow-hidden">
             <div id="progress" class="progress-fill h-full" style="width: 0%"></div>
         </div>
     </header>
 
+    <main class="max-w-md mx-auto p-5">
     <main class="max-w-xl mx-auto p-6 pb-24">
         
         <section id="page-start" class="page active py-8">
@@ -78,6 +120,13 @@
                 <img src="logo.png" alt="Kuchi Check Logo" class="w-48 h-auto object-contain">
             </div>
 
+        <div id="physio-content" class="content-section active">
+            <section class="logic-card">
+                <span class="kw-badge">☀️ 起床・空腹時のニオイ</span>
+                <h2 class="text-sky-700 mb-3">Q1. 朝や空腹時にお口が臭う</h2>
+                <div class="detail-text">睡眠中は、口内を殺菌・洗浄する「唾液」の分泌が極端に減少します。その間に口内の細菌が食べかすや粘膜を分解し、ニオイ成分を大量に発生させます。朝食を食べたり水分を摂ることで改善します。</div>
+                <div class="evidence-box">【根拠】厚生労働省：生理的口臭は誰にでもあり、特に起床時や空腹時に強まる特性があります。</div>
+            </section>
             <h1 class="text-2xl font-bold mb-6 text-[#1A365D] text-center leading-snug">あなたの息から、<br>現在のお口と体の状態を確認します</h1>
             
             <div class="card p-8 mb-8">
@@ -115,6 +164,12 @@
             </div>
         </section>
 
+            <section class="logic-card">
+                <span class="kw-badge">👅 舌の表面の白さ</span>
+                <h2 class="text-sky-700 mb-3">Q2. 舌の上が白く厚くなっている</h2>
+                <div class="detail-text">舌の表面にある凹凸に、細菌や古くなった細胞が溜まったものを「舌苔（ぜったい）」と呼びます。口臭原因の約6割がこの舌苔によるもので、専用ブラシによるケアが推奨されます。</div>
+                <div class="evidence-box">【根拠】日本歯科医学会：舌苔の清掃は、口臭を物理的に減少させる最も即効性のある方法です。</div>
+            </section>
         <section id="page-result" class="page">
             <h2 class="text-lg font-bold mb-6 text-[#1A365D] text-center border-b pb-4">診断結果のまとめ</h2>
             
@@ -137,11 +192,23 @@
             
             <div id="result-message" class="card p-8 mb-8 text-sm text-slate-700 leading-relaxed"></div>
 
+            <section class="logic-card">
+                <span class="kw-badge">🌀 強いストレスの状態</span>
+                <h2 class="text-sky-700 mb-3">Q3. 日常的に強いストレスがある</h2>
+                <div class="detail-text">過度なストレスは自律神経のバランスを崩し、唾液の分泌を抑制します。お口の中が自浄作用を失うため、心のケアはお口の爽やかさを保つためにも重要です。</div>
+                <div class="evidence-box">【根拠】日本唾液腺学会：ストレス環境下では唾液の量が減り、ネバつきの強い性質に変化します。</div>
+            </section>
             <div class="mb-10">
                 <h3 class="font-bold text-[#1A365D] text-base mb-4 flex items-center">今後のためのアドバイス</h3>
                 <div id="advice-list" class="space-y-3"></div>
             </div>
 
+            <section class="logic-card">
+                <span class="kw-badge">💧 緊張時のネバつき</span>
+                <h2 class="text-sky-700 mb-3">Q4. 緊張で口がネバつく</h2>
+                <div class="detail-text">ネバついた唾液は、細菌をお口の中に留めてしまう「接着剤」のような役割をしてしまい、これが不快なニオイや話しにくさを引き起こします。</div>
+                <div class="evidence-box">【根拠】日本口腔外科学会：緊張性の口腔乾燥は、一時的な細菌活性の増大を招きます。</div>
+            </section>
             <div class="mb-10">
                 <a href="detail.html" onclick="goToDetail()" class="block card p-6 hover:bg-slate-50 transition-colors">
                     <div class="flex justify-between items-center">
@@ -154,6 +221,12 @@
                 </a>
             </div>
 
+            <section class="logic-card">
+                <span class="kw-badge">🚰 日中の水分摂取不足</span>
+                <h2 class="text-sky-700 mb-3">Q5. 水分をあまり摂らない</h2>
+                <div class="detail-text">体内の水分が不足すると、体は重要な機能を優先するために唾液の生産を後回しにします。純粋な「水」でこまめに喉を潤すことが大切です。</div>
+                <div class="evidence-box">【アドバイス】一口の水を2時間おきに飲む習慣が、口内の細菌濃度を低く保つ秘訣です。</div>
+            </section>
             <div class="mb-10 card border border-slate-300 overflow-hidden shadow-sm">
                 <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
                     <h3 class="font-bold text-[#1A365D] text-base">医療機関へのご相談</h3>
@@ -164,6 +237,12 @@
                 <p class="px-6 pb-4 text-[10px] text-slate-400 text-center tracking-wider">ボタンを選択すると現在地近くの地図が開きます</p>
             </div>
 
+            <section class="logic-card">
+                <span class="kw-badge">💤 睡眠不足・体調不良</span>
+                <h2 class="text-sky-700 mb-3">Q6. 睡眠不足や疲れがある</h2>
+                <div class="detail-text">体の抵抗力が落ちると、お口の中の炎症が活発になります。疲れが溜まっている時に口臭を感じるのは、体が休息を求めているサインです。</div>
+                <div class="evidence-box">【根拠】しものせき21：生活習慣、特に休養の質が口腔環境に与える影響を重視しています。</div>
+            </section>
             <div class="card p-8 mb-10 border-t-4 border-t-[#5A67D8]">
                 <div class="text-center mb-8">
                     <h3 class="font-bold text-[#1A365D] text-lg mb-2">今後の健康維持のために</h3>
@@ -173,6 +252,12 @@
                 <button onclick="alert('設定を保存しました。')" class="w-full mt-10 btn-primary font-bold py-4 rounded-lg shadow-sm">設定を保存する</button>
             </div>
 
+            <section class="logic-card">
+                <span class="kw-badge">🧄 昨夜の飲食（ニンニク・酒）</span>
+                <h2 class="text-sky-700 mb-3">Q7. ニンニクやお酒を摂取した</h2>
+                <div class="detail-text">これらは一度血液に吸収されて肺から「呼気」として排出されます。リンゴジュースのポリフェノール等で分解を助けるのが効果的です。</div>
+                <div class="evidence-box">【根拠】日本口臭学会：これらは「一過性口臭」に分類され、代謝と共に自然消滅します。</div>
+            </section>
             <div class="card p-8 mb-10 bg-slate-50">
                 <h3 class="text-base font-bold mb-6 text-[#1A365D] text-center uppercase tracking-wider">下関市の健康サポート情報</h3>
                 <div class="grid grid-cols-1 gap-4">
@@ -181,6 +266,12 @@
                 </div>
             </div>
 
+            <section class="logic-card">
+                <span class="kw-badge">🍷 寝る前の飲酒習慣</span>
+                <h2 class="text-sky-700 mb-3">Q8. 寝酒や多量の飲酒習慣</h2>
+                <div class="detail-text">アルコール分解時に大量の水分を消費するため、睡眠中の口腔乾燥を引き起こします。お酒を飲む際は、同量の水を一緒に飲みましょう。</div>
+                <div class="evidence-box">【科学的知見】アルコール由来のアセトアルデヒド自体も強い刺激臭の原因となります。</div>
+            </section>
             <div class="mb-10 space-y-4">
                 <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="block card p-6 hover:bg-slate-50 transition-all border-l-4 border-l-[#1A365D]">
                     <div class="flex justify-between items-center">
@@ -198,10 +289,23 @@
         </section>
     </main>
 
+            <section class="logic-card">
+                <span class="kw-badge">🪥 歯磨きの回数が少ない</span>
+                <h2 class="text-sky-700 mb-3">Q9. 歯磨きが1日2回以下</h2>
+                <div class="detail-text">寝る前の磨き残しは致命的で、8時間の睡眠中に菌が爆発的に増えます。細菌が膜を作る「バイオフィルム」化が進むと、うがいでは落ちなくなります。</div>
+                <div class="evidence-box">【根拠】日本歯周病学会：プラークコントロール（歯垢除去）が口臭予防の基本です。</div>
+            </section>
     <script>
         const LIFF_ID = "2008714027-cuYvg8O7"; 
         const GAS_URL = "https://script.google.com/macros/s/AKfycbwljIPNSg9LNEAE8KhHY6uBoWwwao9umEBEVyhBXWseo2pb35hr7cHKIDI-UbYvoxwsfA/exec"; 
 
+            <section class="logic-card">
+                <span class="kw-badge">🌬️ 口呼吸の習慣</span>
+                <h2 class="text-sky-700 mb-3">Q10. 口で息をすることが多い</h2>
+                <div class="detail-text">口呼吸は、加湿フィルターである鼻を通さないため、お口の中をカラカラに乾燥させ、細菌の活動を許してしまいます。</div>
+                <div class="evidence-box">【根拠】日本耳鼻咽喉科学会：口呼吸は口腔乾燥を招き、咽頭炎などのリスクを高めます。</div>
+            </section>
+        </div>
         const questions = [
             { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口の状態が気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいや、起きてすぐの水分補給でお口を潤しましょう。" },
             { id: 2, axis: 1, cat: "お口の状態", text: "鏡で舌を見たとき、表面が白く厚く覆われているように見えますか？", labels: ["はっきりと白い","わずかに白い","きれいに見える"], advice: "舌の上の白い汚れはニオイの主な原因です。1日1回、朝に専用の舌ブラシなどで優しくケアしてみましょう。", hasImage: true },
@@ -225,6 +329,13 @@
             { id: 20, axis: 2, cat: "体調の変化", text: "夕方になると靴がきつく感じるなど、むくみを実感することはありますか？", labels: ["よくある","時々ある","ない"], advice: "巡りが滞るとお口の健康にも影響します。軽いストレッチなどで体を労わってあげましょう。" }
         ];
 
+        <div id="patho-content" class="content-section">
+            <section class="patho-card">
+                <span class="kw-badge">📅 2週間以上の継続</span>
+                <h2 class="text-rose-700 mb-3">Q11. 悩みが長く続いている</h2>
+                <div class="detail-text">一時的な要因であれば数日で改善しますが、2週間以上続く場合は「病的口臭」の疑いがあります。セルフケアだけでは限界があるサインです。</div>
+                <div class="patho-box">考えられるリスク：進行性の歯周病、慢性的な内臓疾患</div>
+            </section>
         const remindMenus = [
             { id: "morning", name: "起床後・就寝前の水分補給", time1: "07:00", time2: "22:00", triggers: [1], msg: "寝る前と起きた後の1杯のお水で、お口の中を常に清潔に保ちましょう。" },
             { id: "tongue", name: "朝の舌ケア習慣", time1: "07:30", triggers: [2], msg: "朝の鏡チェックで健康管理。白い汚れを優しくケアして1日をスタートしましょう。" },
@@ -236,8 +347,20 @@
             { id: "city_check", name: "下関市 健診・イベント案内", time1: "10:00", triggers: [], msg: "市が実施する健診や健康維持に役立つ情報をお届けします。", isCommon: true }
         ];
 
+            <section class="patho-card">
+                <span class="kw-badge">🩸 歯ぐきからの出血</span>
+                <h2 class="text-rose-700 mb-3">Q12. 歯磨きでの出血がある</h2>
+                <div class="detail-text">出血は、歯ぐきが細菌に感染し、血管がもろくなっている証拠です。放置すると歯を支える骨が溶け始め、強い腐敗臭を発するようになります。</div>
+                <div class="evidence-box">【根拠】日本歯周病学会：出血は歯周組織の破壊が進行している重要な臨床指標です。</div>
+            </section>
         let currentIdx = 0, answers = [], lineProfile = null;
 
+            <section class="patho-card">
+                <span class="kw-badge">🌵 慢性的・強い口の乾き</span>
+                <h2 class="text-rose-700 mb-3">Q13. 常に口が乾き、食事がしにくい</h2>
+                <div class="detail-text">食べ物の味がわかりにくい、飲み込みにくいといった症状がある場合、ドライマウス（口腔乾燥症）が疑われます。</div>
+                <div class="patho-box">考えられるリスク：糖尿病、シェーグレン症候群、薬剤副作用</div>
+            </section>
         window.onload = async () => {
             try {
                 await liff.init({ liffId: LIFF_ID });
@@ -253,9 +376,21 @@
             else if (savedData) { document.getElementById('resume-btn')?.classList.remove('hidden'); }
         };
 
+            <section class="patho-card">
+                <span class="kw-badge">👃 鼻詰まり・喉への鼻水</span>
+                <h2 class="text-rose-700 mb-3">Q14. 鼻や喉の違和感</h2>
+                <div class="detail-text">鼻の奥の炎症（膿）のニオイが漏れ出している場合があります。これは歯科ではなく耳鼻科での治療が必要な領域です。</div>
+                <div class="patho-box">考えられるリスク：副鼻腔炎（蓄膿症）、アレルギー性鼻炎、後鼻漏</div>
+            </section>
         function startQuiz() { currentIdx = 0; answers = []; localStorage.removeItem('kuchi_check_result'); showPage('page-q'); updateQuestion(); }
         function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
 
+            <section class="patho-card">
+                <span class="kw-badge">⚖️ 体のだるさ・むくみ</span>
+                <h2 class="text-rose-700 mb-3">Q15. 体がだるく、むくみやすい</h2>
+                <div class="detail-text">肝臓や腎臓の機能が落ちると、本来尿で排出されるべき成分が呼気に混じり、アンモニアのような独特のニオイを放つことがあります。</div>
+                <div class="patho-box">考えられるリスク：肝機能障害、腎機能の低下</div>
+            </section>
         function updateQuestion() {
             const q = questions[currentIdx];
             document.getElementById('q-counter').innerText = `質問 ${currentIdx + 1} / 20`;
@@ -278,8 +413,20 @@
             document.getElementById('back-btn').style.visibility = (currentIdx > 0) ? 'visible' : 'hidden';
         }
 
+            <section class="patho-card">
+                <span class="kw-badge">🤢 胃もたれ・胸焼け</span>
+                <h2 class="text-rose-700 mb-3">Q16. 胃腸の不調がある</h2>
+                <div class="detail-text">胃酸が逆流したり、消化機能が低下していると、発酵臭がお口まで上がってきます。お口を掃除しても消えない場合は消化器を疑います。</div>
+                <div class="patho-box">考えられるリスク：逆流性食道炎、慢性胃炎</div>
+            </section>
         function prevQuestion() { if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); } }
 
+            <section class="patho-card">
+                <span class="kw-badge">🚬 喫煙習慣（現在・過去）</span>
+                <h2 class="text-rose-700 mb-3">Q17. 日常的にタバコを吸う</h2>
+                <div class="detail-text">タバコは血管を収縮させ、歯周病菌が繁殖しやすい「酸素のない環境」を作ります。ヤニは細菌の住みかとなり、強いニオイを定着させます。</div>
+                <div class="evidence-box">【根拠】厚生労働省：喫煙者は非喫煙者に比べ、歯周病の進行スピードが数倍速い。</div>
+            </section>
         function showResult(isResume = false) {
             let s1, s2, adviceList;
             if (isResume) {
@@ -303,6 +450,12 @@
             renderRemindSection();
         }
 
+            <section class="patho-card">
+                <span class="kw-badge">🚨 歯のグラつき・腫れ</span>
+                <h2 class="text-rose-700 mb-3">Q18. 歯が動く・歯ぐきが腫れる</h2>
+                <div class="detail-text">歯が動く感覚があるのは、骨が溶けている「重度歯周病」のサインです。ポケットの奥の膿は極めて強い悪臭を放ちます。</div>
+                <div class="patho-box">考えられるリスク：重度歯周炎（一刻も早い受診を推奨）</div>
+            </section>
         function renderScoreDisplay(s1, s2, adviceList) {
             const renderScore = (score, scoreId, labelId) => {
                 const el = document.getElementById(scoreId);
@@ -315,11 +468,24 @@
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
+            <section class="patho-card">
+                <span class="kw-badge">🧁 甘いもの欲求・食後の眠気</span>
+                <h2 class="text-rose-700 mb-3">Q19. 食後の強い眠気や異常な食欲</h2>
+                <div class="detail-text">高血糖状態はお口の中の糖分を増やし、細菌が酸を作りやすい環境を作ります。これが歯周病を劇的に進行させます。</div>
+                <div class="patho-box">考えられるリスク：糖尿病（アセトン臭がすることもあります）</div>
+            </section>
             // 医療機関案内（絵文字を排除したシンプルデザイン）
             const hospitalArea = document.getElementById('dynamic-map-btn-area');
             hospitalArea.innerHTML = "";
             const clinicTypes = [];
 
+            <section class="patho-card">
+                <span class="kw-badge">🦵 夕方の足のむくみ</span>
+                <h2 class="text-rose-700 mb-3">Q20. 夕方に靴がきつく感じる</h2>
+                <div class="detail-text">全身の循環不良はお口の唾液分泌低下にも繋がります。全身の巡りを良くすることは、お口の健康維持にも重要です。</div>
+                <div class="advice-box">軽い運動やストレッチで全身の循環を促し、水分を適切に摂取しましょう。</div>
+            </section>
+        </div>
             if (s1 >= 20 || s2 >= 20) { clinicTypes.push({ key: "歯科医院", label: "歯科医院" }); }
             if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) { clinicTypes.push({ key: "耳鼻咽喉科", label: "耳鼻咽喉科" }); }
             if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) { clinicTypes.push({ key: "消化器内科", label: "消化器内科" }); }
@@ -327,6 +493,15 @@
             if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) { clinicTypes.push({ key: "婦人科", label: "婦人科" }); }
             if (s2 >= 61 && clinicTypes.length < 3) { clinicTypes.push({ key: "内科", label: "一般内科" }); }
 
+        <div class="mt-12 bg-slate-800 rounded-[2.5rem] p-8 text-white">
+            <h3 class="font-black text-lg text-sky-400 mb-4 italic text-center underline decoration-sky-600">SHIMONOSEKI HEALTH POLICY</h3>
+            <p class="text-[11px] leading-relaxed opacity-90 mb-6 text-justify">
+                下関市では、第2次下関市健康づくり計画「しものせき21」に基づき、お口の健康から始まる生活習慣病の予防を推進しています。
+            </p>
+            <div class="border-t border-white/20 pt-4 text-center">
+                <button onclick="location.href='index.html'" class="bg-white/10 text-white border border-white/20 px-6 py-3 rounded-2xl text-xs font-bold active:bg-white/20 transition-all">診断トップに戻る</button>
+            </div>
+        </div>
             clinicTypes.forEach(c => {
                 const mapUrl = `http://googleusercontent.com/maps.google.com/4{encodeURIComponent(c.key)}`;
                 const btn = document.createElement('a');
@@ -341,6 +516,7 @@
                 hospitalArea.appendChild(btn);
             });
 
+    </main>
             const msgEl = document.getElementById('result-message');
             let title = "", description = "";
             if (s2 >= 61) { title = "体調の変化に注意しましょう"; description = "現在、何らかの健康に関するサインが数値に現れています。放置せず、一度かかりつけの医療機関への相談や、市の健康診断を活用することをお勧めします。"; } 
@@ -348,6 +524,15 @@
             else { title = "良好な状態を維持されています"; description = "現在のところ大きなリスクは見当たりません。今のケア習慣を大切に続けましょう。"; }
             msgEl.innerHTML = `<h4 class="font-bold mb-3 text-slate-800">${title}</h4><p class="text-slate-600">${description}</p>`;
 
+    <script>
+        // --- 画面読み込み時の処理 ---
+        window.onload = function() {
+            // 1. 診断結果画面からのフラグチェック
+            const fromQuiz = sessionStorage.getItem('fromQuiz');
+            if (fromQuiz === 'true') {
+                document.getElementById('back-to-quiz').classList.remove('hidden');
+                // ここではフラグを消さず、backToResult()実行時まで保持させます
+            }
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
                 <div class="card p-4 text-xs font-bold text-slate-600 flex items-start leading-relaxed">
                     <span class="text-[#5A67D8] mr-3">●</span>${adv}
@@ -356,6 +541,12 @@
             document.getElementById('progress').style.width = "100%";
         }
 
+            // 2. 診断スコアに基づいた初期タブの切り替え
+            const savedData = localStorage.getItem('kuchi_check_result');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.s2 > 35) {
+                    switchCategory('patho');
         function renderRemindSection() {
             const container = document.getElementById('remind-list');
             container.innerHTML = "";
@@ -368,6 +559,13 @@
                         if (ans && ans.userScore > maxScore) maxScore = ans.userScore;
                     });
                 }
+            }
+        };
+
+        // 修正箇所：診断結果画面へ戻るための関数
+        function backToResult() {
+            // fromQuizフラグは保持したままindex.htmlへ遷移
+            location.href = 'index.html';
                 return { ...menu, riskScore: maxScore };
             });
             scoredMenus.sort((a, b) => b.riskScore - a.riskScore).forEach(menu => {
@@ -389,6 +587,22 @@
             });
         }
 
+        function switchCategory(cat) {
+            const physio = document.getElementById('physio-content');
+            const patho = document.getElementById('patho-content');
+            const tab1 = document.getElementById('tab1');
+            const tab2 = document.getElementById('tab2');
+            if (cat === 'physio') {
+                physio.classList.add('active'); patho.classList.remove('active');
+                tab1.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-sky-500 text-sky-600 bg-sky-50/50 category-tab";
+                tab2.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
+            } else {
+                patho.classList.add('active'); physio.classList.remove('active');
+                tab2.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-rose-500 text-rose-600 bg-rose-50/50 category-tab";
+                tab1.className = "w-1/2 py-4 text-[11px] font-black border-b-2 border-transparent text-slate-400 category-tab";
+            }
+            window.scrollTo(0, 0);
+        }
         function goToDetail() { sessionStorage.setItem('fromQuiz', 'true'); location.href = 'detail.html'; }
         function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromQuiz'); location.reload(); }
     </script>
