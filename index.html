@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -68,7 +70,7 @@
                 <h2 class="text-[#1A365D] font-bold text-lg mb-4">この診断の目的</h2>
                 <ul class="space-y-4 text-slate-700">
                     <li class="flex items-start"><span class="text-[#5A67D8] mr-3 mt-1 text-xs">●</span><span><b>2つのリスク分析：</b>「生活習慣によるもの」と「体調によるもの」の側面から分析します。</span></li>
-                    <li class="flex items-start"><span class="text-[#5A67D8] mr-3 mt-1 text-xs">●</span><span><b>個別のケア提案：</b>回答に合わせて、今日からできる対策をお伝えします。</span></li>
+                    <li class="flex items-start"><span class="text-[#5A67D8] mr-3 mt-1 text-xs">●</span><span><b>個別のアドバイス：</b>回答に合わせて、今日からできる対策をお伝えします。</span></li>
                     <li class="flex items-start"><span class="text-[#5A67D8] mr-3 mt-1 text-xs">●</span><span><b>地域医療との連携：</b>下関市の専門機関や健診制度の情報を提供します。</span></li>
                 </ul>
                 <p id="liff-status" class="text-xs text-slate-400 mt-10 pt-4 border-t">システムを確認しています...</p>
@@ -137,9 +139,14 @@
                 </a>
             </div>
 
-            <div class="mb-10 space-y-3">
-                <h3 class="font-bold text-[#1A365D] text-base mb-4">現在地から近くの医療機関を探す</h3>
-                <div id="dynamic-map-btn-area" class="space-y-3"></div>
+            <div class="mb-10 card border-2 border-[#1A365D] overflow-hidden shadow-md">
+                <div class="bg-[#1A365D] px-6 py-4">
+                    <h3 class="font-bold text-white text-base">医療機関へのご相談</h3>
+                    <p class="text-xs text-slate-200 mt-1">リスク分析の結果、以下の受診をおすすめします</p>
+                </div>
+                <div id="dynamic-map-btn-area" class="p-4 space-y-3 bg-slate-50">
+                    </div>
+                <p class="px-6 pb-4 text-[10px] text-slate-500 text-center italic">※ボタンを押すと現在地近くの地図が開きます</p>
             </div>
 
             <div class="card p-8 mb-10 border-t-4 border-t-[#5A67D8]">
@@ -297,47 +304,28 @@
             hospitalArea.innerHTML = "";
             const clinicTypes = [];
 
-            // 1. 歯科医院（リスクがある場合は必須）
-            if (s1 >= 20 || s2 >= 20) {
-                clinicTypes.push({ key: "歯科医院", icon: "📍", label: "近隣の歯科医院を確認" });
-            }
-
-            // 2. 耳鼻科（鼻・喉の質問15に反応）
-            if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) {
-                clinicTypes.push({ key: "耳鼻咽喉科", icon: "👂", label: "近隣の耳鼻咽喉科を確認" });
-            }
-
-            // 3. 消化器内科（胃腸・胸焼けの質問17に反応）
-            if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) {
-                clinicTypes.push({ key: "消化器内科", icon: "胃", label: "近隣の消化器内科を確認" });
-            }
-
-            // 4. 代謝内科/糖尿病内科（喉の渇き・急な眠気の質問14, 19に反応）
-            if (answers.find(a => [14, 19].includes(a.qId) && a.userScore >= 0.5)) {
-                clinicTypes.push({ key: "糖尿病内科", icon: "🩺", label: "近隣の代謝・糖尿病内科を確認" });
-            }
-
-            // 5. 婦人科（女性ホルモン質問6に反応）
-            if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) {
-                clinicTypes.push({ key: "婦人科", icon: "🌸", label: "近隣の婦人科を確認" });
-            }
-
-            // 6. 一般内科（全体的な体調不良リスクが高い場合）
-            if (s2 >= 61 && clinicTypes.length < 3) {
-                clinicTypes.push({ key: "内科", icon: "🏥", label: "近隣の一般内科を確認" });
-            }
+            if (s1 >= 20 || s2 >= 20) { clinicTypes.push({ key: "歯科医院", icon: "📍", label: "歯科医院" }); }
+            if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) { clinicTypes.push({ key: "耳鼻咽喉科", icon: "👂", label: "耳鼻咽喉科" }); }
+            if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) { clinicTypes.push({ key: "消化器内科", icon: "🍱", label: "消化器内科" }); }
+            if (answers.find(a => [14, 19].includes(a.qId) && a.userScore >= 0.5)) { clinicTypes.push({ key: "糖尿病内科", icon: "🩺", label: "糖尿病内科" }); }
+            if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) { clinicTypes.push({ key: "婦人科", icon: "🌸", label: "婦人科" }); }
+            if (s2 >= 61 && clinicTypes.length < 3) { clinicTypes.push({ key: "内科", icon: "🏥", label: "一般内科" }); }
 
             clinicTypes.forEach(c => {
-                const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(c.key)}`;
+                const mapUrl = `http://googleusercontent.com/maps.google.com/3{encodeURIComponent(c.key)}`;
                 const btn = document.createElement('a');
                 btn.href = mapUrl;
                 btn.target = "_blank";
-                btn.className = "block card p-4 hover:bg-slate-50 transition-colors border-l-4 border-l-[#5A67D8]";
-                btn.innerHTML = `<div class="flex items-center"><span class="text-xl mr-4">${c.icon}</span><div class="text-left"><p class="text-sm font-bold text-slate-700">${c.label}</p></div></div>`;
+                btn.className = "flex items-center justify-between w-full bg-white border border-slate-200 p-4 rounded-md shadow-sm hover:border-[#5A67D8] transition-all active:scale-[0.98]";
+                btn.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="text-xl mr-3">${c.icon}</span>
+                        <span class="font-bold text-slate-700 text-sm">近くの${c.label}を探す</span>
+                    </div>
+                    <span class="text-[#5A67D8] text-xs">地図を表示 →</span>`;
                 hospitalArea.appendChild(btn);
             });
 
-            // メッセージ設定
             const msgEl = document.getElementById('result-message');
             let title = "", description = "";
             if (s2 >= 61) { title = "体調の変化に注意しましょう"; description = "現在、何らかの健康に関するサインが数値に現れています。放置せず、一度かかりつけの医療機関への相談や、市の健康診断を活用することをお勧めします。"; } 
