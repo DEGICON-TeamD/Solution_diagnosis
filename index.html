@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -42,6 +40,23 @@
             padding: 4px 8px;
             border-radius: 4px;
         }
+
+        /* カスタムの洗練されたリンクデザイン */
+        .clinic-link {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .clinic-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 1rem;
+            background-color: #1A365D;
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +75,7 @@
         
         <section id="page-start" class="page active py-8">
             <div class="flex justify-center mb-6">
-                <img src="my-icon.png" alt="Kuchi Check Logo" class="w-48 h-auto object-contain">
+                <img src="logo.png" alt="Kuchi Check Logo" class="w-48 h-auto object-contain">
             </div>
 
             <h1 class="text-2xl font-bold mb-6 text-[#1A365D] text-center leading-snug">あなたの息から、<br>現在のお口と体の状態を確認します</h1>
@@ -134,25 +149,25 @@
                             <h3 id="detail-btn-title" class="font-bold text-slate-800 mb-1">診断結果の詳しい解説を見る</h3>
                             <p class="text-xs text-slate-500">専門的な根拠に基づいたガイドをご案内します</p>
                         </div>
-                        <span class="text-slate-400">→</span>
+                        <span class="text-slate-400 text-xl">→</span>
                     </div>
                 </a>
             </div>
 
-            <div class="mb-10 card border-2 border-[#1A365D] overflow-hidden shadow-md">
-                <div class="bg-[#1A365D] px-6 py-4">
-                    <h3 class="font-bold text-white text-base">医療機関へのご相談</h3>
-                    <p class="text-xs text-slate-200 mt-1">リスク分析の結果、以下の受診をおすすめします</p>
+            <div class="mb-10 card border border-slate-300 overflow-hidden shadow-sm">
+                <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+                    <h3 class="font-bold text-[#1A365D] text-base">医療機関へのご相談</h3>
+                    <p class="text-xs text-slate-500 mt-1">リスク分析の結果、以下の受診をおすすめします</p>
                 </div>
-                <div id="dynamic-map-btn-area" class="p-4 space-y-3 bg-slate-50">
+                <div id="dynamic-map-btn-area" class="p-4 space-y-2 bg-white">
                     </div>
-                <p class="px-6 pb-4 text-[10px] text-slate-500 text-center italic">※ボタンを押すと現在地近くの地図が開きます</p>
+                <p class="px-6 pb-4 text-[10px] text-slate-400 text-center tracking-wider">ボタンを選択すると現在地近くの地図が開きます</p>
             </div>
 
             <div class="card p-8 mb-10 border-t-4 border-t-[#5A67D8]">
                 <div class="text-center mb-8">
                     <h3 class="font-bold text-[#1A365D] text-lg mb-2">今後の健康維持のために</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">今回の結果をもとに、日常で取り入れやすいコツをLINEでお伝えします。<br>※★印は特におすすめの項目です。</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">今回の結果をもとに、日常で取り入れやすいコツをLINEでお伝えします。<br>※「★」は特におすすめの項目です。</p>
                 </div>
                 <div id="remind-list" class="space-y-4"></div>
                 <button onclick="alert('設定を保存しました。')" class="w-full mt-10 btn-primary font-bold py-4 rounded-lg shadow-sm">設定を保存する</button>
@@ -161,19 +176,20 @@
             <div class="card p-8 mb-10 bg-slate-50">
                 <h3 class="text-base font-bold mb-6 text-[#1A365D] text-center uppercase tracking-wider">下関市の健康サポート情報</h3>
                 <div class="grid grid-cols-1 gap-4">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block bg-white border border-slate-200 text-center font-bold py-4 rounded text-sm text-slate-700 hover:bg-slate-100">特定健診について（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block bg-white border border-slate-200 text-center font-bold py-4 rounded text-sm text-slate-700 hover:bg-slate-100">健康診査のご案内（全般）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block bg-white border border-slate-200 text-center font-bold py-4 rounded text-sm text-slate-700 hover:bg-slate-100 transition-colors">特定健診について（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block bg-white border border-slate-200 text-center font-bold py-4 rounded text-sm text-slate-700 hover:bg-slate-100 transition-colors">健康診査のご案内（全般）</a>
                 </div>
             </div>
 
             <div class="mb-10 space-y-4">
-                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="block card p-5 hover:bg-slate-50">
-                    <div class="flex items-center">
-                        <span class="text-xl mr-4">📄</span>
+                <a href="https://www.city.shimonoseki.lg.jp/uploaded/attachment/86987.pdf" target="_blank" class="block card p-6 hover:bg-slate-50 transition-all border-l-4 border-l-[#1A365D]">
+                    <div class="flex justify-between items-center">
                         <div class="text-left">
-                            <p class="text-xs font-bold text-[#1A365D]">下関市 公式資料</p>
-                            <p class="text-sm font-bold text-slate-700">実施医療機関一覧 (PDFを開く)</p>
+                            <p class="text-[10px] font-bold text-[#1A365D] mb-1 tracking-widest uppercase">OFFICIAL DOCUMENT</p>
+                            <p class="text-sm font-bold text-slate-800 leading-tight">実施医療機関一覧をPDFで確認する</p>
+                            <p class="text-[10px] text-slate-500 mt-2">下関市が公開している公式の医療機関リストです</p>
                         </div>
+                        <span class="text-slate-300 text-2xl font-light">|</span>
                     </div>
                 </a>
                 <button onclick="liff.closeWindow()" class="w-full btn-primary font-bold py-5 rounded-lg shadow-md text-lg">診断を終了する</button>
@@ -299,30 +315,29 @@
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
-            // 医療機関の出し分けロジック
+            // 医療機関案内（絵文字を排除したシンプルデザイン）
             const hospitalArea = document.getElementById('dynamic-map-btn-area');
             hospitalArea.innerHTML = "";
             const clinicTypes = [];
 
-            if (s1 >= 20 || s2 >= 20) { clinicTypes.push({ key: "歯科医院", icon: "📍", label: "歯科医院" }); }
-            if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) { clinicTypes.push({ key: "耳鼻咽喉科", icon: "👂", label: "耳鼻咽喉科" }); }
-            if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) { clinicTypes.push({ key: "消化器内科", icon: "🍱", label: "消化器内科" }); }
-            if (answers.find(a => [14, 19].includes(a.qId) && a.userScore >= 0.5)) { clinicTypes.push({ key: "糖尿病内科", icon: "🩺", label: "糖尿病内科" }); }
-            if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) { clinicTypes.push({ key: "婦人科", icon: "🌸", label: "婦人科" }); }
-            if (s2 >= 61 && clinicTypes.length < 3) { clinicTypes.push({ key: "内科", icon: "🏥", label: "一般内科" }); }
+            if (s1 >= 20 || s2 >= 20) { clinicTypes.push({ key: "歯科医院", label: "歯科医院" }); }
+            if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) { clinicTypes.push({ key: "耳鼻咽喉科", label: "耳鼻咽喉科" }); }
+            if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) { clinicTypes.push({ key: "消化器内科", label: "消化器内科" }); }
+            if (answers.find(a => [14, 19].includes(a.qId) && a.userScore >= 0.5)) { clinicTypes.push({ key: "糖尿病内科", label: "糖尿病内科" }); }
+            if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) { clinicTypes.push({ key: "婦人科", label: "婦人科" }); }
+            if (s2 >= 61 && clinicTypes.length < 3) { clinicTypes.push({ key: "内科", label: "一般内科" }); }
 
             clinicTypes.forEach(c => {
-                const mapUrl = `http://googleusercontent.com/maps.google.com/3{encodeURIComponent(c.key)}`;
+                const mapUrl = `http://googleusercontent.com/maps.google.com/4{encodeURIComponent(c.key)}`;
                 const btn = document.createElement('a');
                 btn.href = mapUrl;
                 btn.target = "_blank";
-                btn.className = "flex items-center justify-between w-full bg-white border border-slate-200 p-4 rounded-md shadow-sm hover:border-[#5A67D8] transition-all active:scale-[0.98]";
+                btn.className = "flex items-center justify-between w-full bg-white border border-slate-200 p-4 rounded-md hover:bg-slate-50 transition-all active:scale-[0.98]";
                 btn.innerHTML = `
-                    <div class="flex items-center">
-                        <span class="text-xl mr-3">${c.icon}</span>
+                    <div class="clinic-link">
                         <span class="font-bold text-slate-700 text-sm">近くの${c.label}を探す</span>
                     </div>
-                    <span class="text-[#5A67D8] text-xs">地図を表示 →</span>`;
+                    <span class="text-slate-400 text-sm">地図を確認 →</span>`;
                 hospitalArea.appendChild(btn);
             });
 
@@ -335,7 +350,7 @@
 
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
                 <div class="card p-4 text-xs font-bold text-slate-600 flex items-start leading-relaxed">
-                    <span class="text-[#5A67D8] mr-3">✔</span>${adv}
+                    <span class="text-[#5A67D8] mr-3">●</span>${adv}
                 </div>`).join('');
             document.getElementById('q-counter').innerText = "診断結果";
             document.getElementById('progress').style.width = "100%";
@@ -364,11 +379,11 @@
                         <label class="flex items-start font-bold text-sm flex-1 pt-1">
                             <input type="checkbox" class="w-4 h-4 mr-3 accent-[#5A67D8] mt-1" ${isRecommended || menu.isCommon ? 'checked' : ''}>
                             <span class="flex flex-col">
-                                ${isRecommended ? `<span class="text-[10px] text-[#5A67D8] font-bold mb-1 uppercase">★ おすすめのケア</span>` : ''}
+                                ${isRecommended ? `<span class="text-[10px] text-[#5A67D8] font-bold mb-1 uppercase">Recommended</span>` : ''}
                                 <span class="text-slate-700">${menu.name}</span>
                             </span>
                         </label>
-                        <div class="text-right"><input type="time" value="${menu.time1}" class="text-xs font-bold text-slate-600"></div>
+                        <div class="text-right"><input type="time" value="${menu.time1}" class="text-xs font-bold text-slate-600 bg-transparent border-none p-0"></div>
                     </div>`;
                 container.appendChild(item);
             });
