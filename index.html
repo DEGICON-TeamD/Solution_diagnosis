@@ -16,34 +16,25 @@
         }
         .page { display: none; }
         .active { display: block; }
-        
-        
         .btn-primary {
             background-color: #1A365D;
             color: white;
             transition: background-color 0.2s;
         }
         .btn-primary:active { background-color: #2A4365; }
-        
         .progress-bg { background-color: #E2E8F0; }
         .progress-fill { background-color: #5A67D8; transition: width 0.4s ease; }
-        
         .card {
             background: white;
             border: 1px solid #E2E8F0;
             border-radius: 8px;
         }
-        
-    
         .text-risk-low { color: #2B6CB0; }
         .text-risk-mid { color: #B7791F; }
         .text-risk-high { color: #C53030; }
-        
-        
         .tag-low { background-color: #EBF8FF; color: #2B6CB0; }
         .tag-mid { background-color: #FFFFF0; color: #B7791F; }
         .tag-high { background-color: #FFF5F5; color: #C53030; }
-
         input[type="time"] {
             border: 1px solid #CBD5E0;
             padding: 4px 8px;
@@ -67,14 +58,13 @@
         
         <section id="page-start" class="page active py-8">
             <div class="flex justify-center mb-6">
-                <img src="my-icon.png" alt="Kuchi Check Logo" class="w-48 h-auto object-contain">
+                <img src="logo.png" alt="Kuchi Check Logo" class="w-48 h-auto object-contain">
             </div>
 
             <h1 class="text-2xl font-bold mb-6 text-[#1A365D] text-center leading-snug">あなたの息から、<br>現在のお口と体の状態を確認します</h1>
             
             <div class="card p-8 mb-8">
                 <p class="text-base mb-8 text-slate-700">口臭は、日々の生活習慣や、まだ気づいていない体の不調を知らせてくれる大切なサインです。まずは今の状況を一緒に確認してみましょう。</p>
-                
                 <h2 class="text-[#1A365D] font-bold text-lg mb-4">この診断の目的</h2>
                 <ul class="space-y-4 text-slate-700">
                     <li class="flex items-start"><span class="text-[#5A67D8] mr-3 mt-1 text-xs">●</span><span><b>2つのリスク分析：</b>「生活習慣によるもの」と「体調によるもの」の側面から分析します。</span></li>
@@ -121,7 +111,7 @@
                 </div>
                 <div class="card p-6 flex items-center justify-between border-l-4 border-l-[#1A365D]">
                     <div>
-                        <p class="text-xs font-bold text-slate-500 mb-1">病的リスク</p>
+                        <p class="text-xs font-bold text-slate-500 mb-1">体調に関わるリスク</p>
                         <p id="label-2" class="inline-block text-[10px] font-bold px-3 py-1 rounded-full"></p>
                     </div>
                     <div class="text-right"><span id="score-2" class="text-4xl font-bold">0</span><span class="text-sm ml-1 text-slate-500">%</span></div>
@@ -145,6 +135,11 @@
                         <span class="text-slate-400">→</span>
                     </div>
                 </a>
+            </div>
+
+            <div class="mb-10 space-y-3">
+                <h3 class="font-bold text-[#1A365D] text-base mb-4">現在地から近くの医療機関を探す</h3>
+                <div id="dynamic-map-btn-area" class="space-y-3"></div>
             </div>
 
             <div class="card p-8 mb-10 border-t-4 border-t-[#5A67D8]">
@@ -174,9 +169,6 @@
                         </div>
                     </div>
                 </a>
-                
-                <div id="dynamic-map-btn-area"></div>
-
                 <button onclick="liff.closeWindow()" class="w-full btn-primary font-bold py-5 rounded-lg shadow-md text-lg">診断を終了する</button>
                 <button onclick="resetAndStart()" class="w-full text-slate-500 font-bold py-4 text-sm underline underline-offset-4">最初からやり直す</button>
             </div>
@@ -191,7 +183,7 @@
             { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口の状態が気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいや、起きてすぐの水分補給でお口を潤しましょう。" },
             { id: 2, axis: 1, cat: "お口の状態", text: "鏡で舌を見たとき、表面が白く厚く覆われているように見えますか？", labels: ["はっきりと白い","わずかに白い","きれいに見える"], advice: "舌の上の白い汚れはニオイの主な原因です。1日1回、朝に専用の舌ブラシなどで優しくケアしてみましょう。", hasImage: true },
             { id: 3, axis: 1, cat: "環境・ストレス", text: "現在、日常的に強いストレスを感じる場面はありますか？", labels: ["非常に感じている","やや感じている","あまり感じない"], advice: "ストレスは唾液の分泌を抑えます。深呼吸を心がけ、リラックスする時間を大切にしてください。" },
-            { id: 4, axis: 1, cat: "お口の状態", text: "緊張した際、お口の中が粘ついたり、話しにくいと感じることはありますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "粘つきは唾液の質が変化しているサインです。こまめな水分補給や唾液腺のマッサージが有効です。" },
+            { id: 4, axis: 1, cat: "お口の状態", text: "緊張した際、お口の中が粘ついたり、話しにくいと感じることはありますか？", labels: ["よくある","時々ある","ない"], advice: "粘つきは唾液の質が変化しているサインです。こまめな水分補給や唾液腺のマッサージが有効です。" },
             { id: 5, axis: 1, cat: "生活習慣", text: "日中、水分を摂取する頻度はどのくらいですか？", labels: ["少ない","時々摂る","十分に摂っている"], advice: "水分不足は乾燥を招きます。お茶だけでなく、お水をひと口ずつこまめに飲む習慣をつけましょう。" },
             { id: 6, axis: 1, cat: "健康状態", text: "（女性の方）ホルモンバランスの変化（生理前後や更年期）の時期にありますか？", labels: ["当てはまる","やや当てはまる","当てはまらない"], advice: "体調の変化によりお口の状態も左右されます。いつもより丁寧なケアと休息を心がけましょう。" },
             { id: 7, axis: 1, cat: "健康状態", text: "最近、十分な睡眠が取れていない、あるいは疲れを感じていますか？", labels: ["非常に感じている","やや感じている","感じていない"], advice: "免疫力が低下するとお口のトラブルに繋がりやすくなります。早めの就寝を意識してみてください。" },
@@ -232,7 +224,6 @@
                     document.getElementById('start-btn').disabled = false;
                 } else { liff.login(); }
             } catch (e) { document.getElementById('start-btn').disabled = false; }
-
             const savedData = localStorage.getItem('kuchi_check_result');
             const fromDetail = sessionStorage.getItem('fromQuiz');
             if (fromDetail === 'true' && savedData) { showResult(true); } 
@@ -283,7 +274,6 @@
                 s1 = Math.round(s1); s2 = Math.round(s2);
                 adviceList = [...new Set(adviceSet)].slice(0, 4);
                 localStorage.setItem('kuchi_check_result', JSON.stringify({ s1, s2, adviceList, answers }));
-                sendData(s1, s2);
             }
             showPage('page-result');
             renderScoreDisplay(s1, s2, adviceList);
@@ -295,68 +285,70 @@
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
                 el.innerText = score;
-                if (score <= 40) { 
-                    el.className = "text-4xl font-bold text-risk-low"; lbl.innerText = "問題なし"; 
-                    lbl.className = "tag-low px-3 py-0.5 rounded-full inline-block"; 
-                } else if (score <= 60) { 
-                    el.className = "text-4xl font-bold text-risk-mid"; lbl.innerText = "少し注意"; 
-                    lbl.className = "tag-mid px-3 py-0.5 rounded-full inline-block"; 
-                } else { 
-                    el.className = "text-4xl font-bold text-risk-high"; lbl.innerText = "注意が必要"; 
-                    lbl.className = "tag-high px-3 py-0.5 rounded-full inline-block"; 
-                }
+                if (score <= 40) { el.className = "text-4xl font-bold text-risk-low"; lbl.innerText = "問題なし"; lbl.className = "tag-low px-3 py-0.5 rounded-full inline-block"; } 
+                else if (score <= 60) { el.className = "text-4xl font-bold text-risk-mid"; lbl.innerText = "少し注意"; lbl.className = "tag-mid px-3 py-0.5 rounded-full inline-block"; } 
+                else { el.className = "text-4xl font-bold text-risk-high"; lbl.innerText = "注意が必要"; lbl.className = "tag-high px-3 py-0.5 rounded-full inline-block"; }
             };
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
-            const msgEl = document.getElementById('result-message');
-            let title = "", description = "";
+            // 医療機関の出し分けロジック
+            const hospitalArea = document.getElementById('dynamic-map-btn-area');
+            hospitalArea.innerHTML = "";
+            const clinicTypes = [];
 
-             if (s2 >= 61) {
-                title = "体調の変化に注意しましょう";
-                description = "現在、何らかの健康に関するサインが数値に現れています。放置せず、一度かかりつけの医療機関への相談や、市の健康診断を活用することをお勧めします。";
-            } else if (s2 >= 21) {
-                title = "日々の健康管理を見直してみませんか";
-                description = "わずかながらリスク傾向が見られます。日常の習慣の中に、まだ改善できるポイントがあるかもしれません。アドバイスを参考にしてみてください。";
-            } else if (s1 >= 61) {
-                title = "お口の環境が少し乱れ気味です";
-                description = "生活習慣の影響が強く出ているようです。こまめな水分補給や丁寧なセルフケアを意識し、お口を清潔に保つ時間を増やしてみましょう。";
-            } else {
-                title = "良好な状態を維持されています";
-                description = "現在のところ大きなリスクは見当たりません。今のケア習慣を大切に続け、定期的な歯科検診などを活用して健康を守っていきましょう。";
+            // 1. 歯科医院（リスクがある場合は必須）
+            if (s1 >= 20 || s2 >= 20) {
+                clinicTypes.push({ key: "歯科医院", icon: "📍", label: "近隣の歯科医院を確認" });
             }
 
+            // 2. 耳鼻科（鼻・喉の質問15に反応）
+            if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) {
+                clinicTypes.push({ key: "耳鼻咽喉科", icon: "👂", label: "近隣の耳鼻咽喉科を確認" });
+            }
+
+            // 3. 消化器内科（胃腸・胸焼けの質問17に反応）
+            if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) {
+                clinicTypes.push({ key: "消化器内科", icon: "胃", label: "近隣の消化器内科を確認" });
+            }
+
+            // 4. 代謝内科/糖尿病内科（喉の渇き・急な眠気の質問14, 19に反応）
+            if (answers.find(a => [14, 19].includes(a.qId) && a.userScore >= 0.5)) {
+                clinicTypes.push({ key: "糖尿病内科", icon: "🩺", label: "近隣の代謝・糖尿病内科を確認" });
+            }
+
+            // 5. 婦人科（女性ホルモン質問6に反応）
+            if (answers.find(a => a.qId === 6 && a.userScore >= 0.5)) {
+                clinicTypes.push({ key: "婦人科", icon: "🌸", label: "近隣の婦人科を確認" });
+            }
+
+            // 6. 一般内科（全体的な体調不良リスクが高い場合）
+            if (s2 >= 61 && clinicTypes.length < 3) {
+                clinicTypes.push({ key: "内科", icon: "🏥", label: "近隣の一般内科を確認" });
+            }
+
+            clinicTypes.forEach(c => {
+                const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(c.key)}`;
+                const btn = document.createElement('a');
+                btn.href = mapUrl;
+                btn.target = "_blank";
+                btn.className = "block card p-4 hover:bg-slate-50 transition-colors border-l-4 border-l-[#5A67D8]";
+                btn.innerHTML = `<div class="flex items-center"><span class="text-xl mr-4">${c.icon}</span><div class="text-left"><p class="text-sm font-bold text-slate-700">${c.label}</p></div></div>`;
+                hospitalArea.appendChild(btn);
+            });
+
+            // メッセージ設定
+            const msgEl = document.getElementById('result-message');
+            let title = "", description = "";
+            if (s2 >= 61) { title = "体調の変化に注意しましょう"; description = "現在、何らかの健康に関するサインが数値に現れています。放置せず、一度かかりつけの医療機関への相談や、市の健康診断を活用することをお勧めします。"; } 
+            else if (s2 >= 21) { title = "日々の健康管理を見直してみませんか"; description = "わずかながらリスク傾向が見られます。日常の習慣の中に、まだ改善できるポイントがあるかもしれません。"; } 
+            else { title = "良好な状態を維持されています"; description = "現在のところ大きなリスクは見当たりません。今のケア習慣を大切に続けましょう。"; }
             msgEl.innerHTML = `<h4 class="font-bold mb-3 text-slate-800">${title}</h4><p class="text-slate-600">${description}</p>`;
 
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
                 <div class="card p-4 text-xs font-bold text-slate-600 flex items-start leading-relaxed">
                     <span class="text-[#5A67D8] mr-3">✔</span>${adv}
                 </div>`).join('');
-
-            let searchKeyword = "歯科医院";
-            let searchIcon = "📍";
-            let searchLabel = "近隣の歯科医院を確認する";
-
-            if (s2 >= 41) {
-                if (answers.find(a => a.qId === 15 && a.userScore >= 0.5)) {
-                    searchKeyword = "耳鼻咽喉科"; searchIcon = "👂"; searchLabel = "近隣の耳鼻咽喉科を確認する";
-                } else if (answers.find(a => [14, 16, 17, 19].includes(a.qId) && a.userScore >= 0.5)) {
-                    searchKeyword = "内科"; searchIcon = "🏥"; searchLabel = "近隣の内科を確認する";
-                }
-            }
-            const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchKeyword)}`;
-            document.getElementById('dynamic-map-btn-area').innerHTML = `
-                <a href="${mapUrl}" target="_blank" class="block card p-5 hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center">
-                        <span class="text-xl mr-4">${searchIcon}</span>
-                        <div class="text-left">
-                            <p class="text-xs font-bold text-[#1A365D]">施設案内</p>
-                            <p class="text-sm font-bold text-slate-700">${searchLabel}</p>
-                        </div>
-                    </div>
-                </a>
-            `;
-
             document.getElementById('q-counter').innerText = "診断結果";
             document.getElementById('progress').style.width = "100%";
         }
@@ -388,9 +380,7 @@
                                 <span class="text-slate-700">${menu.name}</span>
                             </span>
                         </label>
-                        <div class="text-right">
-                            <input type="time" value="${menu.time1}" class="text-xs font-bold text-slate-600">
-                        </div>
+                        <div class="text-right"><input type="time" value="${menu.time1}" class="text-xs font-bold text-slate-600"></div>
                     </div>`;
                 container.appendChild(item);
             });
@@ -398,7 +388,6 @@
 
         function goToDetail() { sessionStorage.setItem('fromQuiz', 'true'); location.href = 'detail.html'; }
         function resetAndStart() { localStorage.removeItem('kuchi_check_result'); sessionStorage.removeItem('fromQuiz'); location.reload(); }
-        async function sendData(s1, s2) { if (!lineProfile || !GAS_URL) return; const data = { name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2 }; fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }); }
     </script>
 </body>
 </html>
