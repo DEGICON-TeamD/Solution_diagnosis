@@ -11,36 +11,45 @@
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             color: #2D3748; 
-            background-color: #F7FAFC;
-            line-height: 1.7; /* 行間を少し広げて読みやすく */
+            background-color: #F7FAFC; /* わずかにグレーがかった白 */
+            line-height: 1.7;
         }
         .page { display: none; }
         .active { display: block; }
+        
+        /* ボタンのデザイン：清潔感のある水色に */
         .btn-primary {
-            background-color: #1A365D;
+            background-color: #3182CE; /* 清潔感のある水色（少し濃いめ） */
             color: white;
-            transition: opacity 0.2s;
+            transition: background-color 0.2s;
+            border-radius: 4px; /* 丸すぎない角丸 */
         }
-        .btn-primary:active { opacity: 0.8; }
+        .btn-primary:active { background-color: #2B6CB0; } /* アクティブ時は少し濃く */
+        
         .progress-bg { background-color: #E2E8F0; }
-        .progress-fill { background-color: #1A365D; transition: width 0.4s ease; }
+        .progress-fill { background-color: #3182CE; transition: width 0.4s ease; } /* 進捗バーも水色に */
+        
         .card {
             background: white;
             border: 1px solid #E2E8F0;
-            border-radius: 8px;
+            border-radius: 4px; /* 丸すぎない角丸 */
         }
-        .text-risk-low { color: #2B6CB0; }
-        .text-risk-mid { color: #B7791F; }
-        .text-risk-high { color: #C53030; }
-        .tag-low { background-color: #EBF8FF; color: #2B6CB0; }
-        .tag-mid { background-color: #FFFFF0; color: #B7791F; }
-        .tag-high { background-color: #FFF5F5; color: #C53030; }
+        
+        /* スコアカラーの調整 */
+        .text-risk-low { color: #2B6CB0; } /* 良好：落ち着いた青 */
+        .text-risk-mid { color: #B7791F; } /* 注意：落ち着いた黄 */
+        .text-risk-high { color: #C53030; } /* 高リスク：落ち着いた赤 */
+        
+        /* タグのデザイン */
+        .tag-low { background-color: #EBF8FF; color: #2B6CB0; border-radius: 2px; } /* 良好：薄い水色背景 */
+        .tag-mid { background-color: #FFFFF0; color: #B7791F; border-radius: 2px; } /* 注意：薄い黄背景 */
+        .tag-high { background-color: #FFF5F5; color: #C53030; border-radius: 2px; } /* 高リスク：薄い赤背景 */
         
         input[type="time"] {
             border: 1px solid #CBD5E0;
             padding: 4px 6px;
             border-radius: 4px;
-            font-size: 1rem; /* 時刻入力を大きく */
+            font-size: 1rem;
         }
 
         .clinic-link {
@@ -55,7 +64,12 @@
             transform: translateY(-50%);
             width: 4px;
             height: 1.1rem;
-            background-color: #1A365D;
+            background-color: #3182CE; /* リンクのアクセントも水色に */
+        }
+        
+        /* セクションの背景色調整 */
+        .bg-section-accent {
+            background-color: #EBF8FF; /* 清潔感のある薄い水色 */
         }
     </style>
 </head>
@@ -66,7 +80,7 @@
             <span class="text-[#1A365D] font-bold text-lg tracking-tight">口臭＆健康リスク診断</span>
             <span id="q-counter" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Setup</span>
         </div>
-        <div class="max-w-xl mx-auto w-full progress-bg h-1.5 mt-3">
+        <div class="max-w-xl mx-auto w-full progress-bg h-1.5 mt-3 rounded-full overflow-hidden">
             <div id="progress" class="progress-fill h-full" style="width: 0%"></div>
         </div>
     </header>
@@ -75,18 +89,17 @@
         
         <section id="page-start" class="page active py-8 text-center">
             <h1 class="text-2xl font-bold mb-8 text-[#1A365D] leading-snug">あなたの息から、<br>現在のお口と体の状態を確認</h1>
-            <div class="card p-8 mb-8 text-left">
-                <p class="text-base mb-8 text-slate-600">口臭は、日々の生活習慣や、まだ気づいていない体の不調を知らせてくれる大切なサインです。</p>
+            <div class="card p-8 mb-8 text-left border-l-4 border-l-[#3182CE]"> <p class="text-base mb-8 text-slate-600">口臭は、日々の生活習慣や、まだ気づいていない体の不調を知らせてくれる大切なサインです。</p>
                 <h2 class="text-[#1A365D] font-bold text-base mb-5 border-b pb-2">この診断のポイント</h2>
                 <ul class="space-y-5 text-sm text-slate-600">
-                    <li class="flex items-start"><span class="mr-2">・</span><span>2つの側面（習慣・疾患サイン）からリスクを分析</span></li>
-                    <li class="flex items-start"><span class="mr-2">・</span><span>専門的な根拠に基づく個別アドバイス</span></li>
-                    <li class="flex items-start"><span class="mr-2">・</span><span>近隣の専門機関へのスムーズな案内</span></li>
+                    <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>2つの側面（習慣・疾患サイン）からリスクを分析</span></li>
+                    <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>専門的な根拠に基づく個別アドバイス</span></li>
+                    <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>近隣の専門機関へのスムーズな案内</span></li>
                 </ul>
                 <p id="liff-status" class="text-xs text-slate-400 mt-12 text-center">システムを読み込んでいます...</p>
             </div>
             <button id="start-btn" onclick="startQuiz()" class="w-full btn-primary font-bold py-6 rounded-lg shadow-sm disabled:opacity-50 mb-4 text-lg" disabled>診断を開始する</button>
-            <button id="resume-btn" onclick="showResult(true)" class="hidden w-full bg-white border border-slate-300 text-slate-600 font-bold py-5 rounded-lg text-base">前回の結果を表示</button>
+            <button id="resume-btn" onclick="showResult(true)" class="hidden w-full bg-white border border-slate-300 text-slate-600 font-bold py-5 rounded-lg text-base hover:bg-slate-50 transition-colors">前回の結果を表示</button>
         </section>
         
         <section id="page-q" class="page">
@@ -104,53 +117,48 @@
             <h2 class="text-xs font-bold mb-6 text-slate-500 text-center tracking-widest uppercase">Diagnosis Result</h2>
             
             <div class="grid grid-cols-2 gap-4 mb-8">
-                <div class="card p-6">
-                    <p class="text-xs font-bold text-slate-400 mb-2">一時的リスク</p>
+                <div class="card p-6 border-l-4 border-l-[#EBF8FF]"> <p class="text-xs font-bold text-slate-400 mb-2">一時的リスク</p>
                     <div class="flex items-baseline justify-between">
-                        <span id="score-1" class="text-4xl font-bold">0</span><span class="text-xs text-slate-400">%</span>
+                        <span id="score-1" class="text-4xl font-bold score-1">0</span><span class="text-xs text-slate-400">%</span>
                     </div>
                     <p id="label-1" class="text-xs font-bold mt-3 text-center py-1 rounded"></p>
                 </div>
-                <div class="card p-6">
-                    <p class="text-xs font-bold text-slate-400 mb-2">疾患サイン</p>
+                <div class="card p-6 border-l-4 border-l-[#EBF8FF]"> <p class="text-xs font-bold text-slate-400 mb-2">疾患サイン</p>
                     <div class="flex items-baseline justify-between">
-                        <span id="score-2" class="text-4xl font-bold">0</span><span class="text-xs text-slate-400">%</span>
+                        <span id="score-2" class="text-4xl font-bold score-2">0</span><span class="text-xs text-slate-400">%</span>
                     </div>
                     <p id="label-2" class="text-xs font-bold mt-3 text-center py-1 rounded"></p>
                 </div>
             </div>
             
-            <div id="result-message" class="card p-6 mb-8 text-base text-slate-700 border-l-4 border-[#1A365D]"></div>
+            <div id="result-message" class="card p-6 mb-8 text-base text-slate-700 border-l-4 border-[#3182CE]"></div>
 
             <div class="mb-10">
                 <h3 class="font-bold text-slate-800 text-base mb-5 flex items-center">
-                    <span class="w-1.5 h-5 bg-[#1A365D] mr-3"></span>今すぐできるアドバイス
+                    <span class="w-1.5 h-5 bg-[#3182CE] mr-3"></span>今すぐできるアドバイス
                 </h3>
                 <div id="advice-list" class="space-y-3"></div>
             </div>
 
             <div class="mb-10">
-                <a href="detail.html" onclick="goToDetail()" class="block card p-6 hover:bg-slate-50 transition-colors border-dashed">
-                    <div class="flex justify-between items-center">
+                <a href="detail.html" onclick="goToDetail()" class="block card p-6 hover:bg-slate-50 transition-colors border-dashed border-[#3182CE]"> <div class="flex justify-between items-center">
                         <div>
                             <h3 class="font-bold text-slate-800 text-base mb-1">各項目の詳細な解説を読む</h3>
                             <p class="text-xs text-slate-500">医学的根拠に基づいたガイドを確認できます</p>
                         </div>
-                        <span class="text-slate-300 text-xl">→</span>
+                        <span class="text-[#3182CE] text-xl">→</span>
                     </div>
                 </a>
             </div>
 
-            <div class="mb-10 card overflow-hidden">
-                <div class="bg-slate-50 px-6 py-5 border-b">
-                    <h3 class="font-bold text-slate-700 text-base">医療機関へのご相談</h3>
+            <div class="mb-10 card overflow-hidden border-[#3182CE]">
+                <div class="bg-section-accent px-6 py-5 border-b border-[#3182CE]"> <h3 class="font-bold text-[#1A365D] text-base">医療機関へのご相談</h3>
                 </div>
                 <div id="dynamic-map-btn-area" class="p-4 space-y-3"></div>
                 <p class="p-3 text-xs text-slate-400 text-center">※現在地から最寄りの施設を検索します</p>
             </div>
 
-            <div class="card p-8 mb-10 border-t-2 border-[#1A365D]">
-                <div class="text-center mb-8">
+            <div class="card p-8 mb-10 border-t-4 border-t-[#3182CE]"> <div class="text-center mb-8">
                     <h3 class="font-bold text-slate-800 text-base mb-1">健康習慣を継続するために</h3>
                     <p class="text-xs text-slate-500">LINEでリマインド通知をお送りします</p>
                 </div>
@@ -170,7 +178,7 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbwljIPNSg9LNEAE8KhHY6uBoWwwao9umEBEVyhBXWseo2pb35hr7cHKIDI-UbYvoxwsfA/exec"; 
 
         const questions = [
-            { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口のにおいが気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいでお口を清浄しましょう。" },
+            { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口の状態が気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいでお口を清浄しましょう。" },
             { id: 2, axis: 1, cat: "口腔状態", text: "鏡で舌を見たとき、表面が白く厚く覆われているように見えますか？", labels: ["はっきりと白い","わずかに白い","きれいに見える"], advice: "舌の汚れ（舌苔）は口臭の主因です。1日1回、朝の舌清掃が効果的です。" },
             { id: 3, axis: 1, cat: "環境", text: "現在、日常的に強いストレスを感じる場面はありますか？", labels: ["非常に感じている","やや感じている","あまり感じない"], advice: "ストレスは唾液の分泌を抑えます。リラックスする時間を大切にしてください。" },
             { id: 4, axis: 1, cat: "口腔状態", text: "緊張した際、お口の中が粘ついたり、話しにくいと感じることはありますか？", labels: ["よくある","時々ある","ない"], advice: "唾液の質が変化しています。こまめな水分補給を心がけましょう。" },
@@ -185,7 +193,7 @@
             { id: 13, axis: 2, cat: "歯ぐき", text: "歯が浮いたように感じたり、歯ぐきが腫れている場所はありますか？", labels: ["ある","わずかにある","ない"], advice: "炎症の可能性があります。放置せず、専門家に相談しましょう。" },
             { id: 14, axis: 2, cat: "体調", text: "以前よりも喉が非常に乾いたり、トイレの回数が増えたと感じますか？", labels: ["よくある","時々ある","ない"], advice: "血糖値の変化など、全身疾患が関係している可能性があります。" },
             { id: 15, axis: 2, cat: "鼻・喉", text: "鼻が詰まりやすかったり、喉の奥に違和感（膿が下りる等）はありますか？", labels: ["よくある","時々ある","ない"], advice: "副鼻腔炎などが口臭の原因になることもあります。耳鼻咽喉科へ。" },
-            { id: 16, axis: 2, cat: "体調", text: "体がだるかったり、足のむくみが取れにくいことはありますか？", labels: ["よくある","時々ある","ない"], advice: "内臓の疲れが呼기에現れる場合もあります。健診を活用しましょう。" },
+            { id: 16, axis: 2, cat: "体調", text: "体がだるかったり、足のむくみが取れにくいことはありますか？", labels: ["よくある","時々ある","ない"], advice: "内臓の疲れが呼気に現れる場合もあります。健診を活用しましょう。" },
             { id: 17, axis: 2, cat: "胃腸", text: "胃もたれ、胸焼け、慢性の胃痛などに悩まされることはありますか？", labels: ["よくある","時々ある","ない"], advice: "胃腸の不調は特有のニオイを伴う場合があります。消化器科への相談を。" },
             { id: 18, axis: 2, cat: "習慣", text: "現在、喫煙の習慣はありますか？", labels: ["習慣がある","時々吸う","吸わない"], advice: "タバコは歯ぐきの血流を阻害し、重篤な症状を隠してしまうことがあります。" },
             { id: 19, axis: 2, cat: "体調", text: "食後に急な眠気を感じたり、甘いものを過剰に欲しくなりますか？", labels: ["よくある","時々ある","ない"], advice: "代謝バランスが影響している可能性があります。一度数値をチェックして。" },
@@ -237,8 +245,8 @@
             container.innerHTML = "";
             q.labels.forEach((label, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full bg-white border border-slate-200 p-6 rounded-lg text-left hover:bg-slate-50 flex justify-between items-center transition-all";
-                btn.innerHTML = `<span class="text-base font-bold text-slate-700">${label}</span><span class="text-slate-300 text-xl">→</span>`;
+                btn.className = "w-full bg-white border border-slate-200 p-6 rounded-lg text-left hover:bg-slate-50 flex justify-between items-center transition-all hover:border-[#3182CE]"; /* ホバー時に水色枠に */
+                btn.innerHTML = `<span class="text-base font-bold text-slate-700">${label}</span><span class="text-[#3182CE] text-xl">→</span>`; /* 矢印も水色に */
                 btn.onclick = () => {
                     answers.push({ qId: q.id, axis: q.axis, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)), advice: q.advice });
                     if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } else { showResult(); }
@@ -293,12 +301,12 @@
             if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) clinicTypes.push({ key: "消化器内科", label: "胃腸科" });
 
             clinicTypes.forEach(c => {
-                const mapUrl = `https://www.google.com/maps/search/?api=1&query=$${encodeURIComponent(c.key)}`;
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.key)}`; /* URL形式を修正 */
                 const btn = document.createElement('a');
                 btn.href = mapUrl;
                 btn.target = "_blank";
-                btn.className = "flex items-center justify-between w-full bg-white border border-slate-200 p-5 rounded-lg hover:bg-slate-50 transition-all";
-                btn.innerHTML = `<div class="clinic-link text-sm font-bold text-slate-700">近くの${c.label}を探す</div><span class="text-slate-400 text-xs">地図を開く →</span>`;
+                btn.className = "flex items-center justify-between w-full bg-white border border-slate-200 p-5 rounded-lg hover:bg-slate-50 transition-all hover:border-[#3182CE]";
+                btn.innerHTML = `<div class="clinic-link text-sm font-bold text-slate-700">近くの${c.label}を探す</div><span class="text-[#3182CE] text-xs">地図を開く →</span>`;
                 hospitalArea.appendChild(btn);
             });
 
@@ -307,8 +315,7 @@
             msgEl.innerHTML = `<p class="font-bold text-base">${txt}</p>`;
 
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
-                <div class="card p-5 text-sm text-slate-600 flex items-start">
-                    <span class="text-[#1A365D] mr-3 font-bold">●</span>${adv}
+                <div class="card p-5 text-sm text-slate-600 flex items-start border-l-4 border-l-[#EBF8FF]"> <span class="text-[#3182CE] mr-3 font-bold">●</span>${adv}
                 </div>`).join('');
             document.getElementById('progress').style.width = "100%";
         }
@@ -323,11 +330,9 @@
                 item.innerHTML = `
                     <div class="flex items-center justify-between">
                         <label class="flex items-center text-sm font-bold text-slate-700 cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 mr-4 accent-[#1A365D]" ${isRecommended ? 'checked' : ''}>
-                            ${menu.name}
+                            <input type="checkbox" class="w-4 h-4 mr-4 accent-[#3182CE]" ${isRecommended ? 'checked' : ''}> ${menu.name}
                         </label>
-                        <input type="time" value="${menu.time}" class="font-bold text-slate-600 bg-transparent">
-                    </div>`;
+                        <input type="time" value="${menu.time}" class="font-bold text-slate-600 bg-transparent border border-slate-200 rounded p-1"> </div>`;
                 container.appendChild(item);
             });
         }
