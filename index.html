@@ -11,39 +11,36 @@
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             color: #2D3748; 
-            background-color: #F7FAFC; /* わずかにグレーがかった白 */
+            background-color: #F7FAFC;
             line-height: 1.7;
         }
         .page { display: none; }
         .active { display: block; }
         
-        /* ボタンのデザイン：清潔感のある水色に */
         .btn-primary {
-            background-color: #3182CE; /* 清潔感のある水色（少し濃いめ） */
+            background-color: #3182CE;
             color: white;
             transition: background-color 0.2s;
-            border-radius: 4px; /* 丸すぎない角丸 */
+            border-radius: 4px;
         }
-        .btn-primary:active { background-color: #2B6CB0; } /* アクティブ時は少し濃く */
+        .btn-primary:active { background-color: #2B6CB0; }
         
         .progress-bg { background-color: #E2E8F0; }
-        .progress-fill { background-color: #3182CE; transition: width 0.4s ease; } /* 進捗バーも水色に */
+        .progress-fill { background-color: #3182CE; transition: width 0.4s ease; }
         
         .card {
             background: white;
             border: 1px solid #E2E8F0;
-            border-radius: 4px; /* 丸すぎない角丸 */
+            border-radius: 4px;
         }
         
-        /* スコアカラーの調整 */
-        .text-risk-low { color: #2B6CB0; } /* 良好：落ち着いた青 */
-        .text-risk-mid { color: #B7791F; } /* 注意：落ち着いた黄 */
-        .text-risk-high { color: #C53030; } /* 高リスク：落ち着いた赤 */
+        .text-risk-low { color: #2B6CB0; }
+        .text-risk-mid { color: #B7791F; }
+        .text-risk-high { color: #C53030; }
         
-        /* タグのデザイン */
-        .tag-low { background-color: #EBF8FF; color: #2B6CB0; border-radius: 2px; } /* 良好：薄い水色背景 */
-        .tag-mid { background-color: #FFFFF0; color: #B7791F; border-radius: 2px; } /* 注意：薄い黄背景 */
-        .tag-high { background-color: #FFF5F5; color: #C53030; border-radius: 2px; } /* 高リスク：薄い赤背景 */
+        .tag-low { background-color: #EBF8FF; color: #2B6CB0; border-radius: 2px; }
+        .tag-mid { background-color: #FFFFF0; color: #B7791F; border-radius: 2px; }
+        .tag-high { background-color: #FFF5F5; color: #C53030; border-radius: 2px; }
         
         input[type="time"] {
             border: 1px solid #CBD5E0;
@@ -64,12 +61,11 @@
             transform: translateY(-50%);
             width: 4px;
             height: 1.1rem;
-            background-color: #3182CE; /* リンクのアクセントも水色に */
+            background-color: #3182CE;
         }
         
-        /* セクションの背景色調整 */
         .bg-section-accent {
-            background-color: #EBF8FF; /* 清潔感のある薄い水色 */
+            background-color: #EBF8FF;
         }
     </style>
 </head>
@@ -89,10 +85,11 @@
         
         <section id="page-start" class="page active py-8 text-center">
             <h1 class="text-2xl font-bold mb-8 text-[#1A365D] leading-snug">あなたの息から、<br>現在のお口と体の状態を確認</h1>
-            <div class="card p-8 mb-8 text-left border-l-4 border-l-[#3182CE]"> <p class="text-base mb-8 text-slate-600">口臭は、日々の生活習慣や、まだ気づいていない体の不調を知らせてくれる大切なサインです。</p>
+            <div class="card p-8 mb-8 text-left border-l-4 border-l-[#3182CE]">
+                <p class="text-base mb-8 text-slate-600">口臭は、日々の生活習慣や、まだ気づいていない体の不調を知らせてくれる大切なサインです。</p>
                 <h2 class="text-[#1A365D] font-bold text-base mb-5 border-b pb-2">この診断のポイント</h2>
                 <ul class="space-y-5 text-sm text-slate-600">
-                    <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>2つの側面（習慣・疾患サイン）からリスクを分析</span></li>
+                    <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>2つの側面（一時的リスク・病的リスク）からリスクを分析</span></li>
                     <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>専門的な根拠に基づく個別アドバイス</span></li>
                     <li class="flex items-start"><span class="text-[#3182CE] mr-3">・</span><span>近隣の専門機関へのスムーズな案内</span></li>
                 </ul>
@@ -117,15 +114,17 @@
             <h2 class="text-xs font-bold mb-6 text-slate-500 text-center tracking-widest uppercase">Diagnosis Result</h2>
             
             <div class="grid grid-cols-2 gap-4 mb-8">
-                <div class="card p-6 border-l-4 border-l-[#EBF8FF]"> <p class="text-xs font-bold text-slate-400 mb-2">一時的リスク</p>
+                <div class="card p-6 border-l-4 border-l-[#EBF8FF]">
+                    <p class="text-xs font-bold text-slate-400 mb-2">一時的リスク</p>
                     <div class="flex items-baseline justify-between">
-                        <span id="score-1" class="text-4xl font-bold score-1">0</span><span class="text-xs text-slate-400">%</span>
+                        <span id="score-1" class="text-4xl font-bold">0</span><span class="text-xs text-slate-400">%</span>
                     </div>
                     <p id="label-1" class="text-xs font-bold mt-3 text-center py-1 rounded"></p>
                 </div>
-                <div class="card p-6 border-l-4 border-l-[#EBF8FF]"> <p class="text-xs font-bold text-slate-400 mb-2">疾患サイン</p>
+                <div class="card p-6 border-l-4 border-l-[#EBF8FF]">
+                    <p class="text-xs font-bold text-slate-400 mb-2">疾患サイン</p>
                     <div class="flex items-baseline justify-between">
-                        <span id="score-2" class="text-4xl font-bold score-2">0</span><span class="text-xs text-slate-400">%</span>
+                        <span id="score-2" class="text-4xl font-bold">0</span><span class="text-xs text-slate-400">%</span>
                     </div>
                     <p id="label-2" class="text-xs font-bold mt-3 text-center py-1 rounded"></p>
                 </div>
@@ -141,7 +140,8 @@
             </div>
 
             <div class="mb-10">
-                <a href="detail.html" onclick="goToDetail()" class="block card p-6 hover:bg-slate-50 transition-colors border-dashed border-[#3182CE]"> <div class="flex justify-between items-center">
+                <a href="detail.html" onclick="goToDetail()" class="block card p-6 hover:bg-slate-50 transition-colors border-dashed border-[#3182CE]">
+                    <div class="flex justify-between items-center">
                         <div>
                             <h3 class="font-bold text-slate-800 text-base mb-1">各項目の詳細な解説を読む</h3>
                             <p class="text-xs text-slate-500">医学的根拠に基づいたガイドを確認できます</p>
@@ -152,13 +152,15 @@
             </div>
 
             <div class="mb-10 card overflow-hidden border-[#3182CE]">
-                <div class="bg-section-accent px-6 py-5 border-b border-[#3182CE]"> <h3 class="font-bold text-[#1A365D] text-base">医療機関へのご相談</h3>
+                <div class="bg-section-accent px-6 py-5 border-b border-[#3182CE]">
+                    <h3 class="font-bold text-[#1A365D] text-base">医療機関へのご相談</h3>
                 </div>
                 <div id="dynamic-map-btn-area" class="p-4 space-y-3"></div>
                 <p class="p-3 text-xs text-slate-400 text-center">※現在地から最寄りの施設を検索します</p>
             </div>
 
-            <div class="card p-8 mb-10 border-t-4 border-t-[#3182CE]"> <div class="text-center mb-8">
+            <div class="card p-8 mb-10 border-t-4 border-t-[#3182CE]">
+                <div class="text-center mb-8">
                     <h3 class="font-bold text-slate-800 text-base mb-1">健康習慣を継続するために</h3>
                     <p class="text-xs text-slate-500">LINEでリマインド通知をお送りします</p>
                 </div>
@@ -178,7 +180,7 @@
         const GAS_URL = "https://script.google.com/macros/s/AKfycbwljIPNSg9LNEAE8KhHY6uBoWwwao9umEBEVyhBXWseo2pb35hr7cHKIDI-UbYvoxwsfA/exec"; 
 
         const questions = [
-            { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口の状態が気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいでお口を清浄しましょう。" },
+            { id: 1, axis: 1, cat: "生活習慣", text: "朝起きたときや、お腹が空いているとき、お口のにおいが気になりますか？", labels: ["よくある","たまにある","ほとんどない"], advice: "起床直後は唾液が減少しています。朝のうがいでお口を清浄しましょう。" },
             { id: 2, axis: 1, cat: "口腔状態", text: "鏡で舌を見たとき、表面が白く厚く覆われているように見えますか？", labels: ["はっきりと白い","わずかに白い","きれいに見える"], advice: "舌の汚れ（舌苔）は口臭の主因です。1日1回、朝の舌清掃が効果的です。" },
             { id: 3, axis: 1, cat: "環境", text: "現在、日常的に強いストレスを感じる場面はありますか？", labels: ["非常に感じている","やや感じている","あまり感じない"], advice: "ストレスは唾液の分泌を抑えます。リラックスする時間を大切にしてください。" },
             { id: 4, axis: 1, cat: "口腔状態", text: "緊張した際、お口の中が粘ついたり、話しにくいと感じることはありますか？", labels: ["よくある","時々ある","ない"], advice: "唾液の質が変化しています。こまめな水分補給を心がけましょう。" },
@@ -245,8 +247,8 @@
             container.innerHTML = "";
             q.labels.forEach((label, i) => {
                 const btn = document.createElement('button');
-                btn.className = "w-full bg-white border border-slate-200 p-6 rounded-lg text-left hover:bg-slate-50 flex justify-between items-center transition-all hover:border-[#3182CE]"; /* ホバー時に水色枠に */
-                btn.innerHTML = `<span class="text-base font-bold text-slate-700">${label}</span><span class="text-[#3182CE] text-xl">→</span>`; /* 矢印も水色に */
+                btn.className = "w-full bg-white border border-slate-200 p-6 rounded-lg text-left hover:bg-slate-50 flex justify-between items-center transition-all hover:border-[#3182CE]";
+                btn.innerHTML = `<span class="text-base font-bold text-slate-700">${label}</span><span class="text-[#3182CE] text-xl">→</span>`;
                 btn.onclick = () => {
                     answers.push({ qId: q.id, axis: q.axis, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)), advice: q.advice });
                     if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } else { showResult(); }
@@ -293,6 +295,34 @@
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
+            // 詳細な診断メッセージの生成（10パターン）
+            const msgEl = document.getElementById('result-message');
+            let diagMsg = "";
+
+            if (s2 >= 70) {
+                diagMsg = "お口だけでなく全身に関わる疾患サインが強く現れています。放置すると症状が悪化する恐れがあるため、早急に歯科、または必要に応じて内科等を受診し、専門家へ相談してください。";
+            } else if (s2 >= 40 && s1 >= 60) {
+                diagMsg = "疾患の初期サインに加え、生活習慣の乱れがお口の状態を悪化させているようです。丁寧なケアと水分補給を心がけつつ、一度歯科医院でプロによるクリーニングを受けることを強く推奨します。";
+            } else if (s2 >= 40 && s1 < 60) {
+                diagMsg = "習慣に大きな問題はありませんが、お口の中に潜んでいる疾患の可能性が否定できません。痛みや自覚症状がなくても、定期健診を兼ねて専門機関への相談をお勧めします。";
+            } else if (s2 >= 20 && s1 >= 70) {
+                diagMsg = "非常に強い乾燥やストレスなどの生活習慣リスクが見られます。これが続くと将来的に疾患へ繋がる恐れがあります。まずは睡眠と水分補給の改善から始めましょう。";
+            } else if (s2 >= 20 && s1 >= 40) {
+                diagMsg = "現在のお口の状態は「注意」が必要です。日々の疲れや乾燥が呼気に現れ始めています。食後のケアや舌の清掃を取り入れ、リスクを抑える習慣を身につけましょう。";
+            } else if (s2 >= 20 && s1 < 40) {
+                diagMsg = "比較的安定していますが、わずかな疾患サインが気になります。疲れが溜まった時に症状が出やすいため、無理をせず十分な休息を取るようにしてください。";
+            } else if (s2 < 20 && s1 >= 70) {
+                diagMsg = "現在疾患の心配は低いですが、一時的な要因（食事や乾燥）によるリスクが非常に高い状態です。まずは日中のこまめなうがいや水分摂取で、お口の自浄作用を高めてください。";
+            } else if (s2 < 20 && s1 >= 40) {
+                diagMsg = "生活習慣に少しだけ見直しの余地があります。特に朝のケアや喉の乾燥に気をつけるだけで、お口の爽快感はぐっと向上します。今のうちに習慣を整えましょう。";
+            } else if (s2 < 20 && s1 >= 20) {
+                diagMsg = "良好な状態に近いですが、特定の場面（緊張時など）で違和感を感じる可能性があります。リラックスする時間を作り、唾液の分泌を促す工夫をしてみてください。";
+            } else {
+                diagMsg = "素晴らしい状態です！疾患サイン・習慣リスク共に低く保たれています。今の丁寧なケアと健康的な生活をぜひ継続してください。半年ごとの健診もお忘れなく。";
+            }
+            msgEl.innerHTML = `<p class="font-bold text-base leading-relaxed">${diagMsg}</p>`;
+
+            // 地図ボタン
             const hospitalArea = document.getElementById('dynamic-map-btn-area');
             hospitalArea.innerHTML = "";
             const clinicTypes = [];
@@ -301,7 +331,7 @@
             if (answers.find(a => a.qId === 17 && a.userScore >= 0.5)) clinicTypes.push({ key: "消化器内科", label: "胃腸科" });
 
             clinicTypes.forEach(c => {
-                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.key)}`; /* URL形式を修正 */
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.key)}`;
                 const btn = document.createElement('a');
                 btn.href = mapUrl;
                 btn.target = "_blank";
@@ -310,12 +340,9 @@
                 hospitalArea.appendChild(btn);
             });
 
-            const msgEl = document.getElementById('result-message');
-            let txt = (s2 >= 61) ? "疾患による影響が考えられます。早めの相談を推奨します。" : (s2 >= 21) ? "生活習慣の見直しと共に、定期的な健診をお勧めします。" : "良好な状態です。今のケアを継続しましょう。";
-            msgEl.innerHTML = `<p class="font-bold text-base">${txt}</p>`;
-
             document.getElementById('advice-list').innerHTML = adviceList.map(adv => `
-                <div class="card p-5 text-sm text-slate-600 flex items-start border-l-4 border-l-[#EBF8FF]"> <span class="text-[#3182CE] mr-3 font-bold">●</span>${adv}
+                <div class="card p-5 text-sm text-slate-600 flex items-start border-l-4 border-l-[#EBF8FF]">
+                    <span class="text-[#3182CE] mr-3 font-bold">●</span>${adv}
                 </div>`).join('');
             document.getElementById('progress').style.width = "100%";
         }
@@ -330,9 +357,11 @@
                 item.innerHTML = `
                     <div class="flex items-center justify-between">
                         <label class="flex items-center text-sm font-bold text-slate-700 cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 mr-4 accent-[#3182CE]" ${isRecommended ? 'checked' : ''}> ${menu.name}
+                            <input type="checkbox" class="w-4 h-4 mr-4 accent-[#3182CE]" ${isRecommended ? 'checked' : ''}>
+                            ${menu.name}
                         </label>
-                        <input type="time" value="${menu.time}" class="font-bold text-slate-600 bg-transparent border border-slate-200 rounded p-1"> </div>`;
+                        <input type="time" value="${menu.time}" class="font-bold text-slate-600 bg-transparent border border-slate-200 rounded p-1">
+                    </div>`;
                 container.appendChild(item);
             });
         }
