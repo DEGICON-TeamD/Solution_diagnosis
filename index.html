@@ -152,7 +152,7 @@
             <div class="card p-6 mb-10 border-t-2 border-[#1A365D]">
                 <div class="text-center mb-6">
                     <h3 class="font-bold text-slate-800 text-sm mb-1">健康習慣を継続するために</h3>
-                    <p class="text-[10px] text-slate-500">LINEでリマインド通知を送りします</p>
+                    <p class="text-[10px] text-slate-500">LINEでリマインド通知をお送りします</p>
                 </div>
                 <div id="remind-list" class="space-y-3"></div>
                 <button id="save-settings-btn" onclick="saveRemindSettings()" class="w-full mt-6 btn-primary font-bold py-4 rounded text-sm shadow-sm">設定を保存する</button>
@@ -285,7 +285,7 @@
             renderScore(s1, 'score-1', 'label-1');
             renderScore(s2, 'score-2', 'label-2');
 
-            // 医療機関案内（地図URLの修正）
+            // 医療機関案内（現在地からの検索URLに修正済み）
             const hospitalArea = document.getElementById('dynamic-map-btn-area');
             hospitalArea.innerHTML = "";
             const clinicTypes = [];
@@ -318,7 +318,7 @@
             const container = document.getElementById('remind-list');
             container.innerHTML = "";
             remindMenus.forEach(menu => {
-                let isRecommended = menu.isCommon || menu.triggers.some(tId => answers.find(a => a.qId === tId && a.userScore >= 0.5));
+                let isRecommended = menu.isCommon || (menu.triggers && menu.triggers.some(tId => answers.find(a => a.qId === tId && a.userScore >= 0.5)));
                 const item = document.createElement('div');
                 item.className = `p-4 rounded border ${isRecommended ? 'bg-slate-50 border-slate-200' : 'bg-white border-slate-100'}`;
                 item.innerHTML = `
@@ -333,6 +333,7 @@
             });
         }
 
+        // 通知が来ていた時のロジックを忠実に再現
         async function saveRemindSettings() {
             const btn = document.getElementById('save-settings-btn');
             btn.innerText = "保存中...";
@@ -341,21 +342,24 @@
             const selected = [];
             document.querySelectorAll('#remind-list > div').forEach(row => {
                 if (row.querySelector('input[type="checkbox"]').checked) {
+                    const menuName = row.innerText.trim();
+                    const menuTime = row.querySelector('input[type="time"]').value;
                     selected.push({
-                        menu: row.innerText.trim(),
-                        time: row.querySelector('input[type="time"]').value
+                        menu: menuName,
+                        time: menuTime
                     });
                 }
             });
 
             const payload = {
                 userId: lineProfile ? lineProfile.userId : "guest",
+                userName: lineProfile ? lineProfile.displayName : "Guest",
                 settings: selected,
                 timestamp: new Date().toISOString()
             };
 
             try {
-                // 送信処理（no-corsでGASへリクエスト）
+                // 送信処理（以前動作していたno-cors形式）
                 await fetch(GAS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -364,7 +368,8 @@
                 });
                 alert('設定を保存しました。下関市公式アカウントより通知をお届けします。');
             } catch (e) {
-                alert('通信に失敗しましたが、端末内に設定を保存しました。');
+                console.error('Error:', e);
+                alert('通信に失敗しましたが、設定情報を確認しました。');
             } finally {
                 btn.innerText = "設定を保存する";
                 btn.disabled = false;
