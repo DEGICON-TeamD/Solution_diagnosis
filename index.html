@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans JP', sans-serif; letter-spacing: -0.01em; color: #0F172A; -webkit-tap-highlight-color: transparent; font-size: 1.1rem; } /* 文字を大きく */
+        body { font-family: 'Noto Sans JP', sans-serif; letter-spacing: -0.01em; color: #0F172A; -webkit-tap-highlight-color: transparent; font-size: 1.1rem; }
         .page { display: none; }
         .active { display: block; animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
@@ -20,7 +20,7 @@
         .score-red { color: #ef4444; } .bg-red-tag { background-color: #fef2f2; color: #991b1b; }
         .my-icon { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; z-index: 100; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); object-fit: cover; border: 2px solid white; }
         
-        /* --- 追加：アンケート用スタイル --- */
+        /* アンケート用スタイル */
         .survey-step { display: none; }
         .survey-step.active-step { display: block; animation: fadeIn 0.4s ease-out; }
         .loading-spinner {
@@ -30,7 +30,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-main text-lg">
+<body class="bg-main">
 
     <img src="my-icon.png" class="my-icon" alt="Brand Icon">
 
@@ -81,52 +81,78 @@
         </section>
 
         <section id="page-survey" class="page">
-            <div class="text-center py-4 mb-6">
+            <div class="text-center py-4 mb-4">
                 <div class="loading-spinner"></div>
                 <h2 class="text-2xl font-black text-slate-800 mb-1">診断結果を作成中です…</h2>
                 <p class="text-sky-500 font-bold">あと少しで結果が表示されます (90%)</p>
             </div>
 
-            <div class="bg-white rounded-[2.5rem] p-8 shadow-xl border border-sky-50 relative">
-                <p class="text-slate-600 font-bold mb-8 leading-relaxed text-center">
-                    サービス改善のため、ご意見をお聞かせください。回答後に結果をご覧いただけます。
-                </p>
-
-                <div id="survey-content">
+            <div class="bg-white rounded-[2.5rem] p-6 shadow-xl border border-sky-50 relative min-h-[420px] flex flex-col">
+                <div id="survey-content" class="flex-grow">
                     <div class="survey-step active-step" id="step-1">
-                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 1 / 2</p>
-                        <h3 class="text-xl font-black mb-6 text-slate-800">Q1. この診断を知ったきっかけを教えてください。</h3>
-                        <div class="space-y-3">
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl active:bg-sky-50 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 transition-all">
-                                <input type="radio" name="survey_q1" value="SNS" class="hidden"> <span class="font-bold">SNS（Instagram/X等）</span>
-                            </label>
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl active:bg-sky-50 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 transition-all">
-                                <input type="radio" name="survey_q1" value="紹介" class="hidden"> <span class="font-bold">知人からの紹介</span>
-                            </label>
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl active:bg-sky-50 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 transition-all">
-                                <input type="radio" name="survey_q1" value="行政" class="hidden"> <span class="font-bold">市報や掲示板</span>
-                            </label>
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl active:bg-sky-50 has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 transition-all">
-                                <input type="radio" name="survey_q1" value="その他" class="hidden"> <span class="font-bold">その他</span>
-                            </label>
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 1 / 6</p>
+                        <h3 class="text-xl font-black mb-6 text-slate-800">性別を教えてください。<span class="text-red-500 text-sm ml-2 font-bold">※必須</span></h3>
+                        <div class="grid grid-cols-1 gap-3">
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q1" value="女性" class="hidden"> <span class="font-bold">女性</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q1" value="男性" class="hidden"> <span class="font-bold">男性</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q1" value="その他" class="hidden"> <span class="font-bold">その他</span></label>
                         </div>
                         <button onclick="nextSurvey(1)" class="w-full mt-8 bg-sky-500 text-white font-black py-5 rounded-3xl shadow-lg text-lg">次へ</button>
                     </div>
 
                     <div class="survey-step" id="step-2">
-                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 2 / 2</p>
-                        <h3 class="text-xl font-black mb-6 text-slate-800">Q2. 下関市の歯科健診に興味はありますか？</h3>
-                        <div class="space-y-3">
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50">
-                                <input type="radio" name="survey_q2" value="ある" class="hidden"> <span class="font-bold">興味がある</span>
-                            </label>
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50">
-                                <input type="radio" name="survey_q2" value="既に行っている" class="hidden"> <span class="font-bold">定期的に通っている</span>
-                            </label>
-                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50">
-                                <input type="radio" name="survey_q2" value="ない" class="hidden"> <span class="font-bold">今は興味がない</span>
-                            </label>
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 2 / 6</p>
+                        <h3 class="text-xl font-black mb-6 text-slate-800">年齢を教えてください。<span class="text-red-500 text-sm ml-2 font-bold">※必須</span></h3>
+                        <select id="survey_q2" class="w-full p-5 border-2 border-slate-100 rounded-2xl font-bold bg-white focus:border-sky-400 outline-none appearance-none shadow-sm">
+                            <option value="">選択してください</option>
+                            <option value="10歳未満">10歳未満</option>
+                            <option value="10代">10代</option>
+                            <option value="20代">20代</option>
+                            <option value="30代">30代</option>
+                            <option value="40代">40代</option>
+                            <option value="50代">50代</option>
+                            <option value="60代以上">60代以上</option>
+                        </select>
+                        <button onclick="nextSurvey(2)" class="w-full mt-8 bg-sky-500 text-white font-black py-5 rounded-3xl shadow-lg text-lg">次へ</button>
+                    </div>
+
+                    <div class="survey-step" id="step-3">
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 3 / 6</p>
+                        <h3 class="text-xl font-black mb-4 text-slate-800 leading-tight">診断の内容は理解しやすかったですか？<span class="text-red-500 text-sm ml-2 font-bold">※必須</span></h3>
+                        <div class="grid grid-cols-1 gap-2">
+                            <label class="block p-3 border-2 border-slate-100 rounded-xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 text-sm"><input type="radio" name="survey_q3" value="とてもそう思う" class="hidden"> <span class="font-bold">とてもそう思う</span></label>
+                            <label class="block p-3 border-2 border-slate-100 rounded-xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 text-sm"><input type="radio" name="survey_q3" value="そう思う" class="hidden"> <span class="font-bold">そう思う</span></label>
+                            <label class="block p-3 border-2 border-slate-100 rounded-xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 text-sm"><input type="radio" name="survey_q3" value="どちらともいえない" class="hidden"> <span class="font-bold">どちらともいえない</span></label>
+                            <label class="block p-3 border-2 border-slate-100 rounded-xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 text-sm"><input type="radio" name="survey_q3" value="そう思わない" class="hidden"> <span class="font-bold">そう思わない</span></label>
+                            <label class="block p-3 border-2 border-slate-100 rounded-xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50 text-sm"><input type="radio" name="survey_q3" value="とてもそう思わない" class="hidden"> <span class="font-bold">とてもそう思わない</span></label>
                         </div>
+                        <button onclick="nextSurvey(3)" class="w-full mt-6 bg-sky-500 text-white font-black py-5 rounded-3xl shadow-lg text-lg">次へ</button>
+                    </div>
+
+                    <div class="survey-step" id="step-4">
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 4 / 6</p>
+                        <h3 class="text-xl font-black mb-4 text-slate-800">そう思った理由を教えてください。<span class="text-slate-400 text-sm ml-2">（任意）</span></h3>
+                        <textarea id="survey_q4" class="w-full h-32 p-4 border-2 border-slate-100 rounded-2xl font-bold bg-white focus:border-sky-400 outline-none shadow-inner" placeholder="自由に入力してください"></textarea>
+                        <button onclick="nextSurvey(4)" class="w-full mt-8 bg-sky-500 text-white font-black py-5 rounded-3xl shadow-lg text-lg">次へ</button>
+                    </div>
+
+                    <div class="survey-step" id="step-5">
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 5 / 6</p>
+                        <h3 class="text-xl font-black mb-6 text-slate-800">質問の数はどう感じましたか？<span class="text-red-500 text-sm ml-2 font-bold">※必須</span></h3>
+                        <div class="grid grid-cols-1 gap-3 text-base">
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q5" value="多い" class="hidden"> <span class="font-bold">多い</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q5" value="やや多い" class="hidden"> <span class="font-bold">やや多い</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q5" value="適切である" class="hidden"> <span class="font-bold">適切である</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q5" value="やや少ない" class="hidden"> <span class="font-bold">やや少ない</span></label>
+                            <label class="block p-4 border-2 border-slate-100 rounded-2xl has-[:checked]:border-sky-400 has-[:checked]:bg-sky-50"><input type="radio" name="survey_q5" value="少ない" class="hidden"> <span class="font-bold">少ない</span></label>
+                        </div>
+                        <button onclick="nextSurvey(5)" class="w-full mt-8 bg-sky-500 text-white font-black py-5 rounded-3xl shadow-lg text-lg">次へ</button>
+                    </div>
+
+                    <div class="survey-step" id="step-6">
+                        <p class="text-sky-400 font-black text-xs mb-2 uppercase tracking-widest">Question 6 / 6</p>
+                        <h3 class="text-xl font-black mb-4 text-slate-800 leading-tight">分かりにくい点、改善点を教えてください。<span class="text-slate-400 text-sm ml-2">（任意）</span></h3>
+                        <textarea id="survey_q6" class="w-full h-32 p-4 border-2 border-slate-100 rounded-2xl font-bold bg-white focus:border-sky-400 outline-none shadow-inner" placeholder="自由に入力してください"></textarea>
                         <button onclick="finishSurvey()" class="w-full mt-8 bg-sky-600 text-white font-black py-5 rounded-3xl shadow-lg text-lg">回答して結果を見る</button>
                     </div>
                 </div>
@@ -150,16 +176,14 @@
                 </div>
             </div>
 
-            <div class="bg-sky-50/50 p-4 rounded-2xl mb-8 border border-sky-100">
-                <div class="text-[11px] text-slate-500 font-bold leading-relaxed space-y-1">
-                    <p><b class="text-sky-600">●一時的リスク：</b> 生活リズムの乱れによる発生のしやすさです。</p>
-                    <p><b class="text-sky-600">●病的リスク：</b> 身体的な要因が原因となっている可能性の高さです。</p>
-                </div>
+            <div class="bg-sky-50/50 p-4 rounded-2xl mb-8 border border-sky-100 text-sm font-bold text-slate-500 leading-relaxed space-y-1">
+                <p><b class="text-sky-600">●一時的リスク：</b> 生活リズムの乱れによる発生のしやすさです。</p>
+                <p><b class="text-sky-600">●病的リスク：</b> 身体的な要因が原因となっている可能性の高さです。</p>
             </div>
 
             <div id="result-message" class="bg-white p-6 rounded-3xl mb-10 shadow-md border-l-8 text-base font-bold text-slate-700 leading-relaxed"></div>
 
-            <div class="mb-10 text-base">
+            <div class="mb-10 text-base font-bold">
                 <h3 class="font-black text-sky-600 text-sm mb-4 flex items-center"><span class="w-3 h-3 bg-sky-400 mr-2 rounded-full"></span>あなた専用のアドバイス</h3>
                 <div id="advice-list" class="grid gap-3"></div>
             </div>
@@ -204,8 +228,7 @@
         ];
 
         let currentIdx = 0, answers = [], lineProfile = null;
-        /* --- 追加分 --- */
-        let surveyAnswers = { q1: "", q2: "" };
+        let surveyAnswers = { q1: "", q2: "", q3: "", q4: "", q5: "", q6: "" };
         let finalS1 = 0, finalS2 = 0;
 
         window.onload = async () => {
@@ -239,11 +262,11 @@
             q.labels.forEach((label, i) => {
                 const btn = document.createElement('button');
                 btn.className = "w-full bg-white border-2 border-slate-100 p-6 rounded-3xl text-left shadow-sm active:bg-sky-50 flex justify-between items-center";
-                btn.innerHTML = `<span class="opt-btn-text text-lg font-bold">${label}</span><span class="text-sky-300">→</span>`;
+                btn.innerHTML = `<span class="opt-btn-text font-bold">${label}</span><span class="text-sky-300">→</span>`;
                 btn.onclick = () => {
                     answers.push({ ...q, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)) });
                     if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } 
-                    else { startSurveyFlow(); } /* --- アンケートへ遷移 --- */
+                    else { startSurveyFlow(); }
                 };
                 container.appendChild(btn);
             });
@@ -253,9 +276,7 @@
             if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); }
         }
 
-        /* --- 新規：アンケート制御ロジック --- */
         function startSurveyFlow() {
-            // スコア計算だけ先に行う
             let s1 = 0, s2 = 0;
             answers.forEach(a => {
                 let p = a.userScore * 10;
@@ -263,30 +284,36 @@
             });
             finalS1 = Math.round(s1);
             finalS2 = Math.round(s2);
-
             showPage('page-survey');
         }
 
         function nextSurvey(step) {
-            const val = document.querySelector(`input[name="survey_q${step}"]:checked`);
-            if (!val) { alert("項目を選択してください"); return; }
-            surveyAnswers[`q${step}`] = val.value;
-            
+            let val = "";
+            // 必須チェック（1:性別, 2:年齢, 3:理解, 5:数）
+            if (step === 1 || step === 3 || step === 5) {
+                const checked = document.querySelector(`input[name="survey_q${step}"]:checked`);
+                if (!checked) { alert("項目を選択してください"); return; }
+                val = checked.value;
+            } else if (step === 2) {
+                val = document.getElementById("survey_q2").value;
+                if (!val) { alert("年齢を選択してください"); return; }
+            } else if (step === 4) {
+                val = document.getElementById("survey_q4").value;
+            }
+
+            surveyAnswers[`q${step}`] = val;
             document.getElementById(`step-${step}`).classList.remove('active-step');
             document.getElementById(`step-${step + 1}`).classList.add('active-step');
+            window.scrollTo(0, 0);
         }
 
         function finishSurvey() {
-            const val = document.querySelector(`input[name="survey_q2"]:checked`);
-            if (!val) { alert("項目を選択してください"); return; }
-            surveyAnswers.q2 = val.value;
-
-            showResult(); // 最終結果表示
+            surveyAnswers.q6 = document.getElementById("survey_q6").value;
+            showResult(); 
         }
 
         function showResult() {
             showPage('page-result');
-            
             const adviceSet = [];
             answers.forEach(a => { if (a.userScore >= 0.5) adviceSet.push(a.advice); });
 
@@ -317,14 +344,10 @@
 
         async function sendData(s1, s2) {
             if (!lineProfile || !GAS_URL) return;
-            // ★アンケート回答も含めて送信
             const data = { 
-                name: lineProfile.displayName, 
-                userId: lineProfile.userId, 
-                s1: s1, 
-                s2: s2,
-                q1: surveyAnswers.q1,
-                q2: surveyAnswers.q2
+                name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2,
+                q1: surveyAnswers.q1, q2: surveyAnswers.q2, q3: surveyAnswers.q3,
+                q4: surveyAnswers.q4, q5: surveyAnswers.q5, q6: surveyAnswers.q6
             };
             fetch(GAS_URL, {
                 method: 'POST',
