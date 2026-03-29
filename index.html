@@ -10,7 +10,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
         
         :root {
-            --brand-blue: #007AFF; /* Apple-like Blue */
+            --brand-blue: #007AFF;
             --bg-gray: #F2F2F7;
             --text-main: #1C1C1E;
             --text-sub: #8E8E93;
@@ -22,9 +22,9 @@
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            font-size: 1.1rem; /* 全体的に文字を大きく設定 */
         }
 
-        /* ページ遷移アニメーション：より滑らかに */
         .page { display: none; }
         .active { 
             display: block; 
@@ -35,7 +35,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* カスタム装飾 */
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
@@ -71,9 +70,11 @@
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* スクロールバー非表示 */
         ::-webkit-scrollbar { display: none; }
+        
+        /* アンケートのステップ制御用 */
+        .survey-step { display: none; }
+        .active-step { display: block; }
     </style>
 </head>
 <body>
@@ -81,12 +82,12 @@
     <header class="sticky top-0 z-50 px-6 py-4 glass-card">
         <div class="max-w-md mx-auto flex justify-between items-end">
             <div>
-                <p class="text-[10px] font-bold tracking-widest text-blue-500 uppercase mb-0.5">Shimonoseki Health</p>
-                <h1 class="text-lg font-black tracking-tight italic">KUCHI-CHECK</h1>
+                <p class="text-[12px] font-bold tracking-widest text-blue-500 uppercase mb-0.5">Shimonoseki Health</p>
+                <h1 class="text-xl font-black tracking-tight italic">KUCHI-CHECK</h1>
             </div>
-            <span id="q-counter" class="text-[11px] font-bold text-gray-400 tabular-nums">READY</span>
+            <span id="q-counter" class="text-[12px] font-bold text-gray-400 tabular-nums">READY</span>
         </div>
-        <div class="max-w-md mx-auto w-full bg-gray-200/50 h-1 mt-4 rounded-full overflow-hidden">
+        <div class="max-w-md mx-auto w-full bg-gray-200/50 h-1.5 mt-4 rounded-full overflow-hidden">
             <div id="progress" class="progress-bar bg-blue-500 h-full w-0"></div>
         </div>
     </header>
@@ -99,7 +100,7 @@
                     あなたの息は、<br>
                     <span class="text-blue-500">体の鏡</span>です。
                 </h2>
-                <p class="text-gray-500 font-medium">下関市が提供する、お口と体のアライメントをチェックするセルフ診断ツール。</p>
+                <p class="text-gray-500 font-bold">下関市が提供する、お口と体のアライメントをチェックするセルフ診断ツール。</p>
             </div>
 
             <div class="bg-white rounded-[32px] p-8 shadow-sm border border-gray-100 mb-12">
@@ -107,29 +108,29 @@
                 <div class="space-y-6">
                     <div class="flex items-center">
                         <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500">🔍</div>
-                        <p class="text-base font-bold text-gray-700">原因の多角的な分析</p>
+                        <p class="text-lg font-bold text-gray-700">原因の多角的な分析</p>
                     </div>
                     <div class="flex items-center">
                         <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500">📈</div>
-                        <p class="text-base font-bold text-gray-700">生活習慣の可視化</p>
+                        <p class="text-lg font-bold text-gray-700">生活習慣の可視化</p>
                     </div>
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500">提</div>
-                        <p class="text-base font-bold text-gray-700">地域に根ざした改善案</p>
+                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500 font-bold">提</div>
+                        <p class="text-lg font-bold text-gray-700">地域に根ざした改善案</p>
                     </div>
                 </div>
             </div>
 
-            <button id="start-btn" onclick="startQuiz()" class="btn-primary w-full text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-500/20 text-lg disabled:bg-gray-300 disabled:shadow-none transition-all" disabled>
+            <button id="start-btn" onclick="startQuiz()" class="btn-primary w-full text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-500/20 text-xl disabled:bg-gray-300 disabled:shadow-none transition-all" disabled>
                 診断を開始する
             </button>
-            <p id="liff-status" class="text-[11px] text-gray-400 font-medium mt-6 text-center tracking-wide">CONNECTING TO LINE...</p>
+            <p id="liff-status" class="text-[12px] text-gray-400 font-bold mt-6 text-center tracking-wide">CONNECTING TO LINE...</p>
         </section>
 
         <section id="page-q" class="page">
             <div class="flex justify-between items-center mb-8">
-                <span id="q-cat-label" class="text-[10px] font-bold tracking-[0.2em] text-blue-500 uppercase py-1 px-3 border border-blue-200 rounded-full">CATEGORY</span>
-                <button id="back-btn" onclick="prevQuestion()" class="hidden text-[11px] font-bold text-gray-400 hover:text-gray-600 transition-colors">
+                <span id="q-cat-label" class="text-[12px] font-bold tracking-[0.2em] text-blue-500 uppercase py-1 px-3 border border-blue-200 rounded-full">CATEGORY</span>
+                <button id="back-btn" onclick="prevQuestion()" class="hidden text-[12px] font-bold text-gray-400 hover:text-gray-600 transition-colors">
                     ← BACK
                 </button>
             </div>
@@ -140,44 +141,44 @@
                 <div class="grid grid-cols-3 gap-3">
                     <div class="text-center group">
                         <img src="tongue1.jpg" class="rounded-2xl border-2 border-transparent group-active:border-blue-500 transition-all mb-2 aspect-square object-cover">
-                        <span class="text-[10px] font-bold text-gray-400">真っ白</span>
+                        <span class="text-[11px] font-bold text-gray-400">真っ白</span>
                     </div>
                     <div class="text-center group">
                         <img src="tongue2.jpg" class="rounded-2xl border-2 border-transparent group-active:border-blue-500 transition-all mb-2 aspect-square object-cover">
-                        <span class="text-[10px] font-bold text-gray-400">うっすら</span>
+                        <span class="text-[11px] font-bold text-gray-400">うっすら</span>
                     </div>
                     <div class="text-center group">
                         <img src="tongue3.jpg" class="rounded-2xl border-2 border-transparent group-active:border-blue-500 transition-all mb-2 aspect-square object-cover">
-                        <span class="text-[10px] font-bold text-gray-400">きれい</span>
+                        <span class="text-[11px] font-bold text-gray-400">きれい</span>
                     </div>
                 </div>
             </div>
 
-            <div id="options-container" class="space-y-3"></div>
+            <div id="options-container" class="space-y-4"></div>
         </section>
 
         <section id="page-survey" class="page">
             <div class="flex flex-col items-center justify-center py-10">
                 <div class="loading-spinner mb-4"></div>
-                <h2 class="text-xl font-bold mb-1">データを整理しています</h2>
-                <p class="text-sm text-gray-400 font-medium">最後にアンケートにご協力ください</p>
+                <h2 class="text-2xl font-bold mb-1">データを整理しています</h2>
+                <p class="text-lg text-gray-400 font-bold">最後にアンケートにご協力ください</p>
             </div>
 
             <div id="survey-content" class="min-h-[400px]">
                 <div class="survey-step active-step" id="step-1">
-                    <h3 class="text-lg font-bold mb-8 text-center">性別を教えてください</h3>
+                    <h3 class="text-xl font-bold mb-8 text-center">性別を教えてください</h3>
                     <div class="grid grid-cols-1 gap-3">
-                        <label class="option-card block p-5 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="女性" class="hidden"> <span class="font-bold">女性</span></label>
-                        <label class="option-card block p-5 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="男性" class="hidden"> <span class="font-bold">男性</span></label>
-                        <label class="option-card block p-5 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="その他" class="hidden"> <span class="font-bold">その他</span></label>
+                        <label class="option-card block p-6 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="女性" class="hidden"> <span class="font-bold">女性</span></label>
+                        <label class="option-card block p-6 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="男性" class="hidden"> <span class="font-bold">男性</span></label>
+                        <label class="option-card block p-6 rounded-2xl border border-gray-200 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q1" value="その他" class="hidden"> <span class="font-bold">その他</span></label>
                     </div>
-                    <button onclick="nextSurvey(1)" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">次へ</button>
+                    <button onclick="nextSurvey(1)" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">次へ</button>
                 </div>
 
                 <div class="survey-step" id="step-2">
-                    <h3 class="text-lg font-bold mb-8 text-center">年齢を教えてください</h3>
+                    <h3 class="text-xl font-bold mb-8 text-center">年齢を教えてください</h3>
                     <div class="relative">
-                        <select id="survey_q2" class="w-full p-5 bg-white border border-gray-200 rounded-2xl font-bold appearance-none focus:border-blue-500 outline-none shadow-sm">
+                        <select id="survey_q2" class="w-full p-6 bg-white border border-gray-200 rounded-2xl font-bold appearance-none focus:border-blue-500 outline-none shadow-sm text-lg">
                             <option value="">選択してください</option>
                             <option value="10歳未満">10歳未満</option>
                             <option value="10代">10代</option>
@@ -189,100 +190,99 @@
                         </select>
                         <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">▼</div>
                     </div>
-                    <button onclick="nextSurvey(2)" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">次へ</button>
+                    <button onclick="nextSurvey(2)" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">次へ</button>
                 </div>
 
                 <div class="survey-step" id="step-3">
-                    <h3 class="text-lg font-bold mb-8 text-center leading-tight">診断の内容は<br>理解しやすかったですか？</h3>
-                    <div class="space-y-2">
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 text-sm"><input type="radio" name="survey_q3" value="とてもそう思う" class="hidden"> <span class="font-bold">とてもそう思う</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 text-sm"><input type="radio" name="survey_q3" value="そう思う" class="hidden"> <span class="font-bold">そう思う</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 text-sm"><input type="radio" name="survey_q3" value="どちらともいえない" class="hidden"> <span class="font-bold">どちらともいえない</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 text-sm"><input type="radio" name="survey_q3" value="そう思わない" class="hidden"> <span class="font-bold">そう思わない</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 text-sm"><input type="radio" name="survey_q3" value="とてもそう思わない" class="hidden"> <span class="font-bold">とてもそう思わない</span></label>
+                    <h3 class="text-xl font-bold mb-8 text-center leading-tight">診断の内容は<br>理解しやすかったですか？</h3>
+                    <div class="space-y-3">
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q3" value="とてもそう思う" class="hidden"> <span class="font-bold">とてもそう思う</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q3" value="そう思う" class="hidden"> <span class="font-bold">そう思う</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q3" value="どちらともいえない" class="hidden"> <span class="font-bold">どちらともいえない</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q3" value="そう思わない" class="hidden"> <span class="font-bold">そう思わない</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q3" value="とてもそう思わない" class="hidden"> <span class="font-bold">とてもそう思わない</span></label>
                     </div>
-                    <button onclick="nextSurvey(3)" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">次へ</button>
+                    <button onclick="nextSurvey(3)" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">次へ</button>
                 </div>
 
                 <div class="survey-step" id="step-4">
-                    <h3 class="text-lg font-bold mb-2 text-center">そう思った理由</h3>
-                    <p class="text-[11px] text-gray-400 text-center mb-8 uppercase tracking-widest">Optional Question</p>
-                    <textarea id="survey_q4" class="w-full h-40 p-5 bg-white border border-gray-200 rounded-2xl font-medium focus:border-blue-500 outline-none shadow-inner resize-none" placeholder="自由にご記入ください"></textarea>
-                    <button onclick="nextSurvey(4)" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">次へ</button>
+                    <h3 class="text-xl font-bold mb-2 text-center">そう思った理由</h3>
+                    <p class="text-[12px] text-gray-400 text-center mb-8 uppercase tracking-widest font-bold">Optional Question</p>
+                    <textarea id="survey_q4" class="w-full h-40 p-6 bg-white border border-gray-200 rounded-2xl font-bold focus:border-blue-500 outline-none shadow-inner resize-none text-lg" placeholder="自由にご記入ください"></textarea>
+                    <button onclick="nextSurvey(4)" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">次へ</button>
                 </div>
 
                 <div class="survey-step" id="step-5">
-                    <h3 class="text-lg font-bold mb-8 text-center">質問の数はどう感じましたか？</h3>
+                    <h3 class="text-xl font-bold mb-8 text-center">質問の数はどう感じましたか？</h3>
                     <div class="grid grid-cols-1 gap-2">
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="多い" class="hidden"> <span class="font-bold">多い</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="やや多い" class="hidden"> <span class="font-bold">やや多い</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="適切である" class="hidden"> <span class="font-bold">適切である</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="やや少ない" class="hidden"> <span class="font-bold">やや少ない</span></label>
-                        <label class="option-card block p-4 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="少ない" class="hidden"> <span class="font-bold">少ない</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="多い" class="hidden"> <span class="font-bold">多い</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="やや多い" class="hidden"> <span class="font-bold">やや多い</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="適切である" class="hidden"> <span class="font-bold">適切である</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="やや少ない" class="hidden"> <span class="font-bold">やや少ない</span></label>
+                        <label class="option-card block p-5 rounded-xl border border-gray-100 shadow-sm has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50"><input type="radio" name="survey_q5" value="少ない" class="hidden"> <span class="font-bold">少ない</span></label>
                     </div>
-                    <button onclick="nextSurvey(5)" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">次へ</button>
+                    <button onclick="nextSurvey(5)" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">次へ</button>
                 </div>
 
                 <div class="survey-step" id="step-6">
-                    <h3 class="text-lg font-bold mb-2 text-center">分かりにくい点、改善点</h3>
-                    <p class="text-[11px] text-gray-400 text-center mb-8 uppercase tracking-widest">Optional Question</p>
-                    <textarea id="survey_q6" class="w-full h-40 p-5 bg-white border border-gray-200 rounded-2xl font-medium focus:border-blue-500 outline-none shadow-inner resize-none" placeholder="サービス向上のためご意見をお聞かせください"></textarea>
-                    <button onclick="finishSurvey()" class="btn-primary w-full mt-10 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20">回答して結果を見る</button>
+                    <h3 class="text-xl font-bold mb-2 text-center">分かりにくい点、改善点</h3>
+                    <p class="text-[12px] text-gray-400 text-center mb-8 uppercase tracking-widest font-bold">Optional Question</p>
+                    <textarea id="survey_q6" class="w-full h-40 p-6 bg-white border border-gray-200 rounded-2xl font-bold focus:border-blue-500 outline-none shadow-inner resize-none text-lg" placeholder="サービス向上のためご意見をお聞かせください"></textarea>
+                    <button onclick="finishSurvey()" class="btn-primary w-full mt-10 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-500/20 text-lg">回答して結果を見る</button>
                 </div>
             </div>
         </section>
 
         <section id="page-result" class="page">
             <div class="text-center mb-10">
-                <span class="text-[10px] font-black tracking-[0.3em] text-gray-400 uppercase">Analysis Complete</span>
+                <span class="text-[12px] font-black tracking-[0.3em] text-gray-400 uppercase">Analysis Complete</span>
                 <h2 class="text-3xl font-black mt-2">診断結果レポート</h2>
             </div>
             
             <div class="grid grid-cols-2 gap-4 mb-10">
                 <div class="bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 text-center">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">一時的リスク</p>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase mb-2">一時的リスク</p>
                     <div class="flex items-baseline justify-center font-black">
-                        <span id="score-1" class="text-4xl">0</span><span class="text-xs ml-1 font-bold text-gray-400">%</span>
+                        <span id="score-1" class="text-5xl">0</span><span class="text-sm ml-1 font-bold text-gray-400">%</span>
                     </div>
-                    <div class="mt-4"><span id="label-1" class="text-[10px] font-bold px-3 py-1 rounded-full border"></span></div>
+                    <div class="mt-4"><span id="label-1" class="text-[12px] font-bold px-3 py-1 rounded-full border"></span></div>
                 </div>
                 <div class="bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 text-center">
-                    <p class="text-[10px] font-bold text-gray-400 uppercase mb-2">病的リスク</p>
+                    <p class="text-[11px] font-bold text-gray-400 uppercase mb-2">病的リスク</p>
                     <div class="flex items-baseline justify-center font-black">
-                        <span id="score-2" class="text-4xl">0</span><span class="text-xs ml-1 font-bold text-gray-400">%</span>
+                        <span id="score-2" class="text-5xl">0</span><span class="text-sm ml-1 font-bold text-gray-400">%</span>
                     </div>
-                    <div class="mt-4"><span id="label-2" class="text-[10px] font-bold px-3 py-1 rounded-full border"></span></div>
+                    <div class="mt-4"><span id="label-2" class="text-[12px] font-bold px-3 py-1 rounded-full border"></span></div>
                 </div>
             </div>
 
-            <div id="result-message" class="bg-white p-8 rounded-[32px] mb-12 shadow-sm border-t-4 border-blue-500 font-bold text-gray-700"></div>
+            <div id="result-message" class="bg-white p-8 rounded-[32px] mb-12 shadow-sm border-t-4 border-blue-500 font-bold text-gray-700 text-lg"></div>
 
             <div class="mb-12">
-                <h3 class="text-xs font-black text-blue-500 uppercase tracking-widest mb-6 flex items-center">
+                <h3 class="text-sm font-black text-blue-500 uppercase tracking-widest mb-6 flex items-center">
                     <span class="w-8 h-[1px] bg-blue-500 mr-3"></span>Personalized Advice
                 </h3>
-                <div id="advice-list" class="space-y-3"></div>
+                <div id="advice-list" class="space-y-4"></div>
             </div>
 
             <div class="bg-gray-900 text-white rounded-[40px] p-10 mb-8 shadow-2xl">
-                <h3 class="text-xl font-bold mb-2 text-center">SHIMONOSEKI</h3>
-                <p class="text-gray-400 text-xs text-center mb-8 font-medium">下関市の健康支援・医療情報</p>
-                <div class="space-y-3">
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-white/10 hover:bg-white/20 text-center font-bold py-4 rounded-xl text-white transition-all">特定健診（40歳〜74歳）</a>
-                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-white/10 hover:bg-white/20 text-center font-bold py-4 rounded-xl text-white transition-all">健康診査（全般）</a>
+                <h3 class="text-2xl font-bold mb-2 text-center">SHIMONOSEKI</h3>
+                <p class="text-gray-400 text-sm text-center mb-8 font-bold">下関市の健康支援・医療情報</p>
+                <div class="space-y-4">
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/42/5040.html" target="_blank" class="block w-full bg-white/10 hover:bg-white/20 text-center font-bold py-5 rounded-xl text-white transition-all text-lg">特定健診（40歳〜74歳）</a>
+                    <a href="https://www.city.shimonoseki.lg.jp/soshiki/51/5768.html" target="_blank" class="block w-full bg-white/10 hover:bg-white/20 text-center font-bold py-5 rounded-xl text-white transition-all text-lg">健康診査（全般）</a>
                 </div>
             </div>
 
-            <button onclick="liff.closeWindow()" class="w-full text-gray-400 font-bold py-4 rounded-xl text-sm hover:text-gray-600 transition-all">
+            <button onclick="liff.closeWindow()" class="w-full text-gray-400 font-bold py-6 rounded-xl text-lg hover:text-gray-600 transition-all">
                 診断を終了して閉じる
             </button>
         </section>
     </main>
 
     <script>
-        // ロジック部分はご提示いただいたものから変更ありません（変数名・IDのみ整合性確認済み）
         const LIFF_ID = "2008714027-cuYvg807"; 
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbwljIPNSg9LNEAE8KhHY6uBoWwwao9umEBEVyhBXWseo2pb35hr7cHKIDI-UbYvoxwsfA/exec"; 
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbzIkTeby9lUDWGdo2PGD1RLdwiCE1gGKgXyQ4CeOXkpjFAMEVsgE4-7P7Y3I3abwjuP/exec"; 
 
         const questions = [
             { axis: 1, cat: "起床・空腹", text: "朝起きたときや、お腹が空いているときに特にお口が臭う。", labels: ["よくある","たまにある","ない"], advice: "朝一番の水分補給が、爽やかさを作るコツです。" },
@@ -311,6 +311,7 @@
         let surveyAnswers = { q1: "", q2: "", q3: "", q4: "", q5: "", q6: "" };
         let finalS1 = 0, finalS2 = 0;
 
+        // ページロード時に自動的にLINEログイン
         window.onload = async () => {
             try {
                 await liff.init({ liffId: LIFF_ID });
@@ -318,7 +319,9 @@
                     lineProfile = await liff.getProfile();
                     document.getElementById('liff-status').innerText = `${lineProfile.displayName}さん、準備完了`;
                     document.getElementById('start-btn').disabled = false;
-                } else { liff.login(); }
+                } else { 
+                    liff.login(); 
+                }
             } catch (e) {
                 document.getElementById('liff-status').innerText = "DEMO MODE";
                 document.getElementById('start-btn').disabled = false;
@@ -342,11 +345,11 @@
             q.labels.forEach((label, i) => {
                 const btn = document.createElement('button');
                 btn.className = "option-card w-full p-6 rounded-2xl text-left border border-gray-100 shadow-sm flex justify-between items-center group";
-                btn.innerHTML = `<span class="text-base font-bold text-gray-800">${label}</span><span class="text-blue-500 opacity-0 group-active:opacity-100 transition-opacity">→</span>`;
+                btn.innerHTML = `<span class="text-lg font-bold text-gray-800">${label}</span><span class="text-blue-500 opacity-0 group-active:opacity-100 transition-opacity">→</span>`;
                 btn.onclick = () => {
                     answers.push({ ...q, userScore: (i === 0 ? 1 : (i === 1 ? 0.5 : 0)) });
                     if (currentIdx < questions.length - 1) { currentIdx++; updateQuestion(); } 
-                    else { startSurveyFlow(); }
+                    else { calculateFinalScores(); }
                 };
                 container.appendChild(btn);
             });
@@ -356,7 +359,7 @@
             if (currentIdx > 0) { currentIdx--; answers.pop(); updateQuestion(); }
         }
 
-        function startSurveyFlow() {
+        function calculateFinalScores() {
             let s1 = 0, s2 = 0;
             answers.forEach(a => {
                 let p = a.userScore * 10;
@@ -399,9 +402,9 @@
                 const el = document.getElementById(scoreId);
                 const lbl = document.getElementById(labelId);
                 el.innerText = score;
-                if (score <= 40) { el.className = "text-4xl text-blue-500"; lbl.innerText = "安心"; lbl.className = "text-[10px] font-bold border-blue-200 text-blue-500 bg-blue-50 px-3 py-1 rounded-full"; }
-                else if (score <= 60) { el.className = "text-4xl text-amber-500"; lbl.innerText = "注意"; lbl.className = "text-[10px] font-bold border-amber-200 text-amber-600 bg-amber-50 px-3 py-1 rounded-full"; }
-                else { el.className = "text-4xl text-red-500"; lbl.innerText = "警戒"; lbl.className = "text-[10px] font-bold border-red-200 text-red-500 bg-red-50 px-3 py-1 rounded-full"; }
+                if (score <= 40) { el.className = "text-5xl text-blue-500"; lbl.innerText = "安心"; lbl.className = "text-[12px] font-bold border-blue-200 text-blue-500 bg-blue-50 px-3 py-1 rounded-full"; }
+                else if (score <= 60) { el.className = "text-5xl text-amber-500"; lbl.innerText = "注意"; lbl.className = "text-[12px] font-bold border-amber-200 text-amber-600 bg-amber-50 px-3 py-1 rounded-full"; }
+                else { el.className = "text-5xl text-red-500"; lbl.innerText = "警戒"; lbl.className = "text-[12px] font-bold border-red-200 text-red-500 bg-red-50 px-3 py-1 rounded-full"; }
             };
             
             renderScore(finalS1, 'score-1', 'label-1');
@@ -412,22 +415,36 @@
             msgEl.style.borderColor = finalS2 > 40 ? '#EF4444' : '#007AFF';
 
             document.getElementById('advice-list').innerHTML = [...new Set(adviceSet)].slice(0, 4).map(adv => `
-                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-sm font-bold text-gray-700 flex items-start">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-lg font-bold text-gray-700 flex items-start">
                     <span class="text-blue-500 mr-3">●</span>${adv}
                 </div>
             `).join('');
 
+            // 結果表示と同時にデータを送信
             sendData(finalS1, finalS2);
         }
 
         async function sendData(s1, s2) {
             if (!lineProfile || !GAS_URL) return;
             const data = { 
-                name: lineProfile.displayName, userId: lineProfile.userId, s1: s1, s2: s2,
-                q1: surveyAnswers.q1, q2: surveyAnswers.q2, q3: surveyAnswers.q3,
-                q4: surveyAnswers.q4, q5: surveyAnswers.q5, q6: surveyAnswers.q6
+                name: lineProfile.displayName, 
+                userId: lineProfile.userId, 
+                s1: s1, 
+                s2: s2,
+                q1: surveyAnswers.q1, 
+                q2: surveyAnswers.q2, 
+                q3: surveyAnswers.q3,
+                q4: surveyAnswers.q4, 
+                q5: surveyAnswers.q5, 
+                q6: surveyAnswers.q6
             };
-            fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+            // POST送信
+            fetch(GAS_URL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data) 
+            });
         }
     </script>
 </body>
