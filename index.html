@@ -22,7 +22,7 @@
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            font-size: 1.1rem; /* 全体的に文字を大きく設定 */
+            font-size: 1.1rem; 
         }
 
         .page { display: none; }
@@ -72,7 +72,6 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         ::-webkit-scrollbar { display: none; }
         
-        /* アンケートのステップ制御用 */
         .survey-step { display: none; }
         .active-step { display: block; }
     </style>
@@ -107,24 +106,27 @@
                 <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Analysis Items</h3>
                 <div class="space-y-6">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500">🔍</div>
+                        <div class="w-1.5 h-6 bg-blue-500 mr-4 rounded-full"></div>
                         <p class="text-lg font-bold text-gray-700">原因の多角的な分析</p>
                     </div>
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500">📈</div>
+                        <div class="w-1.5 h-6 bg-blue-500 mr-4 rounded-full"></div>
                         <p class="text-lg font-bold text-gray-700">生活習慣の可視化</p>
                     </div>
                     <div class="flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mr-4 text-blue-500 font-bold">提</div>
+                        <div class="w-1.5 h-6 bg-blue-500 mr-4 rounded-full"></div>
                         <p class="text-lg font-bold text-gray-700">地域に根ざした改善案</p>
                     </div>
                 </div>
+                <p id="liff-status" class="text-xs text-slate-400 font-medium italic mt-8 text-center border-t pt-4">LINEと接続しています...</p>
             </div>
 
-            <button id="start-btn" onclick="startQuiz()" class="btn-primary w-full text-white font-bold py-5 rounded-2xl shadow-xl shadow-blue-500/20 text-xl disabled:bg-gray-300 disabled:shadow-none transition-all" disabled>
+            <button id="start-btn" onclick="startQuiz()" class="w-full bg-blue-500 text-white font-black py-6 rounded-3xl shadow-lg active:scale-95 transition-all text-xl disabled:bg-slate-300 mb-4" disabled>
                 診断を開始する
             </button>
-            <p id="liff-status" class="text-[12px] text-gray-400 font-bold mt-6 text-center tracking-wide">CONNECTING TO LINE...</p>
+            <button id="resume-btn" onclick="showLastResult()" class="hidden w-full bg-white border-2 border-blue-400 text-blue-500 font-black py-4 rounded-3xl text-sm shadow-sm active:bg-blue-50 transition-all flex items-center justify-center">
+                前回の診断結果を見る
+            </button>
         </section>
 
         <section id="page-q" class="page">
@@ -311,8 +313,8 @@
         let surveyAnswers = { q1: "", q2: "", q3: "", q4: "", q5: "", q6: "" };
         let finalS1 = 0, finalS2 = 0;
 
-        // ページロード時に自動的にLINEログイン
         window.onload = async () => {
+            checkLastResult();
             try {
                 await liff.init({ liffId: LIFF_ID });
                 if (liff.isLoggedIn()) {
@@ -323,10 +325,27 @@
                     liff.login(); 
                 }
             } catch (e) {
-                document.getElementById('liff-status').innerText = "DEMO MODE";
+                document.getElementById('liff-status').innerText = "DEMO MODE (No LINE Connection)";
                 document.getElementById('start-btn').disabled = false;
             }
         };
+
+        function checkLastResult() {
+            const last = localStorage.getItem('last_kuchi_check');
+            if (last) {
+                document.getElementById('resume-btn').classList.remove('hidden');
+            }
+        }
+
+        function showLastResult() {
+            const last = JSON.parse(localStorage.getItem('last_kuchi_check'));
+            if (last) {
+                finalS1 = last.s1;
+                finalS2 = last.s2;
+                answers = last.answers;
+                showResult(true);
+            }
+        }
 
         function startQuiz() { currentIdx = 0; answers = []; showPage('page-q'); updateQuestion(); }
         function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); window.scrollTo(0,0); }
@@ -390,10 +409,15 @@
 
         function finishSurvey() {
             surveyAnswers.q6 = document.getElementById("survey_q6").value;
+            localStorage.setItem('last_kuchi_check', JSON.stringify({
+                s1: finalS1,
+                s2: finalS2,
+                answers: answers
+            }));
             showResult(); 
         }
 
-        function showResult() {
+        function showResult(isResume = false) {
             showPage('page-result');
             const adviceSet = [];
             answers.forEach(a => { if (a.userScore >= 0.5) adviceSet.push(a.advice); });
@@ -416,12 +440,11 @@
 
             document.getElementById('advice-list').innerHTML = [...new Set(adviceSet)].slice(0, 4).map(adv => `
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-lg font-bold text-gray-700 flex items-start">
-                    <span class="text-blue-500 mr-3">●</span>${adv}
+                    <span class="w-1 h-6 bg-blue-500 mr-4 rounded-full flex-shrink-0"></span>${adv}
                 </div>
             `).join('');
 
-            // 結果表示と同時にデータを送信
-            sendData(finalS1, finalS2);
+            if (!isResume) sendData(finalS1, finalS2);
         }
 
         async function sendData(s1, s2) {
@@ -438,7 +461,6 @@
                 q5: surveyAnswers.q5, 
                 q6: surveyAnswers.q6
             };
-            // POST送信
             fetch(GAS_URL, { 
                 method: 'POST', 
                 mode: 'no-cors', 
