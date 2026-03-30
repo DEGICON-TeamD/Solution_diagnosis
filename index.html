@@ -339,17 +339,10 @@
 
       <div id="notification-setting" class="bg-white p-8 rounded-[32px] mb-12 shadow-sm border border-blue-100">
         <h3 class="text-lg font-bold mb-4 flex items-center text-blue-600">
-          <span class="mr-2">🔔</span>習慣化サポート設定
+          <span class="mr-2"></span>習慣化サポート設定
         </h3>
-        <p class="text-sm text-gray-500 font-bold mb-6">リスクに合わせたケアをLINEでお知らせします。</p>
-        <div id="notification-options" class="space-y-3 mb-6"></div>
-        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
-          <span class="text-sm font-bold text-gray-600">通知時間</span>
-          <input type="time" id="notif-time" value="08:00" class="bg-transparent font-bold text-blue-500 outline-none">
-        </div>
-        <button onclick="saveNotification()" class="btn-primary w-full mt-6 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/20 text-sm">
-          通知を予約する
-        </button>
+        <p class="text-sm text-gray-500 font-bold mb-6">リスクに合わせたケアをLINEでお知らせします。項目ごとに通知時間を設定できます。</p>
+        <div id="notification-options" class="space-y-4 mb-4"></div>
         <p id="notif-status" class="text-center text-[10px] text-blue-400 mt-3 font-bold"></p>
       </div>
 
@@ -359,7 +352,7 @@
         </h3>
         <div id="clinic-search-buttons" class="grid gap-3">
           <a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">
-            📍 現在地から近くの歯科医院を探す
+             現在地から近くの歯科医院を探す
           </a>
         </div>
       </div>
@@ -718,10 +711,16 @@
 
       const notifContainer = document.getElementById('notification-options');
       notifContainer.innerHTML = [...new Set(adviceSet)].slice(0, 3).map((adv, i) =>
-        `<label class="flex items-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm cursor-pointer">
-           <input type="checkbox" class="w-5 h-5 rounded-full border-gray-300 text-blue-500 focus:ring-blue-500 mr-3 notif-item" value="${adv}" checked>
-           <span class="text-sm font-bold text-gray-700">${adv}を意識する</span>
-         </label>`
+        `<div class="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
+           <div class="flex items-center mb-3">
+             <input type="checkbox" id="check-${i}" class="w-5 h-5 rounded-full border-gray-300 text-blue-500 focus:ring-blue-500 mr-3 notif-item" value="${adv}" checked>
+             <label for="check-${i}" class="text-sm font-bold text-gray-700">${adv}</label>
+           </div>
+           <div class="flex items-center space-x-2">
+             <input type="time" id="time-${i}" value="08:00" class="flex-1 bg-gray-50 p-2 rounded-xl font-bold text-blue-500 outline-none text-sm">
+             <button onclick="saveNotification(${i})" class="bg-blue-500 text-white text-[10px] font-bold px-4 py-2 rounded-xl shadow-md active:scale-95 transition-all">保存</button>
+           </div>
+         </div>`
       ).join('');
 
       const clinicContainer = document.getElementById('clinic-search-buttons');
@@ -733,24 +732,27 @@
       }
       clinicContainer.innerHTML = `
         <a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">
-          📍 現在地から近くの歯科医院を探す
+           現在地から近くの歯科医院を探す
         </a>` + additionalClinics;
 
       if (!isResume) sendData(finalS1, finalS2);
     }
 
-    async function saveNotification() {
-      const selected = Array.from(document.querySelectorAll('.notif-item:checked')).map(el => el.value);
-      const time = document.getElementById('notif-time').value;
+    async function saveNotification(index) {
+      const checkbox = document.getElementById(`check-${index}`);
+      const time = document.getElementById(`time-${index}`).value;
       const statusEl = document.getElementById('notif-status');
-      if (selected.length === 0) {
-        alert("通知する項目を1つ以上選択してください");
+
+      if (!checkbox.checked) {
+        alert("通知を有効にするにはチェックを入れてください");
         return;
       }
+
       statusEl.innerText = "設定を保存中...";
+      // 実際にはここでGAS等に各項目ごとの通知設定を飛ばす処理を想定
       setTimeout(() => {
-        statusEl.innerText = `✅ 毎日 ${time} にLINEでお知らせします`;
-      }, 1000);
+        statusEl.innerText = ` 「${checkbox.value}」を毎日 ${time} に予約しました`;
+      }, 800);
     }
 
     async function sendData(s1, s2) {
