@@ -276,9 +276,9 @@ async function sendData(s1, s2) {
     // ネットワークエラー発生時に「再試行」ボタンを表示
     statusEl.innerHTML = `
       <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl flex flex-col items-center">
-        <p class="text-red-600 text-sm font-bold mb-2">⚠️ 通信エラーが発生しました</p>
+        <p class="text-red-600 text-sm font-bold mb-2"> 通信エラーが発生しました</p>
         <button onclick="sendData(${s1}, ${s2})" class="bg-red-500 text-white text-xs font-bold px-6 py-2 rounded-full shadow-md active:scale-95 transition-all">
-          🔄 再試行
+           再試行
         </button>
       </div>
     `;
