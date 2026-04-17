@@ -8,22 +8,35 @@ let finalS1 = 0, finalS2 = 0;
 
 window.onload = async () => {
   checkLastResult();
-  initSurvey(); // アンケート画面を動的に生成
+  initSurvey(); 
+  
   try {
     await liff.init({ liffId: LIFF_ID });
-    if (liff.isLoggedIn()) {
-      lineProfile = await liff.getProfile();
-      document.getElementById('liff-status').innerText = `${lineProfile.displayName}さん、準備完了`;
-      document.getElementById('start-btn').disabled = false;
+    
+    // --- 修正ポイント：ブラウザ環境（isInClientがfalse）ならログインをスキップ ---
+    if (liff.isInClient()) {
+      if (liff.isLoggedIn()) {
+        lineProfile = await liff.getProfile();
+        document.getElementById('liff-status').innerText = `${lineProfile.displayName}さん、準備完了`;
+        document.getElementById('start-btn').disabled = false;
+      } else {
+        liff.login();
+      }
     } else {
-      liff.login();
+      // LINEアプリ以外（PCブラウザ等）で開いている場合
+      console.log("Running on Browser: Skipping LINE Login");
+      setupDemoMode();
     }
-  } catch (e) {
-    // LINE接続がない（ブラウザ等）場合のエラーをキャッチしてデモモードへ
-    console.log("LIFF Init Error: Running in Demo Mode");
-  }
+    // -------------------------------------------------------------------------
 
-  // --- ブラウザ動作確認用の修正（ここから） ---
+  } catch (e) {
+    console.log("LIFF Init Error: Running in Demo Mode");
+    setupDemoMode();
+  }
+};
+
+// ブラウザ確認用のダミーデータセット関数
+function setupDemoMode() {
   if (!lineProfile) {
     lineProfile = {
       displayName: "テストユーザー",
@@ -32,19 +45,17 @@ window.onload = async () => {
     document.getElementById('liff-status').innerText = "DEMO MODE (No LINE Connection)";
     document.getElementById('start-btn').disabled = false;
   }
-  // --- ブラウザ動作確認用の修正（ここまで） ---
-};
+}
 
-// アンケートHTMLの動的生成
+// --- 以下、既存の関数（変更なし） ---
+
 function initSurvey() {
   const container = document.getElementById('survey-content');
   container.innerHTML = "";
-
   surveyQuestions.forEach((q, index) => {
     const stepDiv = document.createElement('div');
     stepDiv.className = `survey-step ${index === 0 ? 'active-step' : ''}`;
     stepDiv.id = `step-${index}`;
-
     let inputHtml = "";
     if (q.type === "radio") {
       inputHtml = `<div class="grid grid-cols-1 gap-3">` +
@@ -64,7 +75,6 @@ function initSurvey() {
     } else if (q.type === "textarea") {
       inputHtml = `<textarea id="survey_${q.id}" class="w-full h-40 p-6 bg-white border border-gray-200 rounded-2xl font-bold focus:border-blue-500 outline-none shadow-inner resize-none text-lg" placeholder="${q.placeholder || ""}"></textarea>`;
     }
-
     stepDiv.innerHTML = `
       <h3 class="text-xl font-bold ${q.subtitle ? 'mb-2' : 'mb-8'} text-center">${q.title}</h3>
       ${q.subtitle ? `<p class="text-[12px] text-gray-400 text-center mb-8 uppercase tracking-widest font-bold">${q.subtitle}</p>` : ''}
@@ -80,7 +90,6 @@ function initSurvey() {
 function nextSurvey(index) {
   const qConfig = surveyQuestions[index];
   let value = "";
-
   if (qConfig.type === "radio") {
     const checked = document.querySelector(`input[name="survey_${qConfig.id}"]:checked`);
     if (qConfig.required && !checked) return alert("項目を選択してください");
@@ -92,9 +101,7 @@ function nextSurvey(index) {
     value = document.getElementById(`survey_${qConfig.id}`).value;
     if (qConfig.required && !value) return alert("内容を入力してください");
   }
-
   surveyAnswers[qConfig.id] = value;
-
   if (index < surveyQuestions.length - 1) {
     document.getElementById(`step-${index}`).classList.remove('active-step');
     document.getElementById(`step-${index + 1}`).classList.add('active-step');
@@ -144,10 +151,8 @@ function updateQuestion() {
   document.getElementById('q-cat-label').innerText = q.cat;
   document.getElementById('q-text').innerText = q.text;
   document.getElementById('q-image-area').classList.toggle('hidden', !q.hasImage);
-
   const backBtn = document.getElementById('back-btn');
   currentIdx > 0 ? backBtn.classList.remove('hidden') : backBtn.classList.add('hidden');
-
   const container = document.getElementById('options-container');
   container.innerHTML = "";
   q.labels.forEach((label, i) => {
@@ -265,9 +270,7 @@ async function sendData(s1, s2) {
     s1: s1, s2: s2,
     ...surveyAnswers
   };
-
   const statusEl = document.getElementById('notif-status');
-
   try {
     const response = await fetch(GAS_URL, {
       method: 'POST',
@@ -275,13 +278,10 @@ async function sendData(s1, s2) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
-    
     statusEl.innerHTML = "";
     console.log("Data sent successfully");
-
   } catch (error) {
     console.error("Fetch error:", error);
-    
     statusEl.innerHTML = `
       <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl flex flex-col items-center">
         <p class="text-red-600 text-sm font-bold mb-2"> 通信エラーが発生しました</p>
