@@ -19,9 +19,20 @@ window.onload = async () => {
       liff.login();
     }
   } catch (e) {
+    // LINE接続がない（ブラウザ等）場合のエラーをキャッチしてデモモードへ
+    console.log("LIFF Init Error: Running in Demo Mode");
+  }
+
+  // --- ブラウザ動作確認用の修正（ここから） ---
+  if (!lineProfile) {
+    lineProfile = {
+      displayName: "テストユーザー",
+      userId: "debug_user_1234"
+    };
     document.getElementById('liff-status').innerText = "DEMO MODE (No LINE Connection)";
     document.getElementById('start-btn').disabled = false;
   }
+  // --- ブラウザ動作確認用の修正（ここまで） ---
 };
 
 // アンケートHTMLの動的生成
@@ -246,7 +257,6 @@ async function saveNotification(index) {
   setTimeout(() => { statusEl.innerText = ` 「${checkbox.value}」を毎日 ${time} に予約しました`; }, 800);
 }
 
-// 通信エラー対策を追加した送信関数
 async function sendData(s1, s2) {
   if (!lineProfile || !GAS_URL) return;
   const data = {
@@ -266,14 +276,12 @@ async function sendData(s1, s2) {
       body: JSON.stringify(data)
     });
     
-    // 成功したら表示をリセット
     statusEl.innerHTML = "";
     console.log("Data sent successfully");
 
   } catch (error) {
     console.error("Fetch error:", error);
     
-    // ネットワークエラー発生時に「再試行」ボタンを表示
     statusEl.innerHTML = `
       <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl flex flex-col items-center">
         <p class="text-red-600 text-sm font-bold mb-2"> 通信エラーが発生しました</p>
