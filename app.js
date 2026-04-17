@@ -13,7 +13,7 @@ window.onload = async () => {
   try {
     await liff.init({ liffId: LIFF_ID });
     
-    // --- 修正ポイント：ブラウザ環境（isInClientがfalse）ならログインをスキップ ---
+    // --- ブラウザ環境（isInClientがfalse）ならログインをスキップ ---
     if (liff.isInClient()) {
       if (liff.isLoggedIn()) {
         lineProfile = await liff.getProfile();
@@ -47,7 +47,6 @@ function setupDemoMode() {
   }
 }
 
-// --- 以下、既存の関数（変更なし） ---
 
 function initSurvey() {
   const container = document.getElementById('survey-content');
