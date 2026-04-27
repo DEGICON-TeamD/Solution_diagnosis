@@ -234,47 +234,38 @@ function showResult(isResume = false) {
      </div>`
   ).join('');
 
-  // --- Find clinics 表示ロジックの修正 ---
+  // --- Find clinics 表示ロジックの修正：該当する科をすべて表示 ---
   const clinicContainer = document.getElementById('clinic-search-buttons');
   
-  const clinicTargets = [];
+  // 重複排除のためにSetを使用
+  const selectedDepts = new Set();
+
   answers.forEach((ans) => {
     if (ans.userScore > 0) {
-      let dept = "";
-      // 質問ID(ans.id)に基づいた診療科の割り当て
-      if ([11, 12, 13].includes(ans.id)) dept = "dental";
-      else if ([14, 16, 19, 20].includes(ans.id)) dept = "internal";
-      else if (ans.id === 15) dept = "ent";
-      else if (ans.id === 17) dept = "gi";
-
-      if (dept) {
-        clinicTargets.push({
-          id: ans.id,
-          score: ans.userScore,
-          dept: dept
-        });
-      }
+      // data.jsのidに基づいて科を振り分け
+      if ([11, 12, 13].includes(ans.id)) selectedDepts.add("dental");
+      if ([14, 16, 19, 20].includes(ans.id)) selectedDepts.add("internal");
+      if (ans.id === 15) selectedDepts.add("ent");
+      if (ans.id === 17) selectedDepts.add("gi");
     }
   });
 
-  // スコア順にソート（最高スコアを優先）
-  clinicTargets.sort((a, b) => b.score - a.score || b.id - a.id);
-
   let clinicHtml = "";
-  if (clinicTargets.length > 0) {
-    const top = clinicTargets[0];
-    if (top.dept === "dental") {
-      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">📍 近くの歯科医院を探す</a>`;
-    } else if (top.dept === "internal") {
-      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの内科を探す</a>`;
-    } else if (top.dept === "ent") {
-      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=耳鼻咽喉科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの耳鼻咽喉科を探す</a>`;
-    } else if (top.dept === "gi") {
-      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=消化器内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの消化器内科を探す</a>`;
+  // 選択された科ごとにボタンを生成
+  selectedDepts.forEach(dept => {
+    if (dept === "dental") {
+      clinicHtml += `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50 mb-2">📍 近くの歯科医院を探す</a>`;
+    } else if (dept === "internal") {
+      clinicHtml += `<a href="https://www.google.com/maps/search/?api=1&query=内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50 mb-2">📍 近くの内科を探す</a>`;
+    } else if (dept === "ent") {
+      clinicHtml += `<a href="https://www.google.com/maps/search/?api=1&query=耳鼻咽喉科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50 mb-2">📍 近くの耳鼻咽喉科を探す</a>`;
+    } else if (dept === "gi") {
+      clinicHtml += `<a href="https://www.google.com/maps/search/?api=1&query=消化器内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50 mb-2">📍 近くの消化器内科を探す</a>`;
     }
-  }
+  });
 
-  if (!clinicHtml) {
+  // 該当なし、または一時的リスク(1-10)・タバコ(18)のみの場合はデフォルトを表示
+  if (clinicHtml === "") {
     clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">現在地から近くの歯科医院を探す</a>`;
   }
   
