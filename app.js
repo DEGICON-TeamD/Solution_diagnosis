@@ -237,32 +237,28 @@ function showResult(isResume = false) {
   // --- Find clinics 表示ロジックの修正 ---
   const clinicContainer = document.getElementById('clinic-search-buttons');
   
-  // スコア（userScore）が高い順にソートして、上位のものから診療科を決定
-  const sortedAnswers = [...answers].sort((a, b) => b.userScore - a.userScore);
-  const topAnswer = sortedAnswers[0];
-  
+  // 回答の中からスコアが高い順にソートし、医療機関案内対象（11-17, 19, 20）を抽出
+  const clinicTargetAnswers = answers
+    .filter(a => [11, 12, 13, 14, 15, 16, 17, 19, 20].includes(a.id) && a.userScore > 0)
+    .sort((a, b) => b.userScore - a.userScore);
+
   let clinicHtml = "";
 
-  // 全回答の中で「最高スコア」が0（すべて「ない」）の場合はデフォルト表示のみ
-  if (topAnswer && topAnswer.userScore > 0) {
-    // 優先度の高い順にチェックし、該当する最初の診療科を表示
-    // 11-13: 歯科医院, 14,16,19,20: 内科, 15: 耳鼻咽喉科, 17: 消化器内科
-    const target = sortedAnswers.find(a => [11,12,13,14,15,16,17,19,20].includes(a.id) && a.userScore > 0);
+  if (clinicTargetAnswers.length > 0) {
+    const topTarget = clinicTargetAnswers[0]; // 最もスコアが高い項目
     
-    if (target) {
-      if ([11, 12, 13].includes(target.id)) {
-        clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">📍 近くの歯科医院を探す</a>`;
-      } else if ([14, 16, 19, 20].includes(target.id)) {
-        clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの内科を探す</a>`;
-      } else if (target.id === 15) {
-        clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=耳鼻咽喉科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの耳鼻咽喉科を探す</a>`;
-      } else if (target.id === 17) {
-        clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=消化器内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの消化器内科を探す</a>`;
-      }
+    if ([11, 12, 13].includes(topTarget.id)) {
+      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">📍 近くの歯科医院を探す</a>`;
+    } else if ([14, 16, 19, 20].includes(topTarget.id)) {
+      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの内科を探す</a>`;
+    } else if (topTarget.id === 15) {
+      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=耳鼻咽喉科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの耳鼻咽喉科を探す</a>`;
+    } else if (topTarget.id === 17) {
+      clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=消化器内科" target="_blank" class="block w-full bg-white border-2 border-gray-200 text-center font-bold py-5 rounded-2xl text-gray-600 transition-all text-lg shadow-sm active:bg-gray-50">📍 近くの消化器内科を探す</a>`;
     }
   }
 
-  // 該当がない場合や1-10, 18が最高スコアの場合はデフォルトの歯科検索を表示
+  // 該当がない（1-10, 18が最高、または全てスコア0）場合はデフォルト
   if (!clinicHtml) {
     clinicHtml = `<a href="https://www.google.com/maps/search/?api=1&query=歯科医院" target="_blank" class="block w-full bg-white border-2 border-blue-400 text-center font-bold py-5 rounded-2xl text-blue-500 transition-all text-lg shadow-sm active:bg-blue-50">現在地から近くの歯科医院を探す</a>`;
   }
